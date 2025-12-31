@@ -1,0 +1,252 @@
+{
+  "site": {
+    "title": "AI/ML Engineer & Full-Stack Developer",
+    "description": "AI/ML Engineer with 7 years of experience. Specialized in LLM optimization, computer vision, and production AI systems. 3 patents in AI optimization."
+  },
+
+  "hero": {
+    "en": {
+      "title": "AI Specialist",
+      "subtitle": "Python | AI Agents | Privacy-focused LLM"
+    },
+    "ko": {
+      "title": "AI/ML 엔지니어 &<br>풀스택 개발자",
+      "subtitle": "Python | AI Agents | Privacy-focused LLM"
+    }
+  },
+
+  "about": {
+    "en": {
+      "intro": "AI/ML Engineer at Scenera with 7+ years of experience building production AI systems for major enterprises (Netflix, Sony, GS Retail, Wachter, LG Science Park). Specialized in LLM infrastructure optimization, computer vision, and achieving 95%+ cost reductions through local deployment strategies. Hold 3 patents in AI optimization.",
+      "highlights": [
+        "7+ years in AI/ML Engineering & Production Systems",
+        "2 patents in AI optimization technologies",
+        "95% cost reduction through local LLM infrastructure",
+        "Major clients: Netflix, Sony, GS Retail, Wachter, LG Science Park",
+        "99.9% uptime achievement on production systems"
+      ],
+      "education": {
+        "degree": "M.Sc. Seoul National University",
+        "field": "Naval Architecture and Ocean Engineering (AI/ML Focus)"
+      }
+    },
+    "ko": {
+      "intro": "Scenera의 AI/ML 엔지니어로 7년 이상의 경력을 보유하고 있으며, 주요 기업(Netflix, Sony, GS Retail, Wachter, LG Science Park)을 위한 프로덕션 AI 시스템을 구축해왔습니다. LLM 인프라 최적화, 컴퓨터 비전 전문가이며, 로컬 배포 전략을 통해 95% 이상의 비용 절감을 달성했습니다. AI 최적화 분야 특허 3건 보유.",
+      "highlights": [
+        "AI/ML 엔지니어링 및 프로덕션 시스템 7년 이상",
+        "AI 최적화 기술 특허 2건",
+        "로컬 LLM 인프라를 통한 95% 비용 절감",
+        "주요 고객사: Netflix, Sony, GS Retail, Wachter, LG Science Park",
+        "프로덕션 시스템 99.9% 가동률 달성"
+      ],
+      "education": {
+        "degree": "서울대학교 석사",
+        "field": "조선해양공학 (AI/ML 집중)"
+      }
+    }
+  },
+  
+  "skills": {
+    "ai_ml": {
+      "title": "AI/ML & Deep Learning",
+      "color": "primary",
+      "image": "https://plus.unsplash.com/premium_photo-1678834890201-47674c716347?q=80&w=1160&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "items": [
+        "PyTorch",
+        "TensorFlow",
+        "Computer Vision",
+        "YOLO",
+        "scikit-learn"
+      ]
+    },
+    "llm_agent": {
+      "title": "LLM Agent",
+      "color": "blue",
+      "image": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "items": [
+        "Python",
+        "MCP",
+        "LangChain",
+        "LangGraph",
+        "GPT-Researcher"
+      ]
+    },
+    "backend": {
+      "title": "Backend",
+      "color": "green",
+      "image": "https://plus.unsplash.com/premium_photo-1663040543387-cb7c78c4f012?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "items": [
+        "Python",
+        "FastAPI",
+        "Docker",
+        "WireGuard VPN"
+      ]
+    },
+    "infrastructure": {
+      "title": "Infrastructure",
+      "color": "yellow",
+      "image": "https://plus.unsplash.com/premium_photo-1764695631081-f8155bfc455e?q=80&w=1057&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "items": [
+        "vLLM",
+        "Ollama",
+        "llama.cpp",
+        "LiteLLM",
+        "Apache"
+      ]
+    },
+    "data": {
+      "title": "Data Engineering",
+      "color": "purple",
+      "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1470&auto=format&fit=crop",
+      "items": [
+        "Neo4j",
+        "PostgreSQL",
+        "ChromaDB",
+        "Elasticsearch",
+        "GDELT",
+        "crawl4ai"
+      ]
+    }
+  },
+
+  "projects": [
+    {
+      "id": "main-assistant",
+      "title": {
+        "en": "Main Assistant - Self-hosted AI",
+        "ko": "Main Assistant - 자체 호스팅 AI"
+      },
+      "description": {
+        "en": "Self-hosted ChatGPT alternative with multi-tenant architecture, file system integration, and local LLM infrastructure. In active development.",
+        "ko": "멀티 테넌트 아키텍처, 파일 시스템 통합, 로컬 LLM 인프라를 갖춘 자체 호스팅 ChatGPT 대안. 활발히 개발 중."
+      },
+      "image": "https://plus.unsplash.com/premium_photo-1725985758331-e1b46919d8cf?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "url": null,
+      "tech": "Python, FastAPI, vLLM, Docker, Streamlit"
+    },
+    {
+      "id": "cost-optimization",
+      "title": {
+        "en": "LLM Cost Optimization",
+        "ko": "LLM 비용 최적화"
+      },
+      "description": {
+        "en": "95% cost reduction from cloud APIs to local infrastructure using RTX 4090 + W6800 GPUs. Production-ready vLLM, Ollama, LiteLLM integration.",
+        "ko": "RTX 4090 + W6800 GPU를 사용하여 클라우드 API에서 로컬 인프라로 전환, 95% 비용 절감. 프로덕션 준비된 vLLM, Ollama, LiteLLM 통합."
+      },
+      "image": "https://plus.unsplash.com/premium_photo-1693257868688-0d940b4c4068?q=80&w=1132&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "url": null,
+      "tech": "Open-Source LLM, vLLM, LiteLLM, llama.cpp, ROCm"
+    },
+    {
+      "id": "enterprise-ai",
+      "title": {
+        "en": "Enterprise AI Solutions",
+        "ko": "엔터프라이즈 AI 솔루션"
+      },
+      "description": {
+        "en": "Production AI systems for Netflix, Sony, GS Retail, Wachter, and LG Science Park. Computer vision, ML optimization, and AI infrastructure.",
+        "ko": "Netflix, Sony, GS Retail, Wachter, LG Science Park를 위한 프로덕션 AI 시스템. 컴퓨터 비전, ML 최적화, AI 인프라."
+      },
+      "image": "https://plus.unsplash.com/premium_photo-1756139722495-5eab51eb956a?q=80&w=713&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "url": null,
+      "tech": "PyTorch, LLMs, Langchain, FastAPI, Docker"
+    },
+    {
+      "id": "graph-database",
+      "title": {
+        "en": "Knowledge Graph System",
+        "ko": "지식 그래프 시스템"
+      },
+      "description": {
+        "en": "Neo4j-based knowledge graph for data relationships. PostgreSQL integration, web scraping, and automated data processing pipelines.",
+        "ko": "Neo4j 기반 데이터 관계 지식 그래프. PostgreSQL 통합, 웹 스크래핑, 자동화된 데이터 처리 파이프라인."
+      },
+      "image": "https://images.unsplash.com/photo-1664526937033-fe2c11f1be25?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "url": null,
+      "tech": "Neo4j, PostgreSQL, Python, Crawl4ai"
+    }
+  ],
+
+
+
+
+  "services": [
+    {
+      "id": "2asy-ai",
+      "title": {
+        "en": "2asy.ai - Global Economics News",
+        "ko": "2asy.ai - 글로벌 경제 뉴스"
+      },
+      "description": {
+        "en": "Automated news platform processing hundreds of articles daily with 99.9% uptime over 7 months. GDELT data integration, 2-hour update cycles.",
+        "ko": "하루 수백 개의 기사를 처리하는 자동화 뉴스 플랫폼. 7개월간 99.9% 가동률 유지. GDELT 데이터 통합, 2시간 업데이트 주기."
+      },
+      "url": "https://2asy.ai",
+      "tech": "Python, crawl4ai, local LLMs, Ghost CMS, Docker"
+    },
+    {
+      "id": "2asy-net",
+      "title": {
+        "en": "2asy.net - Korean Content Platform",
+        "ko": "2asy.net - 한국어 콘텐츠 플랫폼"
+      },
+      "description": {
+        "en": "Automated content generation platform powered by local LLMs. Multi-language support with efficient processing pipeline.",
+        "ko": "로컬 LLM 기반 자동 콘텐츠 생성 플랫폼. 효율적인 처리 파이프라인으로 다국어 지원."
+      },
+      "url": "https://2asy.net",
+      "tech": "Python, local LLMs, Ghost CMS, Docker"
+    },
+    {
+      "id": "llm-optimization",
+      "title": {
+        "en": "LLM Infrastructure & Optimization",
+        "ko": "LLM 인프라 및 최적화"
+      },
+      "description": {
+        "en": "Achieve 95%+ cost reduction through local LLM deployment. Expert setup with vLLM, Ollama, LiteLLM on RTX 4090/W6800 GPUs. Production-ready infrastructure with proven ROI.",
+        "ko": "로컬 LLM 배포를 통해 95% 이상 비용 절감 달성. RTX 4090/W6800 GPU에서 vLLM, Ollama, LiteLLM 전문 설정. 검증된 ROI를 가진 프로덕션 준비 인프라."
+      },
+      "url": "https://github.com/Hannune/LLM-Infrastructure",
+      "tech": null
+    },
+    {
+      "id": "computer-vision",
+      "title": {
+        "en": "Computer Vision Solutions",
+        "ko": "컴퓨터 비전 솔루션"
+      },
+      "description": {
+        "en": "Enterprise-grade computer vision systems using PyTorch and TensorFlow. Proven track record with Fortune 500 clients (Netflix, Sony, Wachter) delivering production AI systems.",
+        "ko": "PyTorch 및 TensorFlow를 사용한 엔터프라이즈급 컴퓨터 비전 시스템. Fortune 500 고객사(Netflix, Sony, Wachter)와 프로덕션 AI 시스템 제공 실적."
+      },
+      "tech": null
+    },
+    {
+      "id": "ai-consulting",
+      "title": {
+        "en": "AI/ML Consulting & Patents",
+        "ko": "AI/ML 컨설팅 및 특허"
+      },
+      "description": {
+        "en": "Strategic AI consulting backed by 3 patents in AI optimization. End-to-end guidance from architecture design to production deployment with 7+ years enterprise experience.",
+        "ko": "AI 최적화 분야 3건의 특허로 뒷받침되는 전략적 AI 컨설팅. 아키텍처 설계부터 프로덕션 배포까지 7년 이상의 엔터프라이즈 경험을 바탕으로 한 엔드투엔드 가이드."
+      },
+      "tech": null
+    }
+  ],
+
+  "social": {
+    "github": "https://github.com/Hannune",
+    "linkedin": "https://www.linkedin.com/in/taeho-kim-26b139262/",
+    "twitter": "https://twitter.com/hannune",
+    "velog": "https://velog.io/@hannune",
+    "devto": "https://dev.to/hannune"
+  },
+
+  "contact": {
+    "intro": "Ready to optimize your AI infrastructure or build production-ready ML systems? Let's discuss how I can help transform your AI vision into reality.",
+    "formspree_id": "xzdbnayo"
+  }
+}

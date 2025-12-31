@@ -1,0 +1,17 @@
+# Docker files (not needed for GitHub Pages)
+Dockerfile
+docker-compose.yml
+nginx.conf
+.dockerignore
+
+# Development files
+.DS_Store
+*.log
+node_modules/
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.swp
+*~
