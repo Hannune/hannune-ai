@@ -335,25 +335,6 @@ function setupCustomCursor() {
     });
 }
 
-// Scroll animations
-function setupScrollAnimations() {
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -100px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.animation = 'fadeInUp 0.8s ease forwards';
-            }
-        });
-    }, observerOptions);
-
-    // Observe all cards
-    const cards = document.querySelectorAll('.skill-card, .project-card, .service-card');
-    cards.forEach(card => observer.observe(card));
-}
 
 // Navbar scroll effect
 function setupNavbarScroll() {
@@ -399,6 +380,4 @@ document.addEventListener('DOMContentLoaded', () => {
     setupNavbarScroll();
     setupParallax();
 
-    // Setup scroll animations after content is loaded
-    setTimeout(setupScrollAnimations, 500);
 });
