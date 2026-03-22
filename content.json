@@ -44,7 +44,7 @@
     "approach": {
       "title": "Selected Work",
       "content": {
-        "intro": "I design and deliver AI systems that replace repetitive manual workflows with reliable automation. My focus is on production-ready systems that operate in real business environments, not experiments that stop at the prototype stage.",
+        "intro": "I design and deliver AI systems that replace repetitive manual workflows with reliable automation, especially in data-heavy, search-heavy, and document-driven operations where manual work becomes a bottleneck.",
         "subsections": [
           {
             "key": "identity",
@@ -99,19 +99,19 @@
             "cases": [
               {
                 "title": "LG Energy Solution — Talent Data Automation",
-                "description": "Replaced manual candidate data collection by building an AI-driven system that navigates complex websites, extracts structured data, and delivers consistent outputs for internal operations. Tech: Crawl4AI, LangGraph, FastAPI, Python."
+                "description": "Replaced manual candidate data collection by building an AI-driven system that navigates complex websites, extracts structured data, and delivers consistent outputs for internal operations. The system automated a previously manual workflow and improved both speed and data consistency at scale."
               },
               {
                 "title": "AI-powered Legal & Tax Document Search",
-                "description": "Reduced time-intensive legal document search for a tax professional client by building an AI system that understands queries, retrieves relevant materials, and filters results before delivery. Search time was reduced from up to 5 hours to under 40 minutes, with search accuracy improved by over 50%. Tech: LangChain, Ollama, ChromaDB, FastAPI, Docker."
+                "description": "Reduced time-intensive legal document search for a tax professional client by building an AI system that understands queries, retrieves relevant materials, and filters results before delivery. Search time was reduced from up to 5 hours to under 40 minutes, significantly improving workflow efficiency."
               },
               {
                 "title": "Scenera (TnM AI) — Enterprise AI Systems",
-                "description": "Delivered multiple AI systems for enterprise clients across data access, IoT pipelines, video analytics, predictive maintenance, and edge deployment. These systems reduced manual operations, improved operational efficiency, and supported production use across media, manufacturing, and retail environments. Tech: Python, FastAPI, Docker, LangChain, SQL, Azure."
+                "description": "Delivered multiple AI systems for enterprise clients across data access, IoT pipelines, video analytics, predictive maintenance, and edge deployment. These systems reduced manual operations and enabled production-level automation across different operational environments."
               },
               {
                 "title": "2asy.ai — Automated AI Content Platform",
-                "description": "Built and operate a fully automated AI system that collects, summarizes, translates, and publishes economic news. The system runs 13 times daily with zero manual intervention and operates at roughly 5–10% of the cost of typical cloud-based alternatives. Tech: LangGraph, vLLM, Docker, FastAPI, Python."
+                "description": "Built and operate a fully automated AI system that collects, summarizes, translates, and publishes economic news. The system runs continuously with zero manual intervention, demonstrating reliable end-to-end automation in production."
               }
             ]
           }
@@ -137,7 +137,7 @@
     "contact": {
       "title": "Contact",
       "content": {
-        "intro": "If your team is spending too much time on manual data, search, or document workflows, I can help design and deliver a production-ready AI system.",
+        "intro": "If your team is spending too much time on manual data, search, or document workflows, I can help design and deliver a production-ready AI system that replaces those processes with reliable automation.",
         "formspree_id": "xzdbnayo"
       }
     }
