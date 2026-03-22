@@ -37,14 +37,14 @@
 
   "hero": {
     "title": "AI Automation Engineer | AI Systems Builder",
-    "subtitle": "I help companies replace manual data, search, and document workflows with production-ready AI systems."
+    "subtitle": "I help companies automate manual data, document, and internal workflows by building production-ready AI systems."
   },
 
   "sections": {
     "approach": {
       "title": "Work",
       "content": {
-        "intro": "I design and deliver AI systems that replace repetitive manual workflows with reliable automation, especially in data-heavy, search-heavy, and document-driven operations where manual work becomes a bottleneck.",
+        "intro": "I design and deliver AI systems that replace repetitive manual workflows with reliable automation, especially in data-heavy and document-driven workflows where manual work slows down operations.",
         "subsections": [
           {
             "key": "identity",
