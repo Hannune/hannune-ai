@@ -42,7 +42,7 @@
 
   "sections": {
     "approach": {
-      "title": "Selected Work",
+      "title": "Work",
       "content": {
         "intro": "I design and deliver AI systems that replace repetitive manual workflows with reliable automation, especially in data-heavy, search-heavy, and document-driven operations where manual work becomes a bottleneck.",
         "subsections": [
@@ -99,7 +99,7 @@
             "cases": [
               {
                 "title": "LG Energy Solution — Talent Data Automation",
-                "description": "Replaced manual candidate data collection by building an AI-driven system that navigates complex websites, extracts structured data, and delivers consistent outputs for internal operations. The system automated a previously manual workflow and improved both speed and data consistency at scale."
+                "description": "Replaced manual candidate data collection by building an AI-driven system that navigates complex websites, extracts structured data, and delivers consistent outputs for internal talent sourcing and data processing operations. The system automated a previously manual workflow and improved both speed and data consistency at scale."
               },
               {
                 "title": "AI-powered Legal & Tax Document Search",
