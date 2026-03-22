@@ -197,6 +197,15 @@ function renderSectionContent(id, content) {
         case 'approach':
             renderApproachContent(div, content);
             break;
+        case 'services':
+            renderServicesContent(div, content);
+            break;
+        case 'work':
+            renderWorkContent(div, content);
+            break;
+        case 'how-i-work':
+            renderHowIWorkContent(div, content);
+            break;
         case 'fit':
             renderFitContent(div, content);
             break;
@@ -208,6 +217,114 @@ function renderSectionContent(id, content) {
     }
 
     return div;
+}
+
+// Services section (What I do — 3 blocks)
+function renderServicesContent(container, content) {
+    const grid = document.createElement('div');
+    grid.className = 'services-grid';
+
+    if (content.blocks && content.blocks.length > 0) {
+        content.blocks.forEach(block => {
+            const card = document.createElement('div');
+            card.className = 'service-card';
+
+            if (block.title) {
+                const title = document.createElement('h3');
+                title.className = 'service-title';
+                title.textContent = block.title;
+                card.appendChild(title);
+            }
+
+            if (block.description) {
+                const desc = document.createElement('p');
+                desc.className = 'service-description';
+                desc.textContent = block.description;
+                card.appendChild(desc);
+            }
+
+            if (block.points && block.points.length > 0) {
+                const list = document.createElement('ul');
+                list.className = 'service-points';
+                block.points.forEach(point => {
+                    const li = document.createElement('li');
+                    li.textContent = point;
+                    list.appendChild(li);
+                });
+                card.appendChild(list);
+            }
+
+            grid.appendChild(card);
+        });
+    }
+
+    container.appendChild(grid);
+}
+
+// Work section (Selected Work — case studies)
+function renderWorkContent(container, content) {
+    const grid = document.createElement('div');
+    grid.className = 'work-grid';
+
+    if (content.cases && content.cases.length > 0) {
+        content.cases.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'work-card';
+
+            if (item.name) {
+                const name = document.createElement('h3');
+                name.className = 'work-name';
+                name.textContent = item.name;
+                card.appendChild(name);
+            }
+
+            const fields = [
+                { key: 'problem', label: 'Problem' },
+                { key: 'built', label: 'What was built' },
+                { key: 'tech', label: 'Tech' },
+                { key: 'impact', label: 'Impact' }
+            ];
+
+            fields.forEach(({ key, label }) => {
+                if (item[key]) {
+                    const row = document.createElement('div');
+                    row.className = 'work-row';
+                    const labelEl = document.createElement('span');
+                    labelEl.className = 'work-label';
+                    labelEl.textContent = label;
+                    const valueEl = document.createElement('span');
+                    valueEl.className = 'work-value';
+                    valueEl.textContent = item[key];
+                    row.appendChild(labelEl);
+                    row.appendChild(valueEl);
+                    card.appendChild(row);
+                }
+            });
+
+            grid.appendChild(card);
+        });
+    }
+
+    container.appendChild(grid);
+}
+
+// How I work section
+function renderHowIWorkContent(container, content) {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'how-i-work-content';
+
+    if (content.points && content.points.length > 0) {
+        const list = document.createElement('ul');
+        list.className = 'highlights-list';
+        content.points.forEach(point => {
+            const li = document.createElement('li');
+            li.textContent = point;
+            list.appendChild(li);
+        });
+        wrapper.appendChild(list);
+    }
+
+    container.appendChild(wrapper);
 }
 
 // Approach section (with subsections)
@@ -361,41 +478,36 @@ function renderFitContent(container, content) {
     const grid = document.createElement('div');
     grid.className = 'boundaries-grid';
 
-    if (content.fit) {
-        const fitCard = document.createElement('div');
-        fitCard.className = 'boundary-card boundary-fit';
-        if (content.fit.heading) {
-            const heading = document.createElement('h3');
-            heading.className = 'boundary-heading';
-            heading.textContent = content.fit.heading;
-            fitCard.appendChild(heading);
-        }
-        if (content.fit.description) {
-            const desc = document.createElement('p');
-            desc.className = 'boundary-description';
-            desc.textContent = content.fit.description;
-            fitCard.appendChild(desc);
-        }
-        grid.appendChild(fitCard);
-    }
+    [{ data: content.fit, cls: 'boundary-fit' }, { data: content.nonfit, cls: 'boundary-nonfit' }].forEach(({ data, cls }) => {
+        if (!data) return;
+        const card = document.createElement('div');
+        card.className = `boundary-card ${cls}`;
 
-    if (content.nonfit) {
-        const nonfitCard = document.createElement('div');
-        nonfitCard.className = 'boundary-card boundary-nonfit';
-        if (content.nonfit.heading) {
+        if (data.heading) {
             const heading = document.createElement('h3');
             heading.className = 'boundary-heading';
-            heading.textContent = content.nonfit.heading;
-            nonfitCard.appendChild(heading);
+            heading.textContent = data.heading;
+            card.appendChild(heading);
         }
-        if (content.nonfit.description) {
+
+        if (data.points && data.points.length > 0) {
+            const list = document.createElement('ul');
+            list.className = 'boundary-points';
+            data.points.forEach(point => {
+                const li = document.createElement('li');
+                li.textContent = point;
+                list.appendChild(li);
+            });
+            card.appendChild(list);
+        } else if (data.description) {
             const desc = document.createElement('p');
             desc.className = 'boundary-description';
-            desc.textContent = content.nonfit.description;
-            nonfitCard.appendChild(desc);
+            desc.textContent = data.description;
+            card.appendChild(desc);
         }
-        grid.appendChild(nonfitCard);
-    }
+
+        grid.appendChild(card);
+    });
 
     wrapper.appendChild(grid);
     container.appendChild(wrapper);
@@ -626,7 +738,7 @@ function setupCustomCursor() {
 
     // Magnetic effect for interactive elements
     const setupMagnetic = () => {
-        const elements = document.querySelectorAll('.btn, .nav-link, .nav-action, .social-link, .pattern-card, .decision-card, .boundary-card');
+        const elements = document.querySelectorAll('.btn, .nav-link, .nav-action, .social-link, .pattern-card, .decision-card, .boundary-card, .service-card, .work-card');
         elements.forEach(elem => {
             elem.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
             elem.addEventListener('mouseleave', () => {

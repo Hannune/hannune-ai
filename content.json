@@ -1,14 +1,14 @@
 {
   "site": {
-    "title": "Hannune — Applied AI Systems Under Real Constraints",
-    "description": "Hannune is a solo technology company focused on designing and stabilizing AI systems that must operate reliably beyond demos, under real-world constraints.",
+    "title": "Hannune — AI Automation Engineer",
+    "description": "I build production AI systems that replace manual data, search, and document workflows for enterprise and professional clients, with full ownership from system design to deployment.",
     "logo_alt": "Hannune"
   },
 
   "header": {
     "nav": {
       "primary": [
-        { "key": "approach", "label": "Approach", "href": "#approach" },
+        { "key": "approach", "label": "Work", "href": "#approach" },
         { "key": "fit", "label": "Fit", "href": "#fit" },
         { "key": "contact", "label": "Contact", "href": "#contact" }
       ],
@@ -36,78 +36,82 @@
   },
 
   "hero": {
-    "title": "AI systems that must keep working after deployment",
-    "subtitle": "When demos succeed but reality introduces constraints, trade-offs, and responsibility."
+    "title": "AI Automation Engineer | AI Systems Builder",
+    "subtitle": "I help companies replace manual data, search, and document workflows with production-ready AI systems."
   },
 
   "sections": {
     "approach": {
-      "title": "Approach",
+      "title": "Selected Work",
       "content": {
-        "intro": "Hannune is a solo technology practice built around a simple idea: some AI systems fail not because models are weak, but because architectural decisions break under real-world constraints.",
+        "intro": "I design and deliver AI systems that replace repetitive manual workflows with reliable automation. My focus is on production-ready systems that operate in real business environments, not experiments that stop at the prototype stage.",
         "subsections": [
           {
             "key": "identity",
             "title": "Identity",
-            "intro": "Hannune focuses on problems where systems must continue operating after deployment, not just during demonstrations.",
+            "intro": "I work with enterprise and professional clients who need one accountable technical owner from system design to deployment.",
             "points": [
-              "Designed for situations where operational responsibility matters",
-              "Works best when constraints shape architecture decisions",
-              "Not a dev shop or ticket-based implementation service",
-              "Not advisory-only consulting without ownership",
-              "Single decision-maker with end-to-end system context"
+              "Build and deliver AI systems end-to-end",
+              "Own architecture, implementation, and deployment directly",
+              "Contract-based work for enterprise and professional clients",
+              "Solo by design — centralized responsibility and consistent technical judgment"
             ],
             "structure": {
               "heading": "Operating Model",
-              "description": "Solo by design — centralized responsibility, consistent technical judgment"
+              "description": "One technical owner from system design to deployment, with no handoff gaps between planning, implementation, and operation."
             }
           },
           {
             "key": "how-it-works",
-            "title": "How It Works",
-            "intro": "Hannune operates at the boundary between what AI can do in demonstrations and what it must do in production. The focus is not on building features, but on making systems that remain operable, understandable, and stable after handoff.",
+            "title": "What I Build",
+            "intro": "I build systems that reduce manual work across data-heavy, search-heavy, and operational workflows.",
             "patterns": [
               {
-                "title": "Constraint-driven environments",
+                "title": "Workflow automation",
                 "items": [
-                  "Cloud usage restricted by policy or cost",
-                  "Data privacy requirements preventing external APIs",
-                  "Limited or heterogeneous GPU environments",
-                  "Systems expected to run continuously without manual intervention"
+                  "Manual processes replaced by automated AI pipelines",
+                  "Large-scale data collection, extraction, and structuring",
+                  "End-to-end document and content workflows"
                 ]
               },
               {
-                "title": "Long-running agent systems",
+                "title": "Search and agent systems",
                 "items": [
-                  "Agent workflows that work in demos but fail in production",
-                  "Unclear ownership of agent behavior after deployment",
-                  "Operational instability under real usage patterns",
-                  "Need for predictable behavior over benchmark performance"
+                  "Query understanding and retrieval pipelines",
+                  "Extraction, validation, and structured output generation",
+                  "Systems that reduce repetitive document search and review"
                 ]
               },
               {
-                "title": "Production integration realities",
+                "title": "Production deployment",
                 "items": [
-                  "Existing infrastructure that cannot be replaced",
-                  "Partial automation with human-in-the-loop constraints",
-                  "Legacy systems interacting with modern AI components",
-                  "Trade-offs between reliability, cost, and capability"
+                  "Docker-based infrastructure for reliable operation",
+                  "REST API integration into client environments",
+                  "Systems running continuously with minimal or zero manual intervention"
                 ]
               }
             ]
           },
           {
             "key": "decisions",
-            "title": "Decisions & Systems",
-            "intro": "Examples of architectural decisions made under real constraints. These are not portfolio pieces but illustrations of how trade-offs were navigated.",
+            "title": "Selected Work",
+            "intro": "Production systems delivered for real client and operational use.",
             "cases": [
               {
-                "title": "Local-first Agent System",
-                "description": "Designed a local-first agent system where cloud APIs were restricted and operational stability mattered more than model benchmarks. Key decisions focused on predictable behavior, failure isolation, and long-term maintainability."
+                "title": "LG Energy Solution — Talent Data Automation",
+                "description": "Replaced manual candidate data collection by building an AI-driven system that navigates complex websites, extracts structured data, and delivers consistent outputs for internal operations. Tech: Crawl4AI, LangGraph, FastAPI, Python."
               },
               {
-                "title": "LLM Infrastructure Under Cost Constraints",
-                "description": "Migrated LLM workloads from cloud APIs to local infrastructure under strict cost constraints. The focus was not cost reduction alone, but ensuring the system remained operable and understandable after deployment."
+                "title": "AI-powered Legal & Tax Document Search",
+                "description": "Reduced time-intensive legal document search for a tax professional client by building an AI system that understands queries, retrieves relevant materials, and filters results before delivery. Search time was reduced from up to 5 hours to under 40 minutes, with search accuracy improved by over 50%. Tech: LangChain, Ollama, ChromaDB, FastAPI, Docker."
+              },
+              {
+                "title": "Scenera (TnM AI) — Enterprise AI Systems",
+                "description": "Delivered multiple AI systems for enterprise clients across data access, IoT pipelines, video analytics, predictive maintenance, and edge deployment. These systems reduced manual operations, improved operational efficiency, and supported production use across media, manufacturing, and retail environments. Tech: Python, FastAPI, Docker, LangChain, SQL, Azure."
+              },
+              {
+                "title": "2asy.ai — Automated AI Content Platform",
+                "description": "Built and operate a fully automated AI system that collects, summarizes, translates, and publishes economic news. The system runs 13 times daily with zero manual intervention and operates at roughly 5–10% of the cost of typical cloud-based alternatives. Tech: LangGraph, vLLM, Docker, FastAPI, Python."
               }
             ]
           }
@@ -118,14 +122,14 @@
     "fit": {
       "title": "Fit",
       "content": {
-        "intro": "Hannune is not a general-purpose service. Clarity about fit helps both sides avoid wasted effort.",
+        "intro": "I work best where AI can replace real manual workflows and be deployed into actual operations.",
         "fit": {
-          "heading": "When Hannune is a good fit",
-          "description": "Hannune works best when AI systems have moved beyond prototypes and must operate reliably under real constraints, with clear ownership expectations."
+          "heading": "When this is a good fit",
+          "description": "Teams spending too much time on manual data collection, document search, review, extraction, or repetitive operational workflows. Enterprise or professional clients who need a production-ready system and want one accountable owner from design to deployment."
         },
         "nonfit": {
-          "heading": "When Hannune may not be a fit",
-          "description": "Projects seeking rapid feature delivery, advisory-only engagement, or experimentation without long-term responsibility may be better served elsewhere."
+          "heading": "When this may not be a fit",
+          "description": "Projects centered only on research, experimentation, or vague exploration without a clear workflow, operational problem, or deployment goal may be better served elsewhere."
         }
       }
     },
@@ -133,7 +137,7 @@
     "contact": {
       "title": "Contact",
       "content": {
-        "intro": "If your system works in demos but becomes uncertain after deployment, an initial conversation may help clarify where constraints and responsibility truly lie.",
+        "intro": "If your team is spending too much time on manual data, search, or document workflows, I can help design and deliver a production-ready AI system.",
         "formspree_id": "xzdbnayo"
       }
     }
