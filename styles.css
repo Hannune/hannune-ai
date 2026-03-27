@@ -356,8 +356,12 @@ section,
 
 /* Section backgrounds */
 .section-approach,
-.section-contact {
+.section-demos {
     background-color: #fff;
+}
+
+.section-contact {
+    background-color: var(--color-light);
 }
 
 .section-fit {
@@ -641,12 +645,12 @@ section,
 .form-group input,
 .form-group textarea {
     padding: var(--spacing-sm);
-    border: 2px solid var(--color-light);
+    border: 2px solid #ccc;
     border-radius: 8px;
     font-family: inherit;
     font-size: 1rem;
     transition: border-color var(--transition-fast);
-    background-color: var(--color-light);
+    background-color: #fff;
 }
 
 .form-group input:focus,
@@ -813,4 +817,58 @@ section,
         --spacing-lg: 3rem;
         --spacing-xl: 4rem;
     }
+}
+
+/* ── Demo Section ─────────────────────────── */
+
+.section-title-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 1.25rem;
+    margin-bottom: 0;
+}
+
+.demo-title-link {
+    color: var(--color-dark);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+.demo-title-link:hover {
+    opacity: 0.7;
+}
+
+.demo-arrow {
+    font-style: normal;
+}
+
+.section-title-row .demo-arrow {
+    font-size: 3rem;
+}
+
+.demo-card-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+    opacity: 0.75;
+}
+
+.demo-card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0.75rem 0 1rem;
+}
+
+.demo-tag {
+    font-size: 0.72rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid currentColor;
+    opacity: 0.55;
+    letter-spacing: 0.03em;
 }
