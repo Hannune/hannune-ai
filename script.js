@@ -67,6 +67,8 @@ function renderNavigation() {
             a.className = 'nav-link';
             a.textContent = item.label;
             a.dataset.key = item.key;
+            if (item.target) a.target = item.target;
+            if (item.rel) a.rel = item.rel;
             li.appendChild(a);
             navMenu.appendChild(li);
         });

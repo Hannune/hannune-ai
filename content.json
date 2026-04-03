@@ -8,10 +8,7 @@
   "header": {
     "nav": {
       "primary": [
-        { "key": "demos", "label": "Demos", "href": "#demos" },
-        { "key": "work", "label": "Work", "href": "#selected-work" },
-        { "key": "fit", "label": "Fit", "href": "#fit" },
-        { "key": "contact", "label": "Contact", "href": "#contact" }
+        { "key": "demos", "label": "Demos", "href": "https://demo.hannune.ai", "target": "_blank", "rel": "noopener noreferrer" }
       ],
       "actions": [
         {
