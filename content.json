@@ -15,6 +15,13 @@
       ],
       "actions": [
         {
+          "key": "email",
+          "label": "Email",
+          "sublabel": "contact@hannune.ai",
+          "href": "mailto:contact@hannune.ai",
+          "icon": "email"
+        },
+        {
           "key": "linkedin",
           "label": "Connect",
           "sublabel": "LinkedIn",
