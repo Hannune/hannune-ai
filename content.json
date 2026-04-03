@@ -8,7 +8,7 @@
   "header": {
     "nav": {
       "primary": [
-        { "key": "approach", "label": "Work", "href": "#approach" },
+        { "key": "work", "label": "Work", "href": "#selected-work" },
         { "key": "fit", "label": "Fit", "href": "#fit" },
         { "key": "demos", "label": "Demos", "href": "#demos" },
         { "key": "contact", "label": "Contact", "href": "#contact" }
@@ -41,104 +41,15 @@
     "subtitle": "I help companies replace manual data, search, and document workflows with production-ready AI systems."
   },
 
+  "section_order": ["demos", "selected-work", "what-i-build", "identity", "fit", "contact"],
+
   "sections": {
-    "approach": {
-      "title": "Work",
-      "content": {
-        "intro": "I design and deliver AI systems that replace repetitive manual workflows with reliable automation. My focus is on production-ready systems that operate in real business environments, not experiments that stop at the prototype stage.",
-        "subsections": [
-          {
-            "key": "identity",
-            "title": "Identity",
-            "intro": "I work with enterprise and professional clients who need one accountable technical owner from system design to deployment.",
-            "points": [
-              "Build and deliver AI systems end-to-end",
-              "Own architecture, implementation, and deployment directly",
-              "Contract-based work for enterprise and professional clients",
-              "Solo by design — centralized responsibility and consistent technical judgment"
-            ],
-            "structure": {
-              "heading": "Operating Model",
-              "description": "One technical owner from system design to deployment, with no handoff gaps between planning, implementation, and operation."
-            }
-          },
-          {
-            "key": "how-it-works",
-            "title": "What I Build",
-            "intro": "I build systems that reduce manual work across data-heavy, search-heavy, and operational workflows.",
-            "patterns": [
-              {
-                "title": "Workflow automation",
-                "items": [
-                  "Manual processes replaced by automated AI pipelines",
-                  "Large-scale data collection, extraction, and structuring",
-                  "End-to-end document and content workflows"
-                ]
-              },
-              {
-                "title": "Search and agent systems",
-                "items": [
-                  "Query understanding and retrieval pipelines",
-                  "Extraction, validation, and structured output generation",
-                  "Systems that reduce repetitive document search and review"
-                ]
-              },
-              {
-                "title": "Production deployment",
-                "items": [
-                  "Docker-based infrastructure for reliable operation",
-                  "REST API integration into client environments",
-                  "Systems running continuously with minimal or zero manual intervention"
-                ]
-              }
-            ]
-          },
-          {
-            "key": "decisions",
-            "title": "Selected Work",
-            "intro": "Production systems delivered for real client and operational use.",
-            "cases": [
-              {
-                "title": "LG Energy Solution — Talent Data Automation",
-                "description": "Replaced manual candidate data collection by building an AI-driven system that navigates complex websites, extracts structured data, and delivers consistent outputs for internal operations. Tech: Crawl4AI, LangGraph, FastAPI, Python."
-              },
-              {
-                "title": "AI-powered Legal & Tax Document Search",
-                "description": "Reduced time-intensive legal document search for a tax professional client by building an AI system that understands queries, retrieves relevant materials, and filters results before delivery. Search time was reduced from up to 5 hours to under 40 minutes, with search accuracy improved by over 50%. Tech: LangChain, Ollama, ChromaDB, FastAPI, Docker."
-              },
-              {
-                "title": "Scenera (TnM AI) — Enterprise AI Systems",
-                "description": "Delivered multiple AI systems for enterprise clients across data access, IoT pipelines, video analytics, predictive maintenance, and edge deployment. These systems reduced manual operations, improved operational efficiency, and supported production use across media, manufacturing, and retail environments. Tech: Python, FastAPI, Docker, LangChain, SQL, Azure."
-              },
-              {
-                "title": "2asy.ai — Automated AI Content Platform",
-                "description": "Built and operate a fully automated AI system that collects, summarizes, translates, and publishes economic news. The system runs 13 times daily with zero manual intervention and operates at roughly 5–10% of the cost of typical cloud-based alternatives. Tech: LangGraph, vLLM, Docker, FastAPI, Python."
-              }
-            ]
-          }
-        ]
-      }
-    },
-
-    "fit": {
-      "title": "Fit",
-      "content": {
-        "intro": "I work best where AI can replace real manual workflows and be deployed into actual operations.",
-        "fit": {
-          "heading": "When this is a good fit",
-          "description": "Teams spending too much time on manual data collection, document search, review, extraction, or repetitive operational workflows. Enterprise or professional clients who need a production-ready system and want one accountable owner from design to deployment."
-        },
-        "nonfit": {
-          "heading": "When this may not be a fit",
-          "description": "Projects centered only on research, experimentation, or vague exploration without a clear workflow, operational problem, or deployment goal may be better served elsewhere."
-        }
-      }
-    },
-
     "demos": {
       "title": "Live Demos",
       "content": {
-        "intro": "Three working AI systems, live and interactive. Each demo reflects a real use case — not a prototype.",
+        "youtube_embed_id": "j5xz0k9i-LA",
+        "youtube_description": "The video below is a simplified demonstration of the features developed so far.",
+        "intro": "Three working AI systems, live and interactive. Each demo reflects a real use case (not a prototype).",
         "demo_home": {
           "href": "https://demo.hannune.ai",
           "label": "View All Demos"
@@ -169,6 +80,96 @@
             "label": "Try it"
           }
         ]
+      }
+    },
+
+    "selected-work": {
+      "title": "Selected Work",
+      "content": {
+        "intro": "Production systems delivered for real client and operational use.",
+        "cases": [
+          {
+            "title": "LG Energy Solution — Talent Data Automation",
+            "description": "Replaced manual candidate data collection by building an AI-driven system that navigates complex websites, extracts structured data, and delivers consistent outputs for internal operations. Tech: Crawl4AI, LangGraph, FastAPI, Python."
+          },
+          {
+            "title": "AI-powered Legal & Tax Document Search",
+            "description": "Reduced time-intensive legal document search for a tax professional client by building an AI system that understands queries, retrieves relevant materials, and filters results before delivery. Search time was reduced from up to 5 hours to under 40 minutes, with search accuracy improved by over 50%. Tech: LangChain, Ollama, ChromaDB, FastAPI, Docker."
+          },
+          {
+            "title": "Scenera (TnM AI) — Enterprise AI Systems",
+            "description": "Delivered multiple AI systems for enterprise clients across data access, IoT pipelines, video analytics, predictive maintenance, and edge deployment. These systems reduced manual operations, improved operational efficiency, and supported production use across media, manufacturing, and retail environments. Tech: Python, FastAPI, Docker, LangChain, SQL, Azure."
+          },
+          {
+            "title": "2asy.ai — Automated AI Content Platform",
+            "description": "Built and operate a fully automated AI system that collects, summarizes, translates, and publishes economic news. The system runs 13 times daily with zero manual intervention and operates at roughly 5–10% of the cost of typical cloud-based alternatives. Tech: LangGraph, vLLM, Docker, FastAPI, Python."
+          }
+        ]
+      }
+    },
+
+    "what-i-build": {
+      "title": "What I Build",
+      "content": {
+        "intro": "I build systems that reduce manual work across data-heavy, search-heavy, and operational workflows.",
+        "patterns": [
+          {
+            "title": "Workflow automation",
+            "items": [
+              "Manual processes replaced by automated AI pipelines",
+              "Large-scale data collection, extraction, and structuring",
+              "End-to-end document and content workflows"
+            ]
+          },
+          {
+            "title": "Search and agent systems",
+            "items": [
+              "Query understanding and retrieval pipelines",
+              "Extraction, validation, and structured output generation",
+              "Systems that reduce repetitive document search and review"
+            ]
+          },
+          {
+            "title": "Production deployment",
+            "items": [
+              "Docker-based infrastructure for reliable operation",
+              "REST API integration into client environments",
+              "Systems running continuously with minimal or zero manual intervention"
+            ]
+          }
+        ]
+      }
+    },
+
+    "identity": {
+      "title": "Identity",
+      "content": {
+        "intro": "I work with enterprise and professional clients who need one accountable technical owner from system design to deployment.",
+        "points": [
+          "Build and deliver AI systems end-to-end",
+          "Own architecture, implementation, and deployment directly",
+          "Contract-based work for enterprise and professional clients",
+          "Solo by design — centralized responsibility and consistent technical judgment"
+        ],
+        "structure": {
+          "heading": "Operating Model",
+          "description": "One technical owner from system design to deployment, with no handoff gaps between planning, implementation, and operation."
+        }
+      }
+    },
+
+    "fit": {
+      "title": "Fit",
+      "content": {
+        "intro": "I work best where AI can replace real manual workflows and be deployed into actual operations.",
+        "fit": {
+          "heading": "When this is a good fit",
+          "description": "Teams spending too much time on manual data collection, document search, review, extraction, or repetitive operational workflows. Enterprise or professional clients who need a production-ready system and want one accountable owner from design to deployment."
+        },
+        "nonfit": {
+          "heading": "When this may not be a fit",
+          "description": "Projects centered only on research, experimentation, or vague exploration without a clear workflow, operational problem, or deployment goal may be better served elsewhere."
+        }
       }
     },
 

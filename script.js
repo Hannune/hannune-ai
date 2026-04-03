@@ -142,8 +142,8 @@ function renderSections() {
     const container = document.getElementById('sections-container');
     if (!container || !contentData.sections) return;
 
-    // Get section order from header.nav.primary
-    const sectionOrder = contentData.header?.nav?.primary?.map(item => item.key) || Object.keys(contentData.sections);
+    // Get section order from section_order, falling back to nav primary keys
+    const sectionOrder = contentData.section_order || contentData.header?.nav?.primary?.map(item => item.key) || Object.keys(contentData.sections);
 
     sectionOrder.forEach(sectionKey => {
         const sectionData = contentData.sections[sectionKey];
@@ -217,6 +217,15 @@ function renderSectionContent(id, content) {
         case 'approach':
             renderApproachContent(div, content);
             break;
+        case 'selected-work':
+            renderSelectedWorkContent(div, content);
+            break;
+        case 'what-i-build':
+            renderWhatIBuildContent(div, content);
+            break;
+        case 'identity':
+            renderIdentityContent(div, content);
+            break;
         case 'services':
             renderServicesContent(div, content);
             break;
@@ -240,6 +249,95 @@ function renderSectionContent(id, content) {
     }
 
     return div;
+}
+
+// Selected Work section
+function renderSelectedWorkContent(container, content) {
+    if (content.intro) {
+        const intro = document.createElement('p');
+        intro.className = 'section-intro';
+        intro.textContent = content.intro;
+        container.appendChild(intro);
+    }
+
+    if (content.cases && content.cases.length > 0) {
+        const grid = document.createElement('div');
+        grid.className = 'decisions-grid';
+        content.cases.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'decision-card';
+            if (item.title) {
+                const title = document.createElement('h4');
+                title.className = 'decision-title';
+                title.textContent = item.title;
+                card.appendChild(title);
+            }
+            if (item.description) {
+                const desc = document.createElement('p');
+                desc.className = 'decision-description';
+                desc.textContent = item.description;
+                card.appendChild(desc);
+            }
+            grid.appendChild(card);
+        });
+        container.appendChild(grid);
+    }
+}
+
+// What I Build section
+function renderWhatIBuildContent(container, content) {
+    if (content.intro) {
+        const intro = document.createElement('p');
+        intro.className = 'section-intro';
+        intro.textContent = content.intro;
+        container.appendChild(intro);
+    }
+
+    if (content.patterns && content.patterns.length > 0) {
+        const grid = document.createElement('div');
+        grid.className = 'patterns-grid';
+        content.patterns.forEach(pattern => {
+            grid.appendChild(createPatternCard(pattern));
+        });
+        container.appendChild(grid);
+    }
+}
+
+// Identity section
+function renderIdentityContent(container, content) {
+    if (content.intro) {
+        const intro = document.createElement('p');
+        intro.className = 'section-intro';
+        intro.textContent = content.intro;
+        container.appendChild(intro);
+    }
+
+    if (content.points && content.points.length > 0) {
+        const list = document.createElement('ul');
+        list.className = 'highlights-list';
+        content.points.forEach(point => {
+            const li = document.createElement('li');
+            li.textContent = point;
+            list.appendChild(li);
+        });
+        container.appendChild(list);
+    }
+
+    if (content.structure) {
+        const block = document.createElement('div');
+        block.className = 'structure-block';
+        if (content.structure.heading) {
+            const heading = document.createElement('h4');
+            heading.textContent = content.structure.heading;
+            block.appendChild(heading);
+        }
+        if (content.structure.description) {
+            const desc = document.createElement('p');
+            desc.textContent = content.structure.description;
+            block.appendChild(desc);
+        }
+        container.appendChild(block);
+    }
 }
 
 // Services section (What I do — 3 blocks)
@@ -490,6 +588,27 @@ function createPatternCard(data) {
 function renderDemosContent(container, content) {
     const wrapper = document.createElement('div');
     wrapper.className = 'demos-content';
+
+    if (content.youtube_embed_id) {
+        const videoWrapper = document.createElement('div');
+        videoWrapper.className = 'demos-video-wrapper';
+
+        if (content.youtube_description) {
+            const desc = document.createElement('p');
+            desc.className = 'demos-video-description';
+            desc.textContent = content.youtube_description;
+            videoWrapper.appendChild(desc);
+        }
+
+        const iframe = document.createElement('iframe');
+        iframe.width = '100%';
+        iframe.height = '450';
+        iframe.src = `https://www.youtube.com/embed/${content.youtube_embed_id}`;
+        iframe.setAttribute('frameborder', '0');
+        iframe.allowFullscreen = true;
+        videoWrapper.appendChild(iframe);
+        wrapper.appendChild(videoWrapper);
+    }
 
     if (content.intro) {
         const intro = document.createElement('p');

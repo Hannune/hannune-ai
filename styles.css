@@ -355,16 +355,31 @@ section,
 }
 
 /* Section backgrounds */
-.section-approach,
-.section-demos {
-    background-color: #fff;
-}
-
+/* Section backgrounds — alternating light / white */
+.section-selected-work,
+.section-identity,
 .section-contact {
     background-color: var(--color-light);
 }
 
+.section-demos,
+.section-what-i-build,
 .section-fit {
+    background-color: #fff;
+}
+
+/* Card colors contrast with their section background */
+.section-selected-work .decision-card,
+.section-identity .highlights-list li,
+.section-identity .structure-block {
+    background-color: #fff;
+}
+
+.section-what-i-build .pattern-card {
+    background-color: var(--color-light);
+}
+
+.section-fit .boundary-card {
     background-color: var(--color-light);
 }
 
@@ -871,4 +886,57 @@ section,
     border: 1px solid currentColor;
     opacity: 0.55;
     letter-spacing: 0.03em;
+}
+
+/* ── Demos Section Video ──────────────────────── */
+
+.demos-video-wrapper {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto var(--spacing-lg);
+}
+
+.demos-video-description {
+    text-align: center;
+    color: var(--color-dark);
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+}
+
+.demos-video-wrapper iframe {
+    display: block;
+    width: 100%;
+    border-radius: 8px;
+}
+
+/* ── Hero Demo Video Section ──────────────────── */
+
+#demo {
+    background-color: var(--color-light);
+}
+
+.demo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 48px 24px;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 14px 32px;
+    background-color: var(--color-dark);
+    color: var(--color-light);
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 600;
+    transition: opacity var(--transition-fast);
+}
+
+.cta-button:hover {
+    opacity: 0.8;
 }
