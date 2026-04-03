@@ -678,6 +678,14 @@ function renderDemosContent(container, content) {
         wrapper.appendChild(grid);
     }
 
+    if (content.cta) {
+        const cta = document.createElement('a');
+        cta.href = content.cta.href;
+        cta.className = 'cta-button';
+        cta.textContent = content.cta.label;
+        wrapper.appendChild(cta);
+    }
+
     container.appendChild(wrapper);
 }
 

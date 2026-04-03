@@ -8,9 +8,9 @@
   "header": {
     "nav": {
       "primary": [
+        { "key": "demos", "label": "Demos", "href": "#demos" },
         { "key": "work", "label": "Work", "href": "#selected-work" },
         { "key": "fit", "label": "Fit", "href": "#fit" },
-        { "key": "demos", "label": "Demos", "href": "#demos" },
         { "key": "contact", "label": "Contact", "href": "#contact" }
       ],
       "actions": [
@@ -53,6 +53,10 @@
         "demo_home": {
           "href": "https://demo.hannune.ai",
           "label": "View All Demos"
+        },
+        "cta": {
+          "label": "Let's Work Together",
+          "href": "#contact"
         },
         "items": [
           {
