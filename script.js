@@ -247,6 +247,12 @@ function renderSectionContent(id, content) {
         case 'contact':
             renderContactContent(div, content);
             break;
+        case '2asy':
+            render2asyContent(div, content);
+            break;
+        case 'reports':
+            renderReportsContent(div, content);
+            break;
         default:
             renderGenericContent(div, content);
     }
@@ -884,6 +890,128 @@ async function handleFormSubmit(form, formspreeId, statusDiv) {
     setTimeout(() => {
         statusDiv.style.display = 'none';
     }, 5000);
+}
+
+// 2asy section
+function render2asyContent(container, content) {
+    if (content.intro) {
+        const intro = document.createElement('p');
+        intro.className = 'section-intro';
+        intro.textContent = content.intro;
+        container.appendChild(intro);
+    }
+
+    if (content.secondary_intro) {
+        const secondary = document.createElement('p');
+        secondary.className = 'section-intro section-intro-secondary';
+        secondary.textContent = content.secondary_intro;
+        container.appendChild(secondary);
+    }
+
+    if (content.preview_image) {
+        const previewWrap = document.createElement('div');
+        previewWrap.className = 'asy-preview';
+        const img = document.createElement('img');
+        img.src = content.preview_image;
+        img.alt = content.preview_alt || '';
+        img.loading = 'lazy';
+        previewWrap.appendChild(img);
+        container.appendChild(previewWrap);
+    }
+
+    if (content.stats && content.stats.length > 0) {
+        const statsList = document.createElement('ul');
+        statsList.className = 'asy-stats';
+        content.stats.forEach(stat => {
+            const li = document.createElement('li');
+            li.textContent = stat;
+            statsList.appendChild(li);
+        });
+        container.appendChild(statsList);
+    }
+
+    if (content.cta) {
+        const ctaWrap = document.createElement('div');
+        ctaWrap.className = 'asy-cta-wrap';
+        const cta = document.createElement('a');
+        cta.href = content.cta.href;
+        cta.className = 'btn btn-primary';
+        cta.textContent = content.cta.label;
+        if (content.cta.target) cta.target = content.cta.target;
+        if (content.cta.rel) cta.rel = content.cta.rel;
+        ctaWrap.appendChild(cta);
+        container.appendChild(ctaWrap);
+    }
+}
+
+// Reports section
+function renderReportsContent(container, content) {
+    if (content.intro) {
+        const intro = document.createElement('p');
+        intro.className = 'section-intro';
+        intro.textContent = content.intro;
+        container.appendChild(intro);
+    }
+
+    if (content.items && content.items.length > 0) {
+        const grid = document.createElement('div');
+        grid.className = 'reports-grid';
+        content.items.forEach(item => {
+            grid.appendChild(createReportCard(item));
+        });
+        container.appendChild(grid);
+    }
+}
+
+function createReportCard(item) {
+    const card = document.createElement('a');
+    card.href = item.href;
+    card.className = 'report-card';
+
+    const thumbWrap = document.createElement('div');
+    thumbWrap.className = 'report-thumb';
+
+    if (item.thumbnail) {
+        const img = document.createElement('img');
+        img.src = item.thumbnail;
+        img.alt = item.title;
+        img.loading = 'lazy';
+        thumbWrap.appendChild(img);
+    }
+
+    if (item.domain) {
+        const badge = document.createElement('span');
+        badge.className = `report-domain-badge report-domain-${item.domain_class || 'default'}`;
+        badge.textContent = item.domain;
+        thumbWrap.appendChild(badge);
+    }
+
+    card.appendChild(thumbWrap);
+
+    const body = document.createElement('div');
+    body.className = 'report-body';
+
+    if (item.title) {
+        const title = document.createElement('h3');
+        title.className = 'report-title';
+        title.textContent = item.title;
+        body.appendChild(title);
+    }
+
+    if (item.description) {
+        const desc = document.createElement('p');
+        desc.className = 'report-description';
+        desc.textContent = item.description;
+        body.appendChild(desc);
+    }
+
+    const viewLink = document.createElement('span');
+    viewLink.className = 'report-view-link';
+    viewLink.textContent = 'View →';
+    body.appendChild(viewLink);
+
+    card.appendChild(body);
+    return card;
 }
 
 // Generic content renderer

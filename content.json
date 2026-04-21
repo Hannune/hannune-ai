@@ -8,7 +8,8 @@
   "header": {
     "nav": {
       "primary": [
-        { "key": "demos", "label": "Demos", "href": "https://demo.hannune.ai", "target": "_blank", "rel": "noopener noreferrer" }
+        { "key": "demos", "label": "Demos", "href": "https://demo.hannune.ai", "target": "_blank", "rel": "noopener noreferrer" },
+        { "key": "reports", "label": "Reports", "href": "#reports" }
       ],
       "actions": [
         {
@@ -45,9 +46,70 @@
     "subtitle": "I help companies replace manual data, search, and document workflows with production-ready AI systems."
   },
 
-  "section_order": ["demos", "selected-work", "what-i-build", "identity", "fit", "contact"],
+  "section_order": ["2asy", "reports", "demos", "selected-work", "what-i-build", "identity", "fit", "contact"],
 
   "sections": {
+    "2asy": {
+      "title": "2asy.ai — Graph RAG in Production",
+      "content": {
+        "intro": "An automated analysis platform I run that uses the same Graph RAG pipeline I build for clients. Every day, it ingests global economic and geopolitical news, extracts causal relationships, and publishes structured analyses with interactive knowledge graphs.",
+        "secondary_intro": "Currently tracking oil, energy, and geopolitical developments — the pipeline is domain-agnostic and extends to any document-heavy vertical.",
+        "preview_image": "images/2asy-preview.png",
+        "preview_alt": "2asy.ai preview showing knowledge graph and analysis",
+        "stats": [
+          "~2,400 articles ingested daily",
+          "~100 articles selected for knowledge graph",
+          "Causal graph visualization on every edition",
+          "Runs on Neo4j + LangGraph + Ghost CMS"
+        ],
+        "cta": {
+          "label": "Visit 2asy.ai →",
+          "href": "https://2asy.ai",
+          "target": "_blank",
+          "rel": "noopener noreferrer"
+        }
+      }
+    },
+
+    "reports": {
+      "title": "Reports — Same Pipeline, Different Domains",
+      "content": {
+        "intro": "While 2asy focuses on global macro and geopolitics, the same Graph RAG pipeline works across any document-heavy domain. These are sample analyses on corporate filings, regulatory decisions, and trade policy.",
+        "items": [
+          {
+            "slug": "nvidia-10k-fy2026",
+            "title": "NVIDIA 10-K FY2026",
+            "domain": "Corporate",
+            "domain_class": "corporate",
+            "description": "Knowledge graph extraction from NVIDIA's SEC 10-K filing using iXBRL parsing.",
+            "thumbnail": "https://img.youtube.com/vi/9lCzd_2-LWc/hqdefault.jpg",
+            "href": "reports/nvidia-10k-fy2026.html",
+            "duration": "60s"
+          },
+          {
+            "slug": "microsoft-activision-cma",
+            "title": "Microsoft–Activision: CMA Final Report",
+            "domain": "M&A",
+            "domain_class": "ma",
+            "description": "How the UK CMA blocked Microsoft's $68.7B Activision acquisition, mapped from the 418-page final report.",
+            "thumbnail": "https://img.youtube.com/vi/m8OID3yTKIg/hqdefault.jpg",
+            "href": "reports/microsoft-activision-cma.html",
+            "duration": "60s"
+          },
+          {
+            "slug": "ustr-section-301-2024",
+            "title": "USTR Section 301: 2024 Four-Year Review",
+            "domain": "Trade Policy",
+            "domain_class": "trade-policy",
+            "description": "US tariff policy on Chinese imports analyzed from the USTR's 187-page review, including 2024 proposed increases.",
+            "thumbnail": "https://img.youtube.com/vi/nfGnB-8vCc8/hqdefault.jpg",
+            "href": "reports/ustr-section-301-2024.html",
+            "duration": "60s"
+          }
+        ]
+      }
+    },
+
     "demos": {
       "title": "Live Demos",
       "content": {
@@ -94,7 +156,7 @@
     "selected-work": {
       "title": "Selected Work",
       "content": {
-        "intro": "Production systems delivered for real client and operational use.",
+        "intro": "Production systems delivered for enterprise clients.",
         "cases": [
           {
             "title": "LG Energy Solution — Talent Data Automation",
@@ -107,10 +169,6 @@
           {
             "title": "Scenera (TnM AI) — Enterprise AI Systems",
             "description": "Delivered multiple AI systems for enterprise clients across data access, IoT pipelines, video analytics, predictive maintenance, and edge deployment. These systems reduced manual operations, improved operational efficiency, and supported production use across media, manufacturing, and retail environments. Tech: Python, FastAPI, Docker, LangChain, SQL, Azure."
-          },
-          {
-            "title": "2asy.ai — Automated AI Content Platform",
-            "description": "Built and operate a fully automated AI system that collects, summarizes, translates, and publishes economic news. The system runs 13 times daily with zero manual intervention and operates at roughly 5–10% of the cost of typical cloud-based alternatives. Tech: LangGraph, vLLM, Docker, FastAPI, Python."
           }
         ]
       }
