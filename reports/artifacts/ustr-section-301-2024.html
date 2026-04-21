@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Hannune · ustr_section301_four_year_review_2024.pdf</title>
+<script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.28.1/cytoscape.min.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #ffffff;
+  color: #334155;
+  line-height: 1.6;
+}
+nav {
+  background: #333A2F;
+  padding: 14px 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+nav img { height: 36px; width: auto; }
+.nav-right { font-size: 14px; font-weight: 500; color: rgba(235,237,223,0.7); }
+.container { max-width: 1200px; margin: 0 auto; padding: 2rem 2rem 4rem; }
+.meta {
+  font-size: 0.8rem; color: #94a3b8;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+.meta strong { color: #475569; }
+.section-header {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #2563eb;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 2rem 0 0.75rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+.tldr-box {
+  background: #eff6ff;
+  border-left: 4px solid #2563eb;
+  border-radius: 0 10px 10px 0;
+  padding: 16px 20px;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #1e3a5f;
+}
+.metrics-row { display: flex; gap: 12px; flex-wrap: wrap; margin: 0.5rem 0; }
+.metric-card {
+  flex: 1; min-width: 120px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 14px 16px;
+  text-align: center;
+}
+.metric-value { font-size: 1.7rem; font-weight: 800; color: #2563eb; line-height: 1.1; }
+.metric-label { font-size: 0.72rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px; }
+.summary { font-size: 0.95rem; line-height: 1.8; }
+.summary h2, .summary h3, .summary h4 { color: #1e3a5f; margin: 1.25rem 0 0.5rem; font-weight: 700; }
+.summary h3 { font-size: 1rem; }
+.summary h4 { font-size: 0.9rem; }
+.summary p { margin-bottom: 0.75rem; color: #334155; }
+.summary strong { color: #1e3a5f; }
+table.data-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 0.85rem; margin: 0.5rem 0 1.5rem;
+}
+table.data-table th {
+  background: #f1f5f9; color: #475569;
+  padding: 8px 12px; text-align: left;
+  font-weight: 600; font-size: 0.78rem;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  border-bottom: 2px solid #e2e8f0;
+}
+table.data-table td {
+  padding: 7px 12px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #334155;
+}
+table.data-table tr:hover td { background: #f8fafc; }
+.chart-grid { display: grid; gap: 1rem; }
+.chart-col { min-width: 0; }
+.graph-wrapper {
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 580px;
+  position: relative;
+  margin-top: 0.5rem;
+}
+h4 { font-size: 0.9rem; font-weight: 700; color: #334155; margin: 1rem 0 0.4rem; }
+.fact-list { margin: 0.25rem 0 1rem; }
+.list-category { font-size: 0.78rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; margin: 0.75rem 0 0.25rem; }
+.list-items { list-style: none; padding: 0; }
+.list-items li { padding: 4px 0 4px 12px; border-left: 2px solid #e2e8f0; font-size: 0.88rem; color: #334155; margin-bottom: 2px; }
+.debug-panel { margin-top: 2rem; border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden; }
+.debug-panel summary { padding: 12px 16px; cursor: pointer; font-size: 0.85rem; font-weight: 600; color: #64748b; background: #f8fafc; user-select: none; }
+.debug-panel summary:hover { background: #f1f5f9; }
+.debug-content { padding: 16px; }
+.debug-stats { display: flex; gap: 1.5rem; font-size: 0.85rem; color: #64748b; margin-bottom: 0.5rem; }
+.debug-stats strong { color: #334155; }
+</style>
+</head>
+<body>
+
+<nav>
+  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAe0AAACCCAYAAABrYZDAAAAACXBIWXMAABcRAAAXEQHKJvM/AAAgAElEQVR4nO2dXXMcRZrvsxXc7rE39sDgwYyEwWBbstWtASZiB0Yill3MBVi8zt5Z3Oxcom+A/AlGfIDdERe7sXt4k9mLsxEL4fZejWcZW5KtN9uyJZu3gQGksx8gT1Srqjsrn/+TlfXW3dV+foQDddaTr5WV/3yyqrJqWmtl8oc//PeIUmpE1TqBtVpN1YyA4Lf5//0f5p+12LH237XOcZDWg2Njo/+qBpgvv/pqql1fxbRdLd52djvDtrdsa/GAKHz7Lw8e3CYRBEEQhMpwX1TQS5f+UK/VavNKqUlUeK20suQgMyCt95RSs/dAt7lAQjwIJlaRSJt/p+ScUmquS/UUBEEQSqAl2r+/dKleU7WmUuqATxY5hAOxfPLk2AwIFwRBEATBYCj8c9FXsItGaz1vJnnt2urB1dW1g4N6kuzbEaXkEc+QHBcEQRCqydDvL10KvNzhHpa+Gf0RCLZSatsMuxfphrALgiAI1WOo9dBZDzl16qT5cFQ99PjHV1fX5P6rA07Y04YLgiAI1WHILGmRA7uZVsZ031ldXauT0AFBKxFRQRAEIR1DrHV/aMrCIN/fbmO0NTfBKWASJAiCIFQcXrQZwegy4/KaUjbkYTRBEITBw0u0OcoScyvdt1dX16aIUYXxabc8bSueuCAIwmCSS7RjmEu8xa+tL6ytrQ/+MnlKRJwFQRDuLdqi3ZUHo7JnMSzL5OmRJXJBEITBojhPOyUZJglvr62tD9YyeXx5ovMnI7DyMJogCMK9TSrRNkWm26IR5re4vr4hy+QG3HngwgVBEITqUqqnXYJwBBuvLJDQipDWUy6i/US6BUEQBgci2l16IjwPZ9bXN6YHsg/KErkgCILggIh2DA8RKZIUgrQwKMvkRTwAyLUVFy4IgiBUE7dopxWMbjyAvp9fpZfJI2SJXBAEQUjDUGnL4ZxUFPc+d7BMXrnvcBciwimWyMXbFgRBGBziHwzpc58MCND8+sZGT79SlgpS/H3SvvqFSBRvEiIIgiBUjdTL47187QswEMvkSYg3LQiCIKhubK6S5zUnTzGaXN/YmCWhfUwRy9soHIW5wgVBEIRqAUWbe7isXwZ/UL65yiyTM03ILZELgiAIQgQU7bQAEaVCVC7BMvliVc9q1qfI5YE0QRCEe4ve7D3O6EfOV6DG1zc2KvNREUc9QoMUtmnSFQRBECrLkD3Q+3jHffYwmsk7GxubdRLabzBNltT2qK1lhzRBEIR7h6542mU8jOZYkq/M0+RlLW+LeAuCIAwm7OYqXHgFGN/Y2Kzst7eTHkhD5wWJP7ITBEEQqo2fp53yQxZeD6NxwUz6KW36cpk8iyCnOS4IgiAMNr15EK07LG5uXu/7j4ogIRZvWxAEQUC0Rbvsh9GQqLjIeV87+N9w8P42idRP4Go54drC2TaCIAjCQDDInnYgXG9vbl6fIgd6CJoQoQlKXm/bFSYIgiBUE/LKFzvgV+++dsRCXy+Td8HbFuEWBEEYDCrjaXPC4zFRCJbJ50nEHoImMWV624IgCMJgEP80Zx/f185KmMbZzc3r07kTK4uCvW3Uzi57QRAEoRr0raddgqj3fJk8aVIExTbna2K+NoIgCEL/A58eZwf8Mu5rq3Q2CM88+/vb26DqsI3BOUB2dhiyEQRBEKpFTz3tkr6vTQjjXVRKHdzcvN43n/BEkxRUR2Tnsvc5JgiCIFSP+9BAX6vV2mJRUzVnpUwbMy6Hj00amPR2wk91NpVSS8eOPbHdL2eGKW94UCm7uaG9r50gCIIwUBDRLhxDYMqYBBiitVer1YLl7/njx471jUjHCNsiaWKE6o3sbHsYD4T1it29valarXaBy56UslY797/+4i8K2SDn//3P/6RZdigs34gfd3dnlFK/M8PaKyH2rQz7+D5/+b//6q92ScI5+frrb9qZRCs6cHUrftvpvYcPH57Jm/etW7edeat28+iLR48+lrjfwubm9abWepJ7DoS5nbSntR4ZGxvN1baXr1wJHIRJnzyffPLnpKvb/P7SpaD/vcOlEeRh1vOXf/3XhVzkFy40tQrPB+wH8b8v/u3zzyeel//7H//RahvXLbvgb+v3nlJq5OWXXsp1Xj748ENn3mb4r998M7EN//lf/qV1XlB7uOpj26K/0THr/xd/8w//MDWEOpgro9T2BYAqYxB41W+dOHH84PHjx2aPH+9TwfaFVM/voTTQLl7Hug3XmaMqxY4wdqUS5FlOvu23F2Jt4CfYAaVuEoREEwl2yNm7X3xReHlAnWEYR8Z+HjzrMktC+wxuDC4D1+24rGQ4N6WfF9jXu0TqHT8NCvG0e7REHszE5kdHT3h5RBsbm1NGnsHfzdZfNaUeP3q0SSKURUZvG7ZZimVyrgN0lagM4arA/p+grCSkzPPRtdzOKDL4egu2CkV/kYQWCJOvVca2zVxREwkoEiAodVogDaaO71y7trowNjZayoQ/7au0Qpt3Pvn3f194+aWXcp0X5pwXSh4RTgsU7bT3tdNQ0BJ58FDZzOjoCXgy19c3DrYGuVprUAn+DQfpxeql9TvR39dv3Aj+t1NTLSEP/i0ePfpY4UuRRgWp2JrtAoQd2tnJOpbJ+wpP8S6UhAvGfTQfP+7uTivzogVlSRBsZXrqhTcNqD3ysi27yTt378787OGHC3kjA9UbhRWZvhUeTEJyL/mDpsyXHFfulHtk5MmX+7uM9AHzZfb9KuL99Di3PMM1OGefFSO9c6OjJ6aQYK+trdfX1zeCQeTH8P7h2XBHNJ5O2Ya10mfDeNs3btxcuHlzq9TPe3Jtt3+QhKRaJnem3S8YS9HRknHZ5dbMv1Lz1Ho6p2AHHPjz998XPnihZXFSMEBon/u+P5owoKAigHXscPbq1WuFLvkn5Nf1dCrKmfOffNKX56VI0kyM9kXbQ4TT4LXMlu1e1VtjY6NkoFhdXRtZXV0LPOQrWreEV5F6gZHAUYbgfspZrfWVmze3Fm9ubRX/mhjI2qeMsMwVEW62NNZ95DIEnNwv7y7T6F65WSbPa6aU+9o+fQz1TaXV8J07d8n1mDd/LiwxHWYymyKtwr8KWPjS+IDez+ZEK/y7r7ahNuHqxoUXAetpp+1saU42a8uLbHD/ujE2NkqW4lZX14IL7Xb7yc0EYGPy+arWvUitbt/c2ur+4KR5G1JOatKXOMUzEjZQ37IxJwqovbPyw48/1pXWB0hVY9V252eUqfRlQo9lcbu8s3fu3M200yDpwwp3DmhXAEAcJldWrmZfIh+QpfE+ZPz8J5/kv3VhAM59prjdwM5vqIgLgqtEgUvkUydPji2ZAdeurQbe9VL0WgTJD5Clrkaa79zc2lq6ubVV3FaoQJRJGUGR4TK5Zdvvy+RO8VbU+y4kT0uYoUgXna/WZLAxvWsfwTb+Hv72u+8KvWUD8wdBxL5jc0BrndkTQvmjsHSJkpBU3vbKytXc1ziXHxfeT3CC1oP72SZz5z/5JPV56Zf25urMlY8LVzFPGwz4zoSwCbZl8BTZt06dOmkLdjBwBWHjJJJHOWGjOTwL43iQ3/bNrez3ukmdYVY0kFvCRLbEJqGduwUqh1YeAl4AKO+YZ1+eh99e0jbrCctDitc5f4Y9mQQUBSoT7F806OzOzp38kwmaLs4/TZKgTlx4GDZc1KtGzsl4hjTu8QfPCzsvRQP1pETg0+MI11PL7QIn2WiPjVZ07Mnqd0+dOhlbEr969Vo9fF0rmOGTp45RWKoyAqw0g6XO5s2tranHHn10iVrzRHmjMqIwo9DwaXIYJ95+bZt+E25SbmtMokdzZ0yCyuaHH34YiSaWacTatAP25d7XdkxeQVnMyeN82rK50iuSNKsZIbPLKyvz46dO+b9BQpLIByhT31G25w3Sn108f35h+swZ8hBylry6xLkCy9eqd0u0OSGDosDA2XLhCMt2efzUqdjMamXlaluwQXQ+X01VQMdf/9r/O2lS0TneEu6tW7emHj1yJJNwo3S161U7YMOmyQh3zwk6pNHmihFvVfwY6E3B+U6b6SVckMQO2Wutx//07bcjP3nggcLeKUaCncYmFPfJ7Z2d6ZHh4WzvkvPpZk4HtR+HZXsgfPgp06oGly8Xnirte+9+tklwXop5Na8AuPY3w2fOni384cb4g2g9WCKH7EeLnZjwPtNi5GHnySPnve2IoByLW7duZXsIJ8syObLhlsntn7T8vcFaiob3lbuEBv+KRIcPjqWpHyfYVhrFP5BGug8ob3KfyvWUL0gvNyjNpPEjrPvZ5ZWVQm6DwbZMmUa3ZrFc26B2KjL9FHHPfry4mGu1qYAy9BT26XFE1qfIuc6HbEPeHT91yvZgFxLfubby4/JF5UKeBCxfPGg4y+c+Xe/GksEalIHYeAp336HLf9XLbAr7X5l8/8MPB1v7YKcQa9hvwe8iPQ2QNulH0Ab0ueBBudvb2+nvO9Lk2de3nGT0sh2knoTcg95vLyjce60Sne9pM1dGYics+EIJN4qPnZTllZUZuA1kjny5+rpA+Witz2zdupXa84H5R/MGkE+SDRpETft+gC0KeBCsZ953QfkGG6qQQAZTrLnzahEskRf+FgPCmMzu0Ggw4tzt29t9+5Qvyof1irWaXF5eKWRVA+WbOg1mabxX10nR6XB/A/vJjxcX04+5TJp56MV5oJ62hwhz4Z0kMlckePBjfny88wDI8srKQTTj9X24pAvedsCCzzI5KjMJA6JMygBszN+cfT+gk4qjS3+aO8yGvvZFzkU+EgcVI889lDcKM44Vs0ROugp7PSyQ8Hh5ItsDqTwhmlQ2LxuUBZUz5L2E4yZk7PHNX6FrMUMavbh+4bhYPu+lyKFvN1wpGyragG51wnp9fKleH7cv+Fn7wTPUiVBYYpm4gjjsoLDvb56RelnQtUzO2RoBMG4/C3dsCdhHwEvIG4qzPVEoZpBy3nezvOvFcD99chwRHittS1MrMGLJnFwkXBNv3769nbyLIOjDqAyutkiDkc521N4eeQ8vLS17TULutaXxPPeDmbjBeTlPQrH98Ecff5x6mZwrA0jfCWfPhRfJUFZB5kQYFRqF+bC83PKyZ7my+Xrb8UASgk8esHOhtfYSbSKySLjBYKZQG3B2YGDtJ2zh7IqAI2EuyZsP9wiHbzgw966b0Re84KQCxz1DDHLgcR97N5xcEFuE1trrWQ+Qj3GQhHin50x3/7h7wI9Hn11aWvZa8kf5oms7LXCSxORXNiXnmcaDnv3wo4+Ku01UEbCnnSDCPiRe2AmHQ5yDn3dZHLaonMgeXjRxswNbt265HxBiRBbC2JLycnZ9LtzK8n7bYT3wwkuAeNm2WFvnKxDDRVe/QHG//uabYu63coJNizPnYxvdd7x16zZpBxeor7raJFXaVjonT441tdbkPj0TJ3HJH5UT1Sc1A+y8o8nHyy+9FJyXZWKM7Q/4ijw6P3kB5ekKWLQBaTxyrgJcuIPZpPvLSQ0HZ97UDMZFdi57r/uMQGSht83YKtQOnF0FhDvCuXxddt7gX07a/YBMSmjdlh+4//7dB+6/P1gahCIC+/A+uUXbV7CD8OHhn22b9x05WwPngArqYxYsNY524vJtC7HHd7jfvnJlKfWHg4rwspMzISH5knP3V2d4TiKv2dlvLM5++NFHpX6Nsd/Y31zFtamHA520gUnSd7Ed5z1cjhoncczoKM0MoDqjtJGdVe8zwd7kjz36qHsnJUdbkXw13lSFlIWzi3ZEczV2HxIOCjN//v77lrfWrc1h8g5Gf/7++3rrM6/MBArkZy4jBx732ygOjK+Lva/NibCV90L4yVsf2/Fg9enRI0cSl8qRaMI6ZwCk0xLfYLfFlZWrc+hVUhAnKOMCWkVBcYq83uAqH1PGfsWz3C3xPfPyywvnP/mkfV44eyPcazc+rgxc+hycPQr/3cLCFDrOTeZRWPhj+ze/+U1nRzSIISxESJBopKiw5wDcOQnavVOZRrubgeOJkwwQ17aDE5G4zVR0fzIJIrAJwu0LSRfVqxoMJ124KoOgu9LKi73awuVlhDeN4IVItNmLV8WE8sDXX38zdejQg02VkyTBjoRjZHi4ub2zczF4B91RJzPO/M2trUXXRLZQgWPa2zpueszBkv/vjMIQjDQnL1+5MjXRaHi1d+5+1oea3MWJQiDavyOhmMkPPvxw6vXXXst9HZTAhYKSPBetDMHlce4iQieMW/5JtE3Ga8kDpYnCIGDpHQ6WjuRAXn5LNYw3gcrB5UXOk3akC9LrNmWVwV5aT/pXMs5d0KzwnZ888EB7E6Hw7x1z1k3SoEmW9rlOS7DrRvgcU5ZO3E4/TvdmBei/pA0YkF1SWPhtg53EOJ3KwnvbiV42CPKqE+Nl502Xo1tL40n5BN62eV48ysUtqW8z9mx5yobLi62jZT8EjdqBOME0oA7smdZUzBYIbJo00fKDD8ge5W8Escs0JC0wQLEwtq6y9OPyme7Rfetu8O13340Ee4OjujF1Jp6B1rqpuHMHg/K/r42uMSP96M/2U7qPjIw0leZfUQMTz1nuk7ao/8K6F4AjXXYSAuJMXr58BbV5YXvBc2WJHabl6ltYMUoGTpAYxj/48EP0IHCx5yUk7eSGs8kC9LRdoIszXlJcaFcYA7zIEShN77zBZCDtjNY16LG2VrqoXX1F3nUeSBo9BN3HYcSsqpAJW0L9yG2U4LUqYq9p39Lhf8Htgy+/+ir/Htl2+nyZI+ZS2B5QmnrbpN+CZPL0DRQXhY2fOtX26tBxUk7s1cXEgVuBLJQuXzaobcok8La5J/wZQWRFnrGvzNhjlnOIOwA6KkuilwvS8vCMx4ktENg0afrYOdN15G/YkHt9bHoOBlW4FSPW9pJ2RWGfGkf85IEHiGgfevDBIGyv0zA0otk3wjyQ55fihFg/rfvYiEceGQlWBC5y/RCI1uyNGzftifiOZUP6RFI5fEnsU5oO+DDOftDw5ctXkFeX+c0aBLc03o3rg8uDC8+aNve3wRwTjhh+/4MP4HkpCq4sXDhHnvM55NGZnYkX2UnzgPLJ4m1zdiheYQ/QgAHLTJ/k7bAnZWJs+wVOrO3wbg1UWfP69rvvAkE64xtfaw13fgpZRN614vtEdtH2FGxUJ3uDEqZsURi6t817pzlBaaGwiPHxU9CrI9dTByLyMB82evVxtSciy/mdPnOGvbfNEO+TftciCetnnMvjXIdFlUzqqGjWiNLh0izd2wbpEhtF64bqxeG0ZcSVLQtjb5cJlblX+AiaS6iRkLvsi4rrg9Z6yneACO3I/eyOET1mTshAPuNffPll6neISR4pBDvgyJFHmu3tQLmyxX8ibxv2T64sWSBl4nEv+ccdmOE//vHyVPwwiAPq5EOazal66Xl3CVaIQbm66m2D/Ek497dXmsB+yBmhHYgT7xymYVyBfEFp+op8Un2QHbFx5U8PURsPiC0jxIMk3CqlR4vE1RUP2RZp78Dp7Zrp6s5+4xyxY2A5HKXrzD8JTiQ9+vwMse0U3A6n3ja1MQ7RsDR1Mf+OhTHp1uvjca+OsTMg3jaqR+x4hjqh+pQJlwcXXkRdXGm/Mj1NnvBHGGnERJvLx5VnGro9oRnK/CoCKGgWb9sB+2AI8oqLKD9KCg2SxCYe8SIx4G1peswgVohw9yFZxRIJbZZ/BQJFE4h18OfOoQcfZJ9qPXToweCd5vMJ3nVcUDV9CC5NWyrQX3wmqUeOPLKtlaZfZ2L6pVaaeEHEBtTVlwLO6SxMAzguwbvqn3/+x6mwXvR8gjiF0AeXddr6FFD/mRRpTL7/wQfR9bBEjvaYtBMH2+Y+8wDaoMR3tzCfjFPGCQaD4bQ7lWmwkQqK40rPThfaaH7TFQ5t7E5m2pL0NbO7GVcew15Zm41k3QSnV1gd9GKtViNLxRl5p6wq/enbb6fMPfI9RMjlZe/HUS1P/AyIG0+zc/jMF198efDw4YfYTUwQeQTbIHhY6KwdSNohfNr9+o0bM48fPbqgdOue9iSKg3ZIS0saLzuiXh9fvHJl6aJWdPMYhtnwVkfi+8BleNkorGi4PLjwMnhlerr50ccfBw6R73mZC9/mcF4PeSYfXFwr/DlikI32pJDfEY2UhO7KhcRdJ+06Zgmsg6XoBBGRYtJG5fIJc5UZiZ7GO6FFtk6RKVW4lTtOBWk+cP/9ZAkyC99+9x0R7YT+l4ZplJ4jfZ8d84JXv8iOUAmrWdPmd699ySnY6tEjR7Zvbm2da0+MQDwrj7mwnNtoECxy9QyFeTAX28kKeMxGumf++/PP6fMEIE5ZdGNHOXSe0nqxTBppCCaHF1AaIL3J//P++yMJNqXz1syMUw+ysP8gGqhL0uw0SwOkjLOUJu+sZYQ2KIgbkKktXSZj0mIHS6scJG/HkmlSnF6SZRm8KNDSeYFpT9tL4Gz6Wu0dejB529GfHjoUeAixrx1Zy+FWsjrTRitsH7TT5+rTYb71qhrT/6xMh69fv+H14F6ht+88E2s06k3uu85M2nhJPScwTWYycPG//otOHMoqQwenF+uZhve1+OorrwTnhd6K4WEn/EWdr16MZex72hBwGIl7gjfge/HEBjZYNhBk2/vOtMixWBVoWuh3aJtqX2J20LTKQfJmyuSK02s0uL/rFLgK8M2f/hTM5ocT69ER2jQz7wVltRvq80YfynxfW6lcgq1ae4uH7zpzfdVM2/7+PLwecgp2zn41a5cBpReWdyY2WQdxMkyavV6HM9LNLdr/+emn3mlw5ekCrBCD8k27VgOqOu50RDuh/KjTleltTzQa25GngQQKDTCojD75+1zkqAzGwYjlx48e5T1tZjAsQrhdccixHoPEuqoi7vwcq1amWEd4fUwmTHsx1s/JKSbv5R+4c/cuXx4H6HpSoM+5eOyxR+ftd50d1+SZSJi466BI0k4GWuOPVu/a4ag9wnfQc02YQJp0HAGTAYMiPk8JRRuOu/uwguibBqiHk9defTVol3OeaRywnyQvCi7PbizHk/e0EzNFQeV527nuz6WZcUMbMEgSk/hgl1xeZlDMK9zoWMJF3hdwYt1t8ebK4UF8UMBCbRx2vuoV4/BDD+1PXEFajr6Yfom8AME2aHvQpIy0D89w/R9Uzwt0zZO0/ZmLdqdDbQHu08NrznmN8mynjFOEaMffO0/ON9VDjwUyH9s1kCEsf9Af97ohpt0iLtoJdSlqJuzdaLojgmgywA02SXmhMPYYMCXCuf97zywvgisvurhRPmDQa8dD7dOOA+rQEzzKUZbHbafrysc336+/+ab1zff9SO76hedoObxXnaLg8T4FvOt4mVN+Y9tXsFGeiKNHH1tsbW9KEoTp4ieBE8rCgQSb4DhkMzHR2DX3GUfpGmHDPkLiyzO//GXc06ZZ25OBIjx90ndcdX7x9OmefArztVdf3XUtk1tlJt9KLwrUNt0AbmMKhTFmQG3RzDavtx1eNO+57FH5fOxgPFAXYoPqtv978fHHj2aeeeYVblfZzHg9R1v/egQSbiTgTgKBdIi1Nv4Lz4u3l23QHhi5fm0J74E7d+6m87oSRBLl60Kr+PamXJ+FfT6hLGlBZU+T5sREY857e1NNX/vL6GVHkL3dHekMNy9ezCzc4f1s+r0HPt9lYsDA6QnKw5fXX3tt3vyMbQIH7MN58u61p06Wx5OAnTUDKbztOXsGC+MSbaOdA8azk0G2TNqGzZ6909P1GzfQl4BYz0YxFzopixEXiYzzPnc/0iURL8mDJ56JAt6wkWdq0T58+KElrfQOuu5ifSl+2P8+XoJIgr6eyONHj3ae8k0j2Ez90uSNnAcjICvwoxUoLE35PGhy5Ubjm8v79CDNA14q5QOVZUG+HAfKyf7N2WelW0vwZBtTdJHBAhTkbScxMdF6IK2zRAXSdQkhsUkIYyHXf6wc80888Xjby75+/UYwa32bTcpRXm4wI2UF7W+XDR3rJWQQRfSDJ+6f75lOFOJV2xOEnYd++tOsuzPFtzWl3rWyjsPJRBJcP8rYh+bQWKIcfZypCwnjcNoyZfHh5z+fWDB3OiTlVvh6zHsdopWZhHQmLzSbqc/9f376abAy49wcB+TrvBWYBZCHk9dfe23R3oGyW+NdL8fVIdgBE0Bxypx1TjQac0nLMSitwpfJyc9WwPITTzxuz1IXQNYwD2SHLnq2PMxg5LzP3UO09V9PsCcGGSYKX3399bSHUJvk8Uzag7fDuzaPD2/v7KRaIkf9B4X7Er5FcY7Lh5x7+2ePl8UBc4prF5BsEfk/+8wzS0rTPbdR2gYLFy40vc/9p599dhBNChPYefH06dQT0IRJQFZSry5UYgXSAdzGtNUnrJ21NNhlLLKLBWXYJc0LrWZUrTXwHYDpMmXSCVuccnXjbK309+wl0s3N68HvSVIuqyyxfEGbaN+d0xQ+X3ae/dBRzTKYfcSktJ3biq8+3AUNkXVpPOLhw4ebd+7e3WvfmwNZglWuKd9XcooWbIP58H3s2D1FIjqMYGfNv8Bl8TZPPvnz5uef//G8ubqCQGVGYSlYiHaaQ+kAIQzaunnhQnPuueem4C26iE8/+2wq9Oa97vkaYc50u8kbr7/efP+DD94zVwpAm5C/s8KlweXzj//0T1PccRQW/oDHwpDd+xQQEx9QHJdoWIFEpJKYmGgsXb7S+vD8x1y6LhG0bVBZM9hOHzv2RPspz83N6wejDs2eXE6EQZldwq2sPcZN4baPkUGsD7DbhxPxXuD5vn/iQz9WHfPeAwy+sU2WMFXsoo7lN+MzuHoLdobTEjyYubl5PfCEfgvTBOmiAS0XYCUqx2RgluwHD5JC/SdHfRbMffNR2lbmKhTh31640JzVSgcTpyXjnfiR8PWwGfPBM1c5rbC9TK/ignTTHE8g6GNnM5/XlPFS2l8gIa7+yKRthF7kd0Tz7ewoCNihsLRMNBrBrPAtV7oon8RlZibMDAdt89bxY8fsXdsWfHvMoWgAAA2TSURBVF4xYMsDljyZAZmWyYpPjvU5uqRXveLN4/dfEl9+9VWdO8+kDvvn5OLhh9J9yIOAvrFt7jBHyz1+e3sbbpbBUaRgRzzxxOOxp3xBOWP1gflnqANKNy9PPflksFc62XDFlQ8KS8Ozzz4TiO27KJ2ksTn44FI4YQqE43b470IYNo7icBi2cy+ePp2rL3P5cuFJvPH66/BWDKIX42LR3n5btFFnTywMiIMKhexQkA8TjcZCJNzsIAPSR2XwEXzAXijYsdnm+sYGnYU7YIUbld0x4MH8+lS4iaA5KFq8UduhcnnmG/uGNImnlT0By7w0bhC7r232CdSXwuPerwCx11IBfSnaspScA5BkoYINkiqgT3XeZgFJkTIUmCdK28qckCVvh8hcfPH06cKXxgu6zuddm6hweXDhaeDyKcLzR2mQV76QePSTt606wt3gOnJs8GTgZvWojIZtcLFOHT9OBDsYxH/LDnzthOyfNG+u7EmDNEGDNHuNjpeZiF2JIGHOmnewNE7iUqE2yS3aP/vZw7v2e7vOvr9vkPgksfOBRXD9Z+HYsScWtdIXUdqw3K46+QLK7pr8+vL0U0/BjT1QGVFYlqyfffaZXfvZGVSveDYgLCkOCDPC97JuCVq0p4l44/XX4XkpmjJF3mNpvEV8eZwcBjHIYWqABBEODDSqNxONxlK4V+55ki4j3JzYeXp+QT4jx48fiz3cs77eEuz2JxRhPWMJ2T+pHSq7nSaqC8nTEBFyrFdoBQWu2yKelS++/HJ/EwqmHjbBO9aHDz9E95HOQPQKEDdxI56+Umdu394+mJQTbPPi+01nQGX6NcoLhSVScp9/+qmn5s2nutFkANYpR3F+9atnm/atwSQK9LJbzsqLp08X0o8RRZyrN994o3UrhhwI6cW4wrRnrvQSd0RDYeh4L54fmmg0dicajeDVm1d8d8dBgx2xiYcFneCV0dET0ydOHI/dy2kLNhnvaJqxdHMKNxokSLx4Bv0LI35QSEoAed7OfKNd0BxYr4IVsTQeZq0XPbxrG6e3DetaguiFz3+8h/pz0Xmh9FzXTEbiXynrwkU2+atftW4NwrHY4ZwolTx+o7CQSLCz7jHgxJFvVmZ96usKz1r+bqVHl8fBCYdByOvT9Diy4wqTleABtUajPhJ26Pb73KhDc3UEF3mQzlujoydGRkdPkIF3bW193vSwixBudkIBknINQlB4qFnXQWUlMCKeFyTMpI2UV77wPrH9zrYBeYAsKyPDw9umJ8F418o6DsvLwgg2qFd6rN0N0Rhhlz9DHgTXtZKVp59+ajFpm1E0mcpbhki4k/Y5R+VKAsQJ6lcvSrBB+s7wLPz6zTfJhis+eZQ9aUThPkvjCLojGkrQEdY+Bjojskd2RdFo1BcajXo9vN8dPOW57BI+u5yhUAfxGmNjo/XR0RPk1YbV1bWR1dW1YCB+m9TPkQfKD9k7hRsMylEc1K6kfH1AzzZXsScD3D8HX3zx5cHoPV3Peuw9fPgwmfDlZH+J3NEvVPzcOz1t0j6g3zjql4rjx49t269Ecn2UC3fClL/IOlhljG24Yh2jYcAuC1OTk8G4VA9v2ZXhZQcPdL11+oUX+n5JHBGdl15ThBduxorSuI9YhSfe591qjd5f9rRDYUVRr48vmctXS0vLU7VabURpNRKVzahj0Cm3T54cS/SIVlfXZsN7cwc09w43qD9Cu97Pdr2Xbdmbx9B5i8XtQ7q2uUoBaOW/PWjY7oXvzxze197fIheMA2BwOHDr1u3pI0ce4ScP3RW79oYrKD9UDs4O4RUXBGXhF794unnp0h/YjT2Kzs9kanIyGLemw93PZhPLkEAYZzmcVC2efuGFQj+72U0H4u9//evmv/7bv73nene7EEHtwdK4YndESxnWtmdEwxY33eVduur18VyD57VrqzO1Wm3OfjcX1W3/ABViBdo4JtyK38kN2jMTo2iQRXF7TbDJQ61We85VDEskipzlO/O18ufybXLpwPbVbDqZeWRkpHn79rZ3GRLqExg8lxA3gk8jBcePH9tdW1uvh5t8EBjR9RKQcDJw0PiN6uGdnlee+xuuLMTy6+IK43PPTQUOyky4kcpUePumHv47kCAEwfL3dtivmy/83d+V5VXHzouJVb4iJwrkvBTEQtJknMuPPReMPcNu7UKzORftuGOLcTDwE4EOf5rhsb/bBoocR+n/4hdPA3nrPVevXhup1WrT4ckfRuVPqt/x48diARsbmxrZxX6T5qZ5uuxj5YkfPHfkyCN9sWwkCEJ3+PSzz0bCt2wiodj+2+efL23JWyif+2IeMPCiUZiLtodoeIOsR9pnrKxcrYcz1elarTbJesYWvvXTzJ7pzuVv4DnH4mfwugVBuDd4/m/+ZrvgFSuhx5B72twydpqPiTiXds2wHj7SvLy8MqVqrYd06uHSzTgrjB7kFe5YnkiIU9znto+j8yEIgiBUj/uSBAoO+IxIkDR87XpD8Nm7RVXrfOEG1ZVMSBzlzyLcyv64RwrhJvYKxLG8bkEQBKG6DKGxHN1Iz/wKmKb2rnjdYnz81G5rWz5HUbjyusrPxSF2YPck8hu8zoNeMdKO7U/JcUEQBKGydD4Y4hjUoZcGXhNxpZHGpluMj59ajLZB5erKibCrHuwxhwCj9J1CDAJdYi8IgiBUnyFTFDK8hE+IpQG87TRpdYnA247tLtRN4TbzQ3GShBuVVcRbEARhMCHbmHJAYQFib+PyCF3xugW3TI7EEJU5Ux1AFNi+dh6MCLvamMtPEARBqB4d0QYCTAQKjf4oCAgPEUVk0yPCZfJ3SRnLFm4mP3QPmnjQJLn097oFQRCEahH3tMHAjgTJJ8x3mbxfCPer3eGE1K4Xqi9qFxTXyoDkV4bXjdISBEEQqsUQN8hzQEEBXjpJEwi3y77b1Ovju1rrGbuMCgghJ9xcmH2c2IAosJ1RGvQw9LoFQRCE6kPvaQMBRsJBACZV8+6CPcq11u+2fhBdzS/czjYFUVzL5bE0HF63iLcgCMLgsP9pTo+BHS13O4UE/Ebedh8yp7XeQeUsSrjZeEB8fZbLsyyZC4IgCNVjqC0gsXXrjiBwQCHIuEzeTwTL5MHe49zys0u4XfUm7cAJN8jTzJfLB92uQPEFQRCE6jJEBnzXwA/sSBg1ITb9LiDh97jPpRFupwgzOAUfeM1FeN2CIAhCdYnd00ZiSgQXLHdzAuL63RaWPqVeHw+eJl/2FW6lErxnhkTBh0EOsRfxFgRBGFjINqZZl8nR8mzq5fX+YyZWj5zCjcJ84oFsiNeN4hHxFgRBECoNfXqcjPwkBAoEAQg38b5R4n1EtEyuEoQbLZdz+Ao3sWM85qQlc1e4IAiCUC2GkKgiMSWC67NMTpOhNn1OuEx+UTmEG7WZq55JxxK9bhjsEHwuLUEQBKFSEE8bDu7Aa6YmvNC4BL8iBMvkeyqlcLvgxNVuI9YOBiUvmQuCIAjVhX16nAgQNSHxSBzFCz7Ks1+p18e3g/e3SdmB1wvbwFFnFGYey+p1i3gLgiAMHuRBNPNvJEA+4kvCGOGuEvX6+Hy0TE7qQqrL1xO1AQpDx1kBznG/WxAEQagOZHmcCEURT5MrRlQc6fQj4d7ke2b5ueVyJNwu8UVh3HHWFgQpS7wFQRCE6hJ/TxsJAVUAYksEiBNuJqwqNBr1ba31LFsnn+ZLWPJGYdxxaMt43YIgCEL1GSKCC0Qh7d7kbBwg+FWj0agvaK3Pk6qlfB/a5TWjMO44ayviLQiCMHCwD6JFQOFmxBelQ8KYuBVjRmu9x9bfUzDRBIk7jhDxFgRBuLeA97RZMYoFOo61TZhl4IoLd6NR39VKx3dLC2HFk7m37LNcjsI5G9YeBAmCIAjVAj49jn4rtOQNxJekkyDcVWWi0VjUan+ZnNSNCWPbMWG53BWO0vC1FwRBEKqF94NocJmcIc2DaRVnRiu9l6VuPl43ShOFcWmg34IgCEJ1IcvjTq8ZCTfwtuFvJPYgqEpMNBr739723cgEHELt4joHXvkAGxFuQRCE6kNE2ybra2DoNxdWZSYajaZS6l3vjUzAoTxeNwpPayMIgiBUA/LKlwKigzw24iEywh03Gdhl8mCL0x2VUMekp8tJmxYs3oIgCEK1YT1t1yCfJNzItmPCi1pVCZfJZ+w6ImICC8yQ1223F9d24lULgiAMNonvaUcQ8eWE22Hb/j2Ywt1aJo9+o3YxKcvrTjomCIIgVJchUwTQ4J/md6g2fnGBKFUe3Vkm9yGP1y3iLQiCcO/hvSMa91shAb5HhXtiorGrdHuZPCbeV64sjXAi6uN1o7ZKKd7b5IAgCIJQKbze0+bCzWNEVFI8UT5ITEw0mkqrhtKqHm8OPeW6LUC8bmqSR7yDd8kXSURBEAShUtxnDvy1Wq39fyQMUbht046rtKopI26gHTVqP+hMTDSWQBX3tz0N2ygSVrtdYuFh+5FzYbcziGulPzM2NrpLIgiCIAiVAnrawFMjcB408QRBUvfafdbLl68sKKUmo9/2O92oPbJ63VaaO1rr58bGRsXLFgRBGADu01o3odcMvGPOwyZxgSfI2Q46ly9fCTzsbaXVOds5NtsJtQfxuhX1vCPhBp538+TJsaZcpIIgCAOCUur/Axa/RUt9qeMaAAAAAElFTkSuQmCC" alt="Hannune"/>
+  <span class="nav-right">Tariff & Trade · Graph RAG</span>
+</nav>
+
+<div class="container">
+
+  <div class="meta">
+    <strong>ustr_section301_four_year_review_2024.pdf</strong> &nbsp;·&nbsp; Tariff & Trade &nbsp;·&nbsp; 20260420_161300
+  </div>
+
+  <div class="section-header">TL;DR</div><div class="tldr-box">The USTR's 2024 Four-Year Review proposes significant tariff increases on Chinese imports across 14 strategic sectors, headlined by a 100% tariff on electric vehicles, 50% on semiconductors and solar cells, and 25% on lithium-ion batteries, critical minerals, steel, and aluminum. The review reaffirms existing Section 301 duties — 25% on 1,333 List 1 subheadings and an additional 10% on 3,782 List 4A subheadings (reduced to 7.5% in 2019) — covering approximately $370 billion in annual Chinese imports. Against an estimated 0.13% GDP impact, the action targets China's technology transfer and intellectual property practices under Section 301 of the Trade Act.</div>
+
+  <div class="section-header">Key Metrics</div><div class="metrics-row"><div class="metric-card"><div class="metric-value">100%</div><div class="metric-label">Highest Tariff Rate</div></div><div class="metric-card"><div class="metric-value">14</div><div class="metric-label">Strategic Sectors</div></div><div class="metric-card"><div class="metric-value">1,333</div><div class="metric-label">List 1 Subheadings</div></div><div class="metric-card"><div class="metric-value">$200B</div><div class="metric-label">List 3 Trade Value</div></div><div class="metric-card"><div class="metric-value">China</div><div class="metric-label">Tariff Target</div></div><div class="metric-card"><div class="metric-value">$200B+</div><div class="metric-label">Duties Collected (by Jan 2024)</div></div></div>
+
+  <div class="section-header">Summary</div><div class="summary"><h3>Action Overview</h3>
+<p>The Section 301 investigation, initiated in August 2017, found that China employs unreasonable or discriminatory acts, policies, and practices related to technology transfer, intellectual property, and innovation. The United States Trade Representative imposed additional duties in four tranches (Lists 1-4A) between 2018 and 2019. The 2024 Four-Year Review concludes that the existing tariffs should remain and proposes substantial increases targeting strategic sectors where China seeks dominance. Since inception, U.S. Customs and Border Protection has assessed more than $200 billion in Section 301 duties.</p>
+<h3>Existing Tariff Structure</h3>
+<p>List 1 imposes a 25% additional duty on 818 tariff subheadings with approximately $34 billion in annual trade value, effective July 6, 2018. List 2 adds 25% duties on 279 subheadings covering $16 billion in trade. List 3, the largest tranche, covers 5,745 subheadings and $200 billion in trade, initially at 10% and raised to 25% on May 10, 2019. List 4A covers an additional $300 billion in trade, originally at 15% and reduced to 7.5% as part of the 2019 Phase One Agreement. These four lists together cover roughly two-thirds of U.S. imports from China.</p>
+<h3>Proposed 2024 Modifications: Strategic Sectors</h3>
+<p>The USTR proposes adding or increasing tariffs in 14 strategic sectors targeted by China's 'new three' growth strategy and U.S. domestic investment priorities. Headline increases include 100% on electric vehicles, 50% on semiconductors and solar cells (including solar wafers), and 25% on lithium-ion EV and non-EV batteries, battery parts, natural graphite, permanent magnets, critical minerals, and ship-to-shore cranes. Steel and aluminum products face new 25% duties. Medical supplies including surgical gloves, N95 facemasks, and syringes also face new or increased duties of 25-50%. These increases complement investments under the Inflation Reduction Act, CHIPS and Science Act, and Bipartisan Infrastructure Law.</p>
+<h3>Economic and Strategic Findings</h3>
+<p>Economic analysis in the review estimates aggregate U.S. GDP impact from tariffs at approximately 0.13%. China's share of U.S. imports has declined across all four lists — notably -12.0 percentage points on List 3 products since 2017 — with diversification toward USMCA partners (+6.4pp on List 3), ASEAN, and EU 27 countries. Flaaen and Pierce (Federal Reserve Board) found short-run impacts of manufacturing employment reductions and producer price increases. The review also proposes a targeted exclusion process for 8-digit tariff lines under HTSUS Chapters 84 and 85 (machinery used in domestic manufacturing), plus 19 temporary exclusions for solar manufacturing equipment.</p></div>
+
+  <div class="section-header">Data Tables</div><h4>Existing Section 301 Tariff Lists</h4><table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>List</th>
+      <th>Subheadings</th>
+      <th>Annual Trade Value</th>
+      <th>Current Rate</th>
+      <th>Effective Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>List 1</td>
+      <td>818</td>
+      <td>$34 billion</td>
+      <td>25%</td>
+      <td>July 6, 2018</td>
+    </tr>
+    <tr>
+      <td>List 2</td>
+      <td>279</td>
+      <td>$16 billion</td>
+      <td>25%</td>
+      <td>August 23, 2018</td>
+    </tr>
+    <tr>
+      <td>List 3</td>
+      <td>5,745</td>
+      <td>$200 billion</td>
+      <td>25% (raised from 10%)</td>
+      <td>September 24, 2018 / May 10, 2019</td>
+    </tr>
+    <tr>
+      <td>List 4A</td>
+      <td>3,782</td>
+      <td>$300 billion</td>
+      <td>7.5% (reduced from 15%)</td>
+      <td>September 1, 2019</td>
+    </tr>
+  </tbody>
+</table><h4>Proposed 2024 Tariff Increases by Strategic Sector</h4><table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Sector</th>
+      <th>Proposed Rate</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Electric Vehicles</td>
+      <td>100%</td>
+    </tr>
+    <tr>
+      <td>Semiconductors</td>
+      <td>50%</td>
+    </tr>
+    <tr>
+      <td>Solar Cells (whether or not in modules)</td>
+      <td>50%</td>
+    </tr>
+    <tr>
+      <td>Lithium-ion EV Batteries</td>
+      <td>25%</td>
+    </tr>
+    <tr>
+      <td>Lithium-ion Non-EV Batteries</td>
+      <td>25%</td>
+    </tr>
+    <tr>
+      <td>Battery Parts (non-lithium-ion)</td>
+      <td>25%</td>
+    </tr>
+    <tr>
+      <td>Natural Graphite</td>
+      <td>25%</td>
+    </tr>
+    <tr>
+      <td>Other Critical Minerals</td>
+      <td>25%</td>
+    </tr>
+    <tr>
+      <td>Permanent Magnets</td>
+      <td>25%</td>
+    </tr>
+    <tr>
+      <td>Steel and Aluminum Products</td>
+      <td>25%</td>
+    </tr>
+    <tr>
+      <td>Ship-to-Shore Cranes</td>
+      <td>25%</td>
+    </tr>
+    <tr>
+      <td>Medical Gloves</td>
+      <td>25%</td>
+    </tr>
+    <tr>
+      <td>Facemasks (including N95)</td>
+      <td>25%</td>
+    </tr>
+    <tr>
+      <td>Syringes and Needles</td>
+      <td>50%</td>
+    </tr>
+  </tbody>
+</table><h4>U.S. Import Market Share Change by Region (2017 vs 2023)</h4><table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Region</th>
+      <th>List 1</th>
+      <th>List 2</th>
+      <th>List 3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>China</td>
+      <td>-2.4pp</td>
+      <td>-7.1pp</td>
+      <td>-12.0pp</td>
+    </tr>
+    <tr>
+      <td>USMCA</td>
+      <td>+0.7pp</td>
+      <td>+1.5pp</td>
+      <td>+6.4pp</td>
+    </tr>
+    <tr>
+      <td>ASEAN</td>
+      <td>+0.4pp</td>
+      <td>+2.7pp</td>
+      <td>+3.6pp</td>
+    </tr>
+    <tr>
+      <td>EU 27</td>
+      <td>+1.5pp</td>
+      <td>-0.3pp</td>
+      <td>+1.4pp</td>
+    </tr>
+    <tr>
+      <td>India</td>
+      <td>+0.5pp</td>
+      <td>+1.9pp</td>
+      <td>+0.7pp</td>
+    </tr>
+  </tbody>
+</table>
+
+  <div class="section-header">Visual Breakdown</div><div class="chart-grid" style="grid-template-columns: 1fr;"><div class="chart-col"><div>                            <div id="0803c9a0-415c-4726-8405-53004505817b" class="plotly-graph-div" style="height:100%; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("0803c9a0-415c-4726-8405-53004505817b")) {                    Plotly.newPlot(                        "0803c9a0-415c-4726-8405-53004505817b",                        [{"hovertemplate":"=%{marker.color}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"","marker":{"color":{"dtype":"i1","bdata":"GRkZGTIyMmQ="},"coloraxis":"coloraxis","pattern":{"shape":""}},"name":"","orientation":"h","showlegend":false,"textposition":"auto","x":{"dtype":"i1","bdata":"GRkZGTIyMmQ="},"xaxis":"x","y":["Permanent Magnets","Steel & Aluminum","Critical Minerals","EV Batteries","Solar Cells","Syringes & Needles","Semiconductors","Electric Vehicles"],"yaxis":"y","type":"bar","width":0.35}],                        {"template":{"data":{"candlestick":[{"decreasing":{"line":{"color":"#000033"}},"increasing":{"line":{"color":"#000032"}},"type":"candlestick"}],"contourcarpet":[{"colorscale":[[0.0,"#000011"],[0.1111111111111111,"#000012"],[0.2222222222222222,"#000013"],[0.3333333333333333,"#000014"],[0.4444444444444444,"#000015"],[0.5555555555555556,"#000016"],[0.6666666666666666,"#000017"],[0.7777777777777778,"#000018"],[0.8888888888888888,"#000019"],[1.0,"#000020"]],"type":"contourcarpet"}],"contour":[{"colorscale":[[0.0,"#000011"],[0.1111111111111111,"#000012"],[0.2222222222222222,"#000013"],[0.3333333333333333,"#000014"],[0.4444444444444444,"#000015"],[0.5555555555555556,"#000016"],[0.6666666666666666,"#000017"],[0.7777777777777778,"#000018"],[0.8888888888888888,"#000019"],[1.0,"#000020"]],"type":"contour"}],"heatmap":[{"colorscale":[[0.0,"#000011"],[0.1111111111111111,"#000012"],[0.2222222222222222,"#000013"],[0.3333333333333333,"#000014"],[0.4444444444444444,"#000015"],[0.5555555555555556,"#000016"],[0.6666666666666666,"#000017"],[0.7777777777777778,"#000018"],[0.8888888888888888,"#000019"],[1.0,"#000020"]],"type":"heatmap"}],"histogram2d":[{"colorscale":[[0.0,"#000011"],[0.1111111111111111,"#000012"],[0.2222222222222222,"#000013"],[0.3333333333333333,"#000014"],[0.4444444444444444,"#000015"],[0.5555555555555556,"#000016"],[0.6666666666666666,"#000017"],[0.7777777777777778,"#000018"],[0.8888888888888888,"#000019"],[1.0,"#000020"]],"type":"histogram2d"}],"icicle":[{"textfont":{"color":"white"},"type":"icicle"}],"sankey":[{"textfont":{"color":"#000036"},"type":"sankey"}],"scatter":[{"marker":{"line":{"width":0}},"type":"scatter"}],"table":[{"cells":{"fill":{"color":"#000038"},"font":{"color":"#000037"},"line":{"color":"#000039"}},"header":{"fill":{"color":"#000040"},"font":{"color":"#000036"},"line":{"color":"#000039"}},"type":"table"}],"waterfall":[{"connector":{"line":{"color":"#000036","width":2}},"decreasing":{"marker":{"color":"#000033"}},"increasing":{"marker":{"color":"#000032"}},"totals":{"marker":{"color":"#000034"}},"type":"waterfall"}]},"layout":{"coloraxis":{"colorscale":[[0.0,"#000011"],[0.1111111111111111,"#000012"],[0.2222222222222222,"#000013"],[0.3333333333333333,"#000014"],[0.4444444444444444,"#000015"],[0.5555555555555556,"#000016"],[0.6666666666666666,"#000017"],[0.7777777777777778,"#000018"],[0.8888888888888888,"#000019"],[1.0,"#000020"]]},"colorscale":{"diverging":[[0.0,"#000021"],[0.1111111111111111,"#000022"],[0.2222222222222222,"#000023"],[0.3333333333333333,"#000024"],[0.4444444444444444,"#000025"],[0.5555555555555556,"#000026"],[0.6666666666666666,"#000027"],[0.7777777777777778,"#000028"],[0.8888888888888888,"#000029"],[1.0,"#000030"]],"sequential":[[0.0,"#000011"],[0.1111111111111111,"#000012"],[0.2222222222222222,"#000013"],[0.3333333333333333,"#000014"],[0.4444444444444444,"#000015"],[0.5555555555555556,"#000016"],[0.6666666666666666,"#000017"],[0.7777777777777778,"#000018"],[0.8888888888888888,"#000019"],[1.0,"#000020"]],"sequentialminus":[[0.0,"#000011"],[0.1111111111111111,"#000012"],[0.2222222222222222,"#000013"],[0.3333333333333333,"#000014"],[0.4444444444444444,"#000015"],[0.5555555555555556,"#000016"],[0.6666666666666666,"#000017"],[0.7777777777777778,"#000018"],[0.8888888888888888,"#000019"],[1.0,"#000020"]]},"colorway":["#000001","#000002","#000003","#000004","#000005","#000006","#000007","#000008","#000009","#000010"]}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":""},"gridcolor":"#e2e8f0","linecolor":"#cbd5e1","tickangle":0},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":""},"gridcolor":"#e2e8f0","linecolor":"#cbd5e1"},"coloraxis":{"colorbar":{"title":{"text":""}},"colorscale":[[0.0,"#7c3aed"],[1.0,"#2563eb"]],"showscale":false},"legend":{"tracegroupgap":0,"bgcolor":"rgba(0,0,0,0)","bordercolor":"#e2e8f0","borderwidth":1},"title":{"text":"Proposed Tariff Rates on Strategic Sectors","font":{"color":"#2563eb","size":14},"x":0},"barmode":"relative","font":{"color":"#334155"},"margin":{"l":40,"r":20,"t":50,"b":40},"paper_bgcolor":"#ffffff","plot_bgcolor":"#f8fafc","bargap":0.4},                        {"responsive": true}                    )                };            </script>        </div></div>
+<div class="chart-col"><div>                            <div id="2a20bf63-f8e5-4c22-bf3c-ff5a00741f2f" class="plotly-graph-div" style="height:100%; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("2a20bf63-f8e5-4c22-bf3c-ff5a00741f2f")) {                    Plotly.newPlot(                        "2a20bf63-f8e5-4c22-bf3c-ff5a00741f2f",                        [{"hovertemplate":"=%{marker.color}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"","marker":{"color":{"dtype":"f8","bdata":"AAAAAAAAKMBmZmZmZmYcwJqZmZmZmQnAMzMzMzMzA8A="},"coloraxis":"coloraxis","pattern":{"shape":""}},"name":"","orientation":"h","showlegend":false,"textposition":"auto","x":{"dtype":"f8","bdata":"AAAAAAAAKMBmZmZmZmYcwJqZmZmZmQnAMzMzMzMzA8A="},"xaxis":"x","y":["List 3","List 2","List 4A","List 1"],"yaxis":"y","type":"bar","width":0.35}],                        {"template":{"data":{"candlestick":[{"decreasing":{"line":{"color":"#000033"}},"increasing":{"line":{"color":"#000032"}},"type":"candlestick"}],"contourcarpet":[{"colorscale":[[0.0,"#000011"],[0.1111111111111111,"#000012"],[0.2222222222222222,"#000013"],[0.3333333333333333,"#000014"],[0.4444444444444444,"#000015"],[0.5555555555555556,"#000016"],[0.6666666666666666,"#000017"],[0.7777777777777778,"#000018"],[0.8888888888888888,"#000019"],[1.0,"#000020"]],"type":"contourcarpet"}],"contour":[{"colorscale":[[0.0,"#000011"],[0.1111111111111111,"#000012"],[0.2222222222222222,"#000013"],[0.3333333333333333,"#000014"],[0.4444444444444444,"#000015"],[0.5555555555555556,"#000016"],[0.6666666666666666,"#000017"],[0.7777777777777778,"#000018"],[0.8888888888888888,"#000019"],[1.0,"#000020"]],"type":"contour"}],"heatmap":[{"colorscale":[[0.0,"#000011"],[0.1111111111111111,"#000012"],[0.2222222222222222,"#000013"],[0.3333333333333333,"#000014"],[0.4444444444444444,"#000015"],[0.5555555555555556,"#000016"],[0.6666666666666666,"#000017"],[0.7777777777777778,"#000018"],[0.8888888888888888,"#000019"],[1.0,"#000020"]],"type":"heatmap"}],"histogram2d":[{"colorscale":[[0.0,"#000011"],[0.1111111111111111,"#000012"],[0.2222222222222222,"#000013"],[0.3333333333333333,"#000014"],[0.4444444444444444,"#000015"],[0.5555555555555556,"#000016"],[0.6666666666666666,"#000017"],[0.7777777777777778,"#000018"],[0.8888888888888888,"#000019"],[1.0,"#000020"]],"type":"histogram2d"}],"icicle":[{"textfont":{"color":"white"},"type":"icicle"}],"sankey":[{"textfont":{"color":"#000036"},"type":"sankey"}],"scatter":[{"marker":{"line":{"width":0}},"type":"scatter"}],"table":[{"cells":{"fill":{"color":"#000038"},"font":{"color":"#000037"},"line":{"color":"#000039"}},"header":{"fill":{"color":"#000040"},"font":{"color":"#000036"},"line":{"color":"#000039"}},"type":"table"}],"waterfall":[{"connector":{"line":{"color":"#000036","width":2}},"decreasing":{"marker":{"color":"#000033"}},"increasing":{"marker":{"color":"#000032"}},"totals":{"marker":{"color":"#000034"}},"type":"waterfall"}]},"layout":{"coloraxis":{"colorscale":[[0.0,"#000011"],[0.1111111111111111,"#000012"],[0.2222222222222222,"#000013"],[0.3333333333333333,"#000014"],[0.4444444444444444,"#000015"],[0.5555555555555556,"#000016"],[0.6666666666666666,"#000017"],[0.7777777777777778,"#000018"],[0.8888888888888888,"#000019"],[1.0,"#000020"]]},"colorscale":{"diverging":[[0.0,"#000021"],[0.1111111111111111,"#000022"],[0.2222222222222222,"#000023"],[0.3333333333333333,"#000024"],[0.4444444444444444,"#000025"],[0.5555555555555556,"#000026"],[0.6666666666666666,"#000027"],[0.7777777777777778,"#000028"],[0.8888888888888888,"#000029"],[1.0,"#000030"]],"sequential":[[0.0,"#000011"],[0.1111111111111111,"#000012"],[0.2222222222222222,"#000013"],[0.3333333333333333,"#000014"],[0.4444444444444444,"#000015"],[0.5555555555555556,"#000016"],[0.6666666666666666,"#000017"],[0.7777777777777778,"#000018"],[0.8888888888888888,"#000019"],[1.0,"#000020"]],"sequentialminus":[[0.0,"#000011"],[0.1111111111111111,"#000012"],[0.2222222222222222,"#000013"],[0.3333333333333333,"#000014"],[0.4444444444444444,"#000015"],[0.5555555555555556,"#000016"],[0.6666666666666666,"#000017"],[0.7777777777777778,"#000018"],[0.8888888888888888,"#000019"],[1.0,"#000020"]]},"colorway":["#000001","#000002","#000003","#000004","#000005","#000006","#000007","#000008","#000009","#000010"]}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":""},"gridcolor":"#e2e8f0","linecolor":"#cbd5e1","tickangle":0},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":""},"gridcolor":"#e2e8f0","linecolor":"#cbd5e1"},"coloraxis":{"colorbar":{"title":{"text":""}},"colorscale":[[0.0,"#7c3aed"],[1.0,"#2563eb"]],"showscale":false},"legend":{"tracegroupgap":0,"bgcolor":"rgba(0,0,0,0)","bordercolor":"#e2e8f0","borderwidth":1},"title":{"text":"China Share of U.S. Imports by List (2017 \u2192 2023)","font":{"color":"#2563eb","size":14},"x":0},"barmode":"relative","font":{"color":"#334155"},"margin":{"l":40,"r":20,"t":50,"b":40},"paper_bgcolor":"#ffffff","plot_bgcolor":"#f8fafc","bargap":0.4},                        {"responsive": true}                    )                };            </script>        </div></div></div>
+
+  <div class="section-header">Key Items</div><table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+    </tr>
+    <tr>
+      <th>Category</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>China's Acts Identified by USTR</th>
+      <td>Foreign ownership restrictions and JV requirements forcing technology transfer</td>
+    </tr>
+    <tr>
+      <th>China's Acts Identified by USTR</th>
+      <td>Technology licensing on non-market-based terms favoring Chinese recipients</td>
+    </tr>
+    <tr>
+      <th>China's Acts Identified by USTR</th>
+      <td>Systematic investment in and acquisition of U.S. companies to obtain IP</td>
+    </tr>
+    <tr>
+      <th>China's Acts Identified by USTR</th>
+      <td>Cybertheft and unauthorized intrusions into U.S. company networks</td>
+    </tr>
+    <tr>
+      <th>Key Strategic Sectors Targeted</th>
+      <td>Electric Vehicles (100%)</td>
+    </tr>
+    <tr>
+      <th>Key Strategic Sectors Targeted</th>
+      <td>Semiconductors (50%)</td>
+    </tr>
+    <tr>
+      <th>Key Strategic Sectors Targeted</th>
+      <td>Solar Cells (50%)</td>
+    </tr>
+    <tr>
+      <th>Key Strategic Sectors Targeted</th>
+      <td>Lithium-ion Batteries (25%)</td>
+    </tr>
+    <tr>
+      <th>Key Strategic Sectors Targeted</th>
+      <td>Critical Minerals &amp; Permanent Magnets (25%)</td>
+    </tr>
+    <tr>
+      <th>Key Strategic Sectors Targeted</th>
+      <td>Steel and Aluminum (25%)</td>
+    </tr>
+    <tr>
+      <th>Exclusion Process</th>
+      <td>Proposed machinery exclusion under HTSUS Chapters 84 and 85</td>
+    </tr>
+    <tr>
+      <th>Exclusion Process</th>
+      <td>19 temporary exclusions for solar manufacturing equipment</td>
+    </tr>
+    <tr>
+      <th>Exclusion Process</th>
+      <td>Reinstated prior exclusions for select categories</td>
+    </tr>
+    <tr>
+      <th>Exclusion Process</th>
+      <td>COVID-19 medical-care product exclusions</td>
+    </tr>
+    <tr>
+      <th>Domestic Investment Complements</th>
+      <td>Inflation Reduction Act (clean energy)</td>
+    </tr>
+    <tr>
+      <th>Domestic Investment Complements</th>
+      <td>CHIPS and Science Act (semiconductors)</td>
+    </tr>
+    <tr>
+      <th>Domestic Investment Complements</th>
+      <td>Bipartisan Infrastructure Law</td>
+    </tr>
+  </tbody>
+</table>
+
+  <div class="section-header">Knowledge Graph</div>
+  <p style="font-size:0.8rem;color:#94a3b8;margin-bottom:0.5rem">
+    42 nodes · 45 edges
+    &nbsp;— drag to reposition, scroll to zoom, click node for details
+  </p>
+  <div class="graph-wrapper">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  .graph-wrapper {
+    background: #f8fafc;
+    color: #1a1a2a;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    overflow: hidden;
+  }
+  #cy {
+    width: 100%;
+    height: 560px;
+    background: #f8fafc;
+  }
+  #legend {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255,255,255,0.95);
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 11px;
+    max-width: 180px;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  #legend h4 {
+    color: #2563eb;
+    margin-bottom: 6px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin: 3px 0;
+    color: #475569;
+  }
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  #popup {
+    position: absolute;
+    bottom: 14px;
+    left: 14px;
+    background: #ffffff;
+    border: 1px solid #2563eb;
+    border-radius: 10px;
+    padding: 12px 16px;
+    max-width: 320px;
+    display: none;
+    z-index: 20;
+    box-shadow: 0 4px 16px rgba(37,99,235,0.12);
+  }
+  #popup-close {
+    float: right;
+    cursor: pointer;
+    color: #94a3b8;
+    font-size: 14px;
+    line-height: 1;
+  }
+  #popup-title {
+    font-weight: 700;
+    color: #2563eb;
+    font-size: 13px;
+    margin-bottom: 2px;
+    padding-right: 20px;
+  }
+  #popup-type {
+    font-size: 10px;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+  #popup-snippet {
+    font-size: 12px;
+    color: #475569;
+    line-height: 1.5;
+    border-left: 2px solid #2563eb;
+    padding-left: 8px;
+    font-style: italic;
+  }
+  #controls {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    z-index: 10;
+  }
+  #node-count {
+    background: rgba(255,255,255,0.85);
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-size: 11px;
+    color: #94a3b8;
+  }
+  #toggle-btn {
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.03em;
+  }
+  #toggle-btn:hover { background: #1d4ed8; }
+</style>
+
+
+<div id="cy"></div>
+<div id="controls">
+  <div id="node-count">Loading graph...</div>
+  <button id="toggle-btn">Show Full Graph</button>
+</div>
+<div id="legend"><h4>Node Types</h4></div>
+<div id="popup">
+  <span id="popup-close" onclick="document.getElementById('popup').style.display='none'">✕</span>
+  <div id="popup-title"></div>
+  <div id="popup-type"></div>
+  <div id="popup-snippet"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.28.1/cytoscape.min.js"></script>
+<script>
+const allNodes = [{"data": {"id": "Section 301 of Trade Act 1974", "label": "Section 301 of Trade…", "full_label": "Section 301 of Trade Act 1974", "type": "LegalBasis", "color": "#6366f1", "snippet": "Statutory authority (19 U.S.C. 2411) under which the investigation and tariffs were initiated"}}, {"data": {"id": "Section 307 of Trade Act 1974", "label": "Section 307 of Trade…", "full_label": "Section 307 of Trade Act 1974", "type": "LegalBasis", "color": "#6366f1", "snippet": "Authority for subsequent modifications (Lists 3 and 4A)"}}, {"data": {"id": "List 1", "label": "List 1", "full_label": "List 1", "type": "TariffList", "color": "#ffd700", "snippet": "818 subheadings, $34B annual trade value, effective July 6, 2018"}}, {"data": {"id": "List 2", "label": "List 2", "full_label": "List 2", "type": "TariffList", "color": "#ffd700", "snippet": "279 subheadings, $16B annual trade value, effective August 23, 2018"}}, {"data": {"id": "List 3", "label": "List 3", "full_label": "List 3", "type": "TariffList", "color": "#ffd700", "snippet": "5,745 subheadings, $200B annual trade value"}}, {"data": {"id": "List 4A", "label": "List 4A", "full_label": "List 4A", "type": "TariffList", "color": "#ffd700", "snippet": "3,782 subheadings, $300B annual trade value"}}, {"data": {"id": "25% Duty (List 1)", "label": "25% Duty (List 1)", "full_label": "25% Duty (List 1)", "type": "TariffRate", "color": "#f59e0b", "snippet": "Original 25% rate on List 1"}}, {"data": {"id": "25% Duty (List 2)", "label": "25% Duty (List 2)", "full_label": "25% Duty (List 2)", "type": "TariffRate", "color": "#f59e0b", "snippet": "Original 25% rate on List 2"}}, {"data": {"id": "25% Duty (List 3)", "label": "25% Duty (List 3)", "full_label": "25% Duty (List 3)", "type": "TariffRate", "color": "#f59e0b", "snippet": "Increased from 10% on May 10, 2019"}}, {"data": {"id": "7.5% Duty (List 4A)", "label": "7.5% Duty (List 4A)", "full_label": "7.5% Duty (List 4A)", "type": "TariffRate", "color": "#f59e0b", "snippet": "Reduced from 15% as part of 2019 Phase One Agreement"}}, {"data": {"id": "100% Proposed EV Duty", "label": "100% Proposed EV Duty", "full_label": "100% Proposed EV Duty", "type": "TariffRate", "color": "#f59e0b", "snippet": "2024 proposed duty on electric vehicles"}}, {"data": {"id": "50% Proposed Semiconductor Duty", "label": "50% Proposed Semicon…", "full_label": "50% Proposed Semiconductor Duty", "type": "TariffRate", "color": "#f59e0b", "snippet": "2024 proposed duty on semiconductors"}}, {"data": {"id": "50% Proposed Solar Duty", "label": "50% Proposed Solar D…", "full_label": "50% Proposed Solar Duty", "type": "TariffRate", "color": "#f59e0b", "snippet": "2024 proposed duty on solar cells"}}, {"data": {"id": "25% Proposed Battery Duty", "label": "25% Proposed Battery…", "full_label": "25% Proposed Battery Duty", "type": "TariffRate", "color": "#f59e0b", "snippet": "2024 proposed duty on lithium-ion batteries"}}, {"data": {"id": "25% Proposed Steel & Aluminum Duty", "label": "25% Proposed Steel &…", "full_label": "25% Proposed Steel & Aluminum Duty", "type": "TariffRate", "color": "#f59e0b", "snippet": "2024 proposed duty on steel and aluminum products"}}, {"data": {"id": "Electric Vehicles", "label": "Electric Vehicles", "full_label": "Electric Vehicles", "type": "Product", "color": "#00d4aa", "snippet": "Targeted at 100% under 2024 proposal"}}, {"data": {"id": "Semiconductors", "label": "Semiconductors", "full_label": "Semiconductors", "type": "Product", "color": "#00d4aa", "snippet": "Targeted at 50%; China expanding foundational semiconductor capacity"}}, {"data": {"id": "Solar Cells", "label": "Solar Cells", "full_label": "Solar Cells", "type": "Product", "color": "#00d4aa", "snippet": "Targeted at 50%; China holds overwhelming global production share"}}, {"data": {"id": "Lithium-ion EV Batteries", "label": "Lithium-ion EV Batte…", "full_label": "Lithium-ion EV Batteries", "type": "Product", "color": "#00d4aa", "snippet": "Targeted at 25% under 2024 proposal"}}, {"data": {"id": "Lithium-ion Non-EV Batteries", "label": "Lithium-ion Non-EV B…", "full_label": "Lithium-ion Non-EV Batteries", "type": "Product", "color": "#00d4aa", "snippet": "Targeted at 25% under 2024 proposal"}}, {"data": {"id": "Natural Graphite", "label": "Natural Graphite", "full_label": "Natural Graphite", "type": "Product", "color": "#00d4aa", "snippet": "Critical mineral for EV batteries"}}, {"data": {"id": "Permanent Magnets", "label": "Permanent Magnets", "full_label": "Permanent Magnets", "type": "Product", "color": "#00d4aa", "snippet": "Critical for EV motors, proposed 25%"}}, {"data": {"id": "Steel Products", "label": "Steel Products", "full_label": "Steel Products", "type": "Product", "color": "#00d4aa", "snippet": "Proposed 25%; China's overproduction distorts global markets"}}, {"data": {"id": "Aluminum Products", "label": "Aluminum Products", "full_label": "Aluminum Products", "type": "Product", "color": "#00d4aa", "snippet": "Proposed 25%; paired with steel in 2024 additions"}}, {"data": {"id": "Ship-to-Shore Cranes", "label": "Ship-to-Shore Cranes", "full_label": "Ship-to-Shore Cranes", "type": "Product", "color": "#00d4aa", "snippet": "Proposed 25%; cybersecurity concerns cited"}}, {"data": {"id": "Medical Gloves", "label": "Medical Gloves", "full_label": "Medical Gloves", "type": "Product", "color": "#00d4aa", "snippet": "Proposed 25%; pandemic preparedness"}}, {"data": {"id": "Facemasks (N95)", "label": "Facemasks (N95)", "full_label": "Facemasks (N95)", "type": "Product", "color": "#00d4aa", "snippet": "Proposed 25%; pandemic preparedness"}}, {"data": {"id": "Syringes and Needles", "label": "Syringes and Needles", "full_label": "Syringes and Needles", "type": "Product", "color": "#00d4aa", "snippet": "Proposed 50%; public health emergency readiness"}}, {"data": {"id": "Critical Minerals", "label": "Critical Minerals", "full_label": "Critical Minerals", "type": "Product", "color": "#00d4aa", "snippet": "Targeted across multiple lines"}}, {"data": {"id": "Clean Energy Sector", "label": "Clean Energy Sector", "full_label": "Clean Energy Sector", "type": "StrategicSector", "color": "#ff6b6b", "snippet": "China's 'new three' exports: solar, batteries, EVs"}}, {"data": {"id": "Semiconductor Sector", "label": "Semiconductor Sector", "full_label": "Semiconductor Sector", "type": "StrategicSector", "color": "#ff6b6b", "snippet": "CHIPS and Science Act investment complement"}}, {"data": {"id": "Critical Medical Supplies", "label": "Critical Medical Sup…", "full_label": "Critical Medical Supplies", "type": "StrategicSector", "color": "#ff6b6b", "snippet": "Pandemic preparedness infrastructure"}}, {"data": {"id": "Heavy Industry", "label": "Heavy Industry", "full_label": "Heavy Industry", "type": "StrategicSector", "color": "#ff6b6b", "snippet": "Steel, aluminum, shipbuilding"}}, {"data": {"id": "China", "label": "China", "full_label": "China", "type": "Country", "color": "#a78bfa", "snippet": "Target of all Section 301 actions"}}, {"data": {"id": "United States", "label": "United States", "full_label": "United States", "type": "Country", "color": "#a78bfa", "snippet": "Imposing country"}}, {"data": {"id": "USMCA Partners", "label": "USMCA Partners", "full_label": "USMCA Partners", "type": "Country", "color": "#a78bfa", "snippet": "Primary import share beneficiary (Canada, Mexico)"}}, {"data": {"id": "ASEAN", "label": "ASEAN", "full_label": "ASEAN", "type": "Country", "color": "#a78bfa", "snippet": "Major beneficiary of import diversification"}}, {"data": {"id": "EU 27", "label": "EU 27", "full_label": "EU 27", "type": "Country", "color": "#a78bfa", "snippet": "Modest import share gains"}}, {"data": {"id": "India", "label": "India", "full_label": "India", "type": "Country", "color": "#a78bfa", "snippet": "Growing import share"}}, {"data": {"id": "Machinery Exclusion Process", "label": "Machinery Exclusion …", "full_label": "Machinery Exclusion Process", "type": "Exemption", "color": "#10b981", "snippet": "Proposed for 8-digit tariff lines in HTSUS Chapters 84 and 85"}}, {"data": {"id": "Solar Manufacturing Equipment Exclusions", "label": "Solar Manufacturing …", "full_label": "Solar Manufacturing Equipment Exclusions", "type": "Exemption", "color": "#10b981", "snippet": "19 temporary exclusions proposed in Appendix L"}}, {"data": {"id": "COVID-19 Medical Exclusions", "label": "COVID-19 Medical Exc…", "full_label": "COVID-19 Medical Exclusions", "type": "Exemption", "color": "#10b981", "snippet": "Reinstated for select medical-care products"}}];
+const allEdges = [{"data": {"id": "Section 301 of Trade Act 1974|AUTHORIZES|List 1", "source": "Section 301 of Trade Act 1974", "target": "List 1", "label": "AUTHORIZES"}}, {"data": {"id": "Section 301 of Trade Act 1974|AUTHORIZES|List 2", "source": "Section 301 of Trade Act 1974", "target": "List 2", "label": "AUTHORIZES"}}, {"data": {"id": "Section 307 of Trade Act 1974|AUTHORIZES|List 3", "source": "Section 307 of Trade Act 1974", "target": "List 3", "label": "AUTHORIZES"}}, {"data": {"id": "Section 307 of Trade Act 1974|AUTHORIZES|List 4A", "source": "Section 307 of Trade Act 1974", "target": "List 4A", "label": "AUTHORIZES"}}, {"data": {"id": "25% Duty (List 1)|APPLIES_TO|List 1", "source": "25% Duty (List 1)", "target": "List 1", "label": "APPLIES TO"}}, {"data": {"id": "25% Duty (List 2)|APPLIES_TO|List 2", "source": "25% Duty (List 2)", "target": "List 2", "label": "APPLIES TO"}}, {"data": {"id": "25% Duty (List 3)|APPLIES_TO|List 3", "source": "25% Duty (List 3)", "target": "List 3", "label": "APPLIES TO"}}, {"data": {"id": "7.5% Duty (List 4A)|APPLIES_TO|List 4A", "source": "7.5% Duty (List 4A)", "target": "List 4A", "label": "APPLIES TO"}}, {"data": {"id": "List 1|TARGETS|China", "source": "List 1", "target": "China", "label": "TARGETS"}}, {"data": {"id": "List 2|TARGETS|China", "source": "List 2", "target": "China", "label": "TARGETS"}}, {"data": {"id": "List 3|TARGETS|China", "source": "List 3", "target": "China", "label": "TARGETS"}}, {"data": {"id": "List 4A|TARGETS|China", "source": "List 4A", "target": "China", "label": "TARGETS"}}, {"data": {"id": "100% Proposed EV Duty|APPLIES_TO|Electric Vehicles", "source": "100% Proposed EV Duty", "target": "Electric Vehicles", "label": "APPLIES TO"}}, {"data": {"id": "50% Proposed Semiconductor Duty|APPLIES_TO|Semiconductors", "source": "50% Proposed Semiconductor Duty", "target": "Semiconductors", "label": "APPLIES TO"}}, {"data": {"id": "50% Proposed Solar Duty|APPLIES_TO|Solar Cells", "source": "50% Proposed Solar Duty", "target": "Solar Cells", "label": "APPLIES TO"}}, {"data": {"id": "25% Proposed Battery Duty|APPLIES_TO|Lithium-ion EV Batteries", "source": "25% Proposed Battery Duty", "target": "Lithium-ion EV Batteries", "label": "APPLIES TO"}}, {"data": {"id": "25% Proposed Battery Duty|APPLIES_TO|Lithium-ion Non-EV Batteries", "source": "25% Proposed Battery Duty", "target": "Lithium-ion Non-EV Batteries", "label": "APPLIES TO"}}, {"data": {"id": "25% Proposed Steel & Aluminum Duty|APPLIES_TO|Steel Products", "source": "25% Proposed Steel & Aluminum Duty", "target": "Steel Products", "label": "APPLIES TO"}}, {"data": {"id": "25% Proposed Steel & Aluminum Duty|APPLIES_TO|Aluminum Products", "source": "25% Proposed Steel & Aluminum Duty", "target": "Aluminum Products", "label": "APPLIES TO"}}, {"data": {"id": "Electric Vehicles|BELONGS_TO|Clean Energy Sector", "source": "Electric Vehicles", "target": "Clean Energy Sector", "label": "BELONGS TO"}}, {"data": {"id": "Solar Cells|BELONGS_TO|Clean Energy Sector", "source": "Solar Cells", "target": "Clean Energy Sector", "label": "BELONGS TO"}}, {"data": {"id": "Lithium-ion EV Batteries|BELONGS_TO|Clean Energy Sector", "source": "Lithium-ion EV Batteries", "target": "Clean Energy Sector", "label": "BELONGS TO"}}, {"data": {"id": "Lithium-ion Non-EV Batteries|BELONGS_TO|Clean Energy Sector", "source": "Lithium-ion Non-EV Batteries", "target": "Clean Energy Sector", "label": "BELONGS TO"}}, {"data": {"id": "Natural Graphite|BELONGS_TO|Clean Energy Sector", "source": "Natural Graphite", "target": "Clean Energy Sector", "label": "BELONGS TO"}}, {"data": {"id": "Permanent Magnets|BELONGS_TO|Clean Energy Sector", "source": "Permanent Magnets", "target": "Clean Energy Sector", "label": "BELONGS TO"}}, {"data": {"id": "Critical Minerals|BELONGS_TO|Clean Energy Sector", "source": "Critical Minerals", "target": "Clean Energy Sector", "label": "BELONGS TO"}}, {"data": {"id": "Semiconductors|BELONGS_TO|Semiconductor Sector", "source": "Semiconductors", "target": "Semiconductor Sector", "label": "BELONGS TO"}}, {"data": {"id": "Steel Products|BELONGS_TO|Heavy Industry", "source": "Steel Products", "target": "Heavy Industry", "label": "BELONGS TO"}}, {"data": {"id": "Aluminum Products|BELONGS_TO|Heavy Industry", "source": "Aluminum Products", "target": "Heavy Industry", "label": "BELONGS TO"}}, {"data": {"id": "Ship-to-Shore Cranes|BELONGS_TO|Heavy Industry", "source": "Ship-to-Shore Cranes", "target": "Heavy Industry", "label": "BELONGS TO"}}, {"data": {"id": "Medical Gloves|BELONGS_TO|Critical Medical Supplies", "source": "Medical Gloves", "target": "Critical Medical Supplies", "label": "BELONGS TO"}}, {"data": {"id": "Facemasks (N95)|BELONGS_TO|Critical Medical Supplies", "source": "Facemasks (N95)", "target": "Critical Medical Supplies", "label": "BELONGS TO"}}, {"data": {"id": "Syringes and Needles|BELONGS_TO|Critical Medical Supplies", "source": "Syringes and Needles", "target": "Critical Medical Supplies", "label": "BELONGS TO"}}, {"data": {"id": "Clean Energy Sector|TARGETS|China", "source": "Clean Energy Sector", "target": "China", "label": "TARGETS"}}, {"data": {"id": "Semiconductor Sector|TARGETS|China", "source": "Semiconductor Sector", "target": "China", "label": "TARGETS"}}, {"data": {"id": "Heavy Industry|TARGETS|China", "source": "Heavy Industry", "target": "China", "label": "TARGETS"}}, {"data": {"id": "Critical Medical Supplies|TARGETS|China", "source": "Critical Medical Supplies", "target": "China", "label": "TARGETS"}}, {"data": {"id": "United States|IMPOSES_DUTIES_ON|China", "source": "United States", "target": "China", "label": "IMPOSES DUTIES ON"}}, {"data": {"id": "List 3|DIVERSIFIED_TO|USMCA Partners", "source": "List 3", "target": "USMCA Partners", "label": "DIVERSIFIED TO"}}, {"data": {"id": "List 3|DIVERSIFIED_TO|ASEAN", "source": "List 3", "target": "ASEAN", "label": "DIVERSIFIED TO"}}, {"data": {"id": "List 3|DIVERSIFIED_TO|EU 27", "source": "List 3", "target": "EU 27", "label": "DIVERSIFIED TO"}}, {"data": {"id": "List 2|DIVERSIFIED_TO|ASEAN", "source": "List 2", "target": "ASEAN", "label": "DIVERSIFIED TO"}}, {"data": {"id": "Machinery Exclusion Process|EXEMPTS_FROM|List 1", "source": "Machinery Exclusion Process", "target": "List 1", "label": "EXEMPTS FROM"}}, {"data": {"id": "Solar Manufacturing Equipment Exclusions|EXEMPTS_FROM|50% Proposed Solar Duty", "source": "Solar Manufacturing Equipment Exclusions", "target": "50% Proposed Solar Duty", "label": "EXEMPTS FROM"}}, {"data": {"id": "COVID-19 Medical Exclusions|EXEMPTS_FROM|List 3", "source": "COVID-19 Medical Exclusions", "target": "List 3", "label": "EXEMPTS FROM"}}];
+
+// --- Edge validation ---
+const nodeIdSet = new Set(allNodes.map(n => n.data.id));
+const validEdges = allEdges.filter(e =>
+  e.data && nodeIdSet.has(e.data.source) && nodeIdSet.has(e.data.target)
+);
+
+// --- Compute degree (undirected) ---
+const degree = {};
+allNodes.forEach(n => { degree[n.data.id] = 0; });
+validEdges.forEach(e => {
+  degree[e.data.source] = (degree[e.data.source] || 0) + 1;
+  degree[e.data.target] = (degree[e.data.target] || 0) + 1;
+});
+
+// --- Find root node (highest degree) ---
+let rootId = allNodes.length > 0 ? allNodes[0].data.id : null;
+let maxDeg = 0;
+Object.entries(degree).forEach(([id, deg]) => {
+  if (deg > maxDeg) { maxDeg = deg; rootId = id; }
+});
+
+// --- Build undirected adjacency list ---
+const adj = {};
+allNodes.forEach(n => { adj[n.data.id] = new Set(); });
+validEdges.forEach(e => {
+  if (adj[e.data.source]) adj[e.data.source].add(e.data.target);
+  if (adj[e.data.target]) adj[e.data.target].add(e.data.source);
+});
+
+// --- BFS up to depth 2, max 5 children per node (sorted by degree desc) ---
+function bfs(startId, maxDepth, maxChildren) {
+  const visited = new Map();
+  if (!startId) return visited;
+  const queue = [[startId, 0]];
+  visited.set(startId, 0);
+  while (queue.length > 0) {
+    const [id, depth] = queue.shift();
+    if (depth < maxDepth) {
+      const neighbors = Array.from(adj[id] || [])
+        .filter(n => !visited.has(n))
+        .sort((a, b) => (degree[b] || 0) - (degree[a] || 0))
+        .slice(0, maxChildren);
+      for (const neighbor of neighbors) {
+        visited.set(neighbor, depth + 1);
+        queue.push([neighbor, depth + 1]);
+      }
+    }
+  }
+  return visited;
+}
+
+// --- Compute focused subgraph ---
+const depthMap = bfs(rootId, 2, 5);
+const subNodeIds = new Set(depthMap.keys());
+
+const focusedNodes = allNodes.filter(n => subNodeIds.has(n.data.id));
+const focusedEdges = validEdges.filter(e =>
+  subNodeIds.has(e.data.source) && subNodeIds.has(e.data.target)
+);
+
+// --- Build legend ---
+const typeColors = {};
+allNodes.forEach(n => {
+  if (n.data && n.data.type && n.data.color) typeColors[n.data.type] = n.data.color;
+});
+const legend = document.getElementById('legend');
+Object.entries(typeColors).forEach(([type, color]) => {
+  const item = document.createElement('div');
+  item.className = 'legend-item';
+  item.innerHTML = `<div class="legend-dot" style="background:${color}"></div><span>${type}</span>`;
+  legend.appendChild(item);
+});
+
+// --- Cytoscape init ---
+const cy = cytoscape({
+  container: document.getElementById('cy'),
+  elements: [],
+  style: [
+    {
+      selector: 'node',
+      style: {
+        'background-color': 'data(color)',
+        'label': 'data(label)',
+        'color': '#ffffff',
+        'font-size': '11px',
+        'font-weight': '600',
+        'text-valign': 'center',
+        'text-halign': 'center',
+        'width': 52,
+        'height': 52,
+        'text-wrap': 'wrap',
+        'text-max-width': '48px',
+        'border-width': 2,
+        'border-color': 'rgba(255,255,255,0.6)',
+        'opacity': 0,
+      }
+    },
+    {
+      // Root node — larger, gold ring
+      selector: 'node.root',
+      style: {
+        'width': 80,
+        'height': 80,
+        'font-size': '12px',
+        'font-weight': '800',
+        'text-max-width': '72px',
+        'border-width': 4,
+        'border-color': '#f59e0b',
+      }
+    },
+    {
+      // Depth-1 nodes — slightly larger
+      selector: 'node.depth1',
+      style: {
+        'width': 62,
+        'height': 62,
+        'font-size': '11px',
+        'border-width': 2,
+        'border-color': 'rgba(255,255,255,0.8)',
+      }
+    },
+    {
+      selector: 'node.visible',
+      style: {
+        'opacity': 1,
+        'transition-property': 'opacity',
+        'transition-duration': '0.3s',
+      }
+    },
+    {
+      selector: 'node:selected',
+      style: {
+        'border-width': 3,
+        'border-color': '#1e3a5f',
+      }
+    },
+    {
+      selector: 'edge',
+      style: {
+        'width': 1.5,
+        'line-color': '#cbd5e1',
+        'target-arrow-color': '#cbd5e1',
+        'target-arrow-shape': 'triangle',
+        'curve-style': 'bezier',
+        'label': 'data(label)',
+        'font-size': '8px',
+        'color': '#94a3b8',
+        'text-background-color': '#f8fafc',
+        'text-background-opacity': 0.9,
+        'text-background-padding': '2px',
+        'opacity': 0,
+      }
+    },
+    {
+      selector: 'edge.visible',
+      style: {
+        'opacity': 0.9,
+        'transition-property': 'opacity',
+        'transition-duration': '0.4s',
+      }
+    },
+  ],
+  layout: { name: 'preset' },
+  userZoomingEnabled: true,
+  userPanningEnabled: true,
+  boxSelectionEnabled: false,
+  minZoom: 0.2,
+  maxZoom: 3,
+});
+
+// --- Render helpers ---
+function renderGraph(nodes, edges, label) {
+  cy.elements().remove();
+  document.getElementById('node-count').textContent = 'Loading...';
+  document.getElementById('popup').style.display = 'none';
+
+  let i = 0;
+  function addNext() {
+    if (i < nodes.length) {
+      const n = nodes[i];
+      try {
+        cy.add(n);
+        const el = cy.getElementById(n.data.id);
+        // Apply depth classes
+        const depth = depthMap.get(n.data.id);
+        if (depth === 0) el.addClass('root');
+        else if (depth === 1) el.addClass('depth1');
+        setTimeout(() => el.addClass('visible'), 20);
+      } catch (_) {}
+      i++;
+      document.getElementById('node-count').textContent =
+        `${i} / ${nodes.length} nodes`;
+      setTimeout(addNext, 60);
+    } else {
+      edges.forEach(e => { try { cy.add(e); } catch (_) {} });
+      setTimeout(() => {
+        cy.edges().addClass('visible');
+        runLayout();
+      }, 80);
+      document.getElementById('node-count').textContent =
+        `${nodes.length} nodes · ${edges.length} edges  |  ${label}`;
+    }
+  }
+  setTimeout(addNext, 200);
+}
+
+function runLayout() {
+  cy.layout({
+    name: 'cose',
+    animate: true,
+    animationDuration: 1200,
+    animationEasing: 'ease-in-out-cubic',
+    fit: true,
+    padding: 50,
+    nodeRepulsion: () => 10000,
+    edgeElasticity: () => 32,
+    idealEdgeLength: () => 90,
+    gravity: 0.25,
+    numIter: 1000,
+    coolingFactor: 0.99,
+  }).run();
+}
+
+// --- Toggle state ---
+let showingFull = false;
+document.getElementById('toggle-btn').addEventListener('click', () => {
+  showingFull = !showingFull;
+  document.getElementById('toggle-btn').textContent =
+    showingFull ? 'Show Focused (Depth 2)' : 'Show Full Graph';
+  if (showingFull) {
+    renderGraph(allNodes, validEdges, 'Full graph');
+  } else {
+    renderGraph(focusedNodes, focusedEdges, `Root: ${rootId} · depth ≤ 2`);
+  }
+});
+
+// --- Initial render ---
+if (allNodes.length === 0) {
+  document.getElementById('node-count').textContent = 'No graph data. Run analysis first.';
+} else {
+  renderGraph(focusedNodes, focusedEdges, `Root: ${rootId} · depth ≤ 2`);
+}
+
+// --- Click handler ---
+cy.on('tap', 'node', function(evt) {
+  const node = evt.target;
+  document.getElementById('popup-title').textContent = node.data('full_label') || node.data('label');
+  document.getElementById('popup-type').textContent = node.data('type') || '';
+  const snippet = node.data('snippet');
+  document.getElementById('popup-snippet').textContent =
+    snippet ? `"${snippet}"` : '(no source snippet)';
+  document.getElementById('popup').style.display = 'block';
+});
+
+cy.on('tap', function(evt) {
+  if (evt.target === cy) document.getElementById('popup').style.display = 'none';
+});
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.28.1/cytoscape.min.js"></script>
+<script>
+const allNodes = [{"data": {"id": "Section 301 of Trade Act 1974", "label": "Section 301 of Trade…", "full_label": "Section 301 of Trade Act 1974", "type": "LegalBasis", "color": "#6366f1", "snippet": "Statutory authority (19 U.S.C. 2411) under which the investigation and tariffs were initiated"}}, {"data": {"id": "Section 307 of Trade Act 1974", "label": "Section 307 of Trade…", "full_label": "Section 307 of Trade Act 1974", "type": "LegalBasis", "color": "#6366f1", "snippet": "Authority for subsequent modifications (Lists 3 and 4A)"}}, {"data": {"id": "List 1", "label": "List 1", "full_label": "List 1", "type": "TariffList", "color": "#ffd700", "snippet": "818 subheadings, $34B annual trade value, effective July 6, 2018"}}, {"data": {"id": "List 2", "label": "List 2", "full_label": "List 2", "type": "TariffList", "color": "#ffd700", "snippet": "279 subheadings, $16B annual trade value, effective August 23, 2018"}}, {"data": {"id": "List 3", "label": "List 3", "full_label": "List 3", "type": "TariffList", "color": "#ffd700", "snippet": "5,745 subheadings, $200B annual trade value"}}, {"data": {"id": "List 4A", "label": "List 4A", "full_label": "List 4A", "type": "TariffList", "color": "#ffd700", "snippet": "3,782 subheadings, $300B annual trade value"}}, {"data": {"id": "25% Duty (List 1)", "label": "25% Duty (List 1)", "full_label": "25% Duty (List 1)", "type": "TariffRate", "color": "#f59e0b", "snippet": "Original 25% rate on List 1"}}, {"data": {"id": "25% Duty (List 2)", "label": "25% Duty (List 2)", "full_label": "25% Duty (List 2)", "type": "TariffRate", "color": "#f59e0b", "snippet": "Original 25% rate on List 2"}}, {"data": {"id": "25% Duty (List 3)", "label": "25% Duty (List 3)", "full_label": "25% Duty (List 3)", "type": "TariffRate", "color": "#f59e0b", "snippet": "Increased from 10% on May 10, 2019"}}, {"data": {"id": "7.5% Duty (List 4A)", "label": "7.5% Duty (List 4A)", "full_label": "7.5% Duty (List 4A)", "type": "TariffRate", "color": "#f59e0b", "snippet": "Reduced from 15% as part of 2019 Phase One Agreement"}}, {"data": {"id": "100% Proposed EV Duty", "label": "100% Proposed EV Duty", "full_label": "100% Proposed EV Duty", "type": "TariffRate", "color": "#f59e0b", "snippet": "2024 proposed duty on electric vehicles"}}, {"data": {"id": "50% Proposed Semiconductor Duty", "label": "50% Proposed Semicon…", "full_label": "50% Proposed Semiconductor Duty", "type": "TariffRate", "color": "#f59e0b", "snippet": "2024 proposed duty on semiconductors"}}, {"data": {"id": "50% Proposed Solar Duty", "label": "50% Proposed Solar D…", "full_label": "50% Proposed Solar Duty", "type": "TariffRate", "color": "#f59e0b", "snippet": "2024 proposed duty on solar cells"}}, {"data": {"id": "25% Proposed Battery Duty", "label": "25% Proposed Battery…", "full_label": "25% Proposed Battery Duty", "type": "TariffRate", "color": "#f59e0b", "snippet": "2024 proposed duty on lithium-ion batteries"}}, {"data": {"id": "25% Proposed Steel & Aluminum Duty", "label": "25% Proposed Steel &…", "full_label": "25% Proposed Steel & Aluminum Duty", "type": "TariffRate", "color": "#f59e0b", "snippet": "2024 proposed duty on steel and aluminum products"}}, {"data": {"id": "Electric Vehicles", "label": "Electric Vehicles", "full_label": "Electric Vehicles", "type": "Product", "color": "#00d4aa", "snippet": "Targeted at 100% under 2024 proposal"}}, {"data": {"id": "Semiconductors", "label": "Semiconductors", "full_label": "Semiconductors", "type": "Product", "color": "#00d4aa", "snippet": "Targeted at 50%; China expanding foundational semiconductor capacity"}}, {"data": {"id": "Solar Cells", "label": "Solar Cells", "full_label": "Solar Cells", "type": "Product", "color": "#00d4aa", "snippet": "Targeted at 50%; China holds overwhelming global production share"}}, {"data": {"id": "Lithium-ion EV Batteries", "label": "Lithium-ion EV Batte…", "full_label": "Lithium-ion EV Batteries", "type": "Product", "color": "#00d4aa", "snippet": "Targeted at 25% under 2024 proposal"}}, {"data": {"id": "Lithium-ion Non-EV Batteries", "label": "Lithium-ion Non-EV B…", "full_label": "Lithium-ion Non-EV Batteries", "type": "Product", "color": "#00d4aa", "snippet": "Targeted at 25% under 2024 proposal"}}, {"data": {"id": "Natural Graphite", "label": "Natural Graphite", "full_label": "Natural Graphite", "type": "Product", "color": "#00d4aa", "snippet": "Critical mineral for EV batteries"}}, {"data": {"id": "Permanent Magnets", "label": "Permanent Magnets", "full_label": "Permanent Magnets", "type": "Product", "color": "#00d4aa", "snippet": "Critical for EV motors, proposed 25%"}}, {"data": {"id": "Steel Products", "label": "Steel Products", "full_label": "Steel Products", "type": "Product", "color": "#00d4aa", "snippet": "Proposed 25%; China's overproduction distorts global markets"}}, {"data": {"id": "Aluminum Products", "label": "Aluminum Products", "full_label": "Aluminum Products", "type": "Product", "color": "#00d4aa", "snippet": "Proposed 25%; paired with steel in 2024 additions"}}, {"data": {"id": "Ship-to-Shore Cranes", "label": "Ship-to-Shore Cranes", "full_label": "Ship-to-Shore Cranes", "type": "Product", "color": "#00d4aa", "snippet": "Proposed 25%; cybersecurity concerns cited"}}, {"data": {"id": "Medical Gloves", "label": "Medical Gloves", "full_label": "Medical Gloves", "type": "Product", "color": "#00d4aa", "snippet": "Proposed 25%; pandemic preparedness"}}, {"data": {"id": "Facemasks (N95)", "label": "Facemasks (N95)", "full_label": "Facemasks (N95)", "type": "Product", "color": "#00d4aa", "snippet": "Proposed 25%; pandemic preparedness"}}, {"data": {"id": "Syringes and Needles", "label": "Syringes and Needles", "full_label": "Syringes and Needles", "type": "Product", "color": "#00d4aa", "snippet": "Proposed 50%; public health emergency readiness"}}, {"data": {"id": "Critical Minerals", "label": "Critical Minerals", "full_label": "Critical Minerals", "type": "Product", "color": "#00d4aa", "snippet": "Targeted across multiple lines"}}, {"data": {"id": "Clean Energy Sector", "label": "Clean Energy Sector", "full_label": "Clean Energy Sector", "type": "StrategicSector", "color": "#ff6b6b", "snippet": "China's 'new three' exports: solar, batteries, EVs"}}, {"data": {"id": "Semiconductor Sector", "label": "Semiconductor Sector", "full_label": "Semiconductor Sector", "type": "StrategicSector", "color": "#ff6b6b", "snippet": "CHIPS and Science Act investment complement"}}, {"data": {"id": "Critical Medical Supplies", "label": "Critical Medical Sup…", "full_label": "Critical Medical Supplies", "type": "StrategicSector", "color": "#ff6b6b", "snippet": "Pandemic preparedness infrastructure"}}, {"data": {"id": "Heavy Industry", "label": "Heavy Industry", "full_label": "Heavy Industry", "type": "StrategicSector", "color": "#ff6b6b", "snippet": "Steel, aluminum, shipbuilding"}}, {"data": {"id": "China", "label": "China", "full_label": "China", "type": "Country", "color": "#a78bfa", "snippet": "Target of all Section 301 actions"}}, {"data": {"id": "United States", "label": "United States", "full_label": "United States", "type": "Country", "color": "#a78bfa", "snippet": "Imposing country"}}, {"data": {"id": "USMCA Partners", "label": "USMCA Partners", "full_label": "USMCA Partners", "type": "Country", "color": "#a78bfa", "snippet": "Primary import share beneficiary (Canada, Mexico)"}}, {"data": {"id": "ASEAN", "label": "ASEAN", "full_label": "ASEAN", "type": "Country", "color": "#a78bfa", "snippet": "Major beneficiary of import diversification"}}, {"data": {"id": "EU 27", "label": "EU 27", "full_label": "EU 27", "type": "Country", "color": "#a78bfa", "snippet": "Modest import share gains"}}, {"data": {"id": "India", "label": "India", "full_label": "India", "type": "Country", "color": "#a78bfa", "snippet": "Growing import share"}}, {"data": {"id": "Machinery Exclusion Process", "label": "Machinery Exclusion …", "full_label": "Machinery Exclusion Process", "type": "Exemption", "color": "#10b981", "snippet": "Proposed for 8-digit tariff lines in HTSUS Chapters 84 and 85"}}, {"data": {"id": "Solar Manufacturing Equipment Exclusions", "label": "Solar Manufacturing …", "full_label": "Solar Manufacturing Equipment Exclusions", "type": "Exemption", "color": "#10b981", "snippet": "19 temporary exclusions proposed in Appendix L"}}, {"data": {"id": "COVID-19 Medical Exclusions", "label": "COVID-19 Medical Exc…", "full_label": "COVID-19 Medical Exclusions", "type": "Exemption", "color": "#10b981", "snippet": "Reinstated for select medical-care products"}}];
+const allEdges = [{"data": {"id": "Section 301 of Trade Act 1974|AUTHORIZES|List 1", "source": "Section 301 of Trade Act 1974", "target": "List 1", "label": "AUTHORIZES"}}, {"data": {"id": "Section 301 of Trade Act 1974|AUTHORIZES|List 2", "source": "Section 301 of Trade Act 1974", "target": "List 2", "label": "AUTHORIZES"}}, {"data": {"id": "Section 307 of Trade Act 1974|AUTHORIZES|List 3", "source": "Section 307 of Trade Act 1974", "target": "List 3", "label": "AUTHORIZES"}}, {"data": {"id": "Section 307 of Trade Act 1974|AUTHORIZES|List 4A", "source": "Section 307 of Trade Act 1974", "target": "List 4A", "label": "AUTHORIZES"}}, {"data": {"id": "25% Duty (List 1)|APPLIES_TO|List 1", "source": "25% Duty (List 1)", "target": "List 1", "label": "APPLIES TO"}}, {"data": {"id": "25% Duty (List 2)|APPLIES_TO|List 2", "source": "25% Duty (List 2)", "target": "List 2", "label": "APPLIES TO"}}, {"data": {"id": "25% Duty (List 3)|APPLIES_TO|List 3", "source": "25% Duty (List 3)", "target": "List 3", "label": "APPLIES TO"}}, {"data": {"id": "7.5% Duty (List 4A)|APPLIES_TO|List 4A", "source": "7.5% Duty (List 4A)", "target": "List 4A", "label": "APPLIES TO"}}, {"data": {"id": "List 1|TARGETS|China", "source": "List 1", "target": "China", "label": "TARGETS"}}, {"data": {"id": "List 2|TARGETS|China", "source": "List 2", "target": "China", "label": "TARGETS"}}, {"data": {"id": "List 3|TARGETS|China", "source": "List 3", "target": "China", "label": "TARGETS"}}, {"data": {"id": "List 4A|TARGETS|China", "source": "List 4A", "target": "China", "label": "TARGETS"}}, {"data": {"id": "100% Proposed EV Duty|APPLIES_TO|Electric Vehicles", "source": "100% Proposed EV Duty", "target": "Electric Vehicles", "label": "APPLIES TO"}}, {"data": {"id": "50% Proposed Semiconductor Duty|APPLIES_TO|Semiconductors", "source": "50% Proposed Semiconductor Duty", "target": "Semiconductors", "label": "APPLIES TO"}}, {"data": {"id": "50% Proposed Solar Duty|APPLIES_TO|Solar Cells", "source": "50% Proposed Solar Duty", "target": "Solar Cells", "label": "APPLIES TO"}}, {"data": {"id": "25% Proposed Battery Duty|APPLIES_TO|Lithium-ion EV Batteries", "source": "25% Proposed Battery Duty", "target": "Lithium-ion EV Batteries", "label": "APPLIES TO"}}, {"data": {"id": "25% Proposed Battery Duty|APPLIES_TO|Lithium-ion Non-EV Batteries", "source": "25% Proposed Battery Duty", "target": "Lithium-ion Non-EV Batteries", "label": "APPLIES TO"}}, {"data": {"id": "25% Proposed Steel & Aluminum Duty|APPLIES_TO|Steel Products", "source": "25% Proposed Steel & Aluminum Duty", "target": "Steel Products", "label": "APPLIES TO"}}, {"data": {"id": "25% Proposed Steel & Aluminum Duty|APPLIES_TO|Aluminum Products", "source": "25% Proposed Steel & Aluminum Duty", "target": "Aluminum Products", "label": "APPLIES TO"}}, {"data": {"id": "Electric Vehicles|BELONGS_TO|Clean Energy Sector", "source": "Electric Vehicles", "target": "Clean Energy Sector", "label": "BELONGS TO"}}, {"data": {"id": "Solar Cells|BELONGS_TO|Clean Energy Sector", "source": "Solar Cells", "target": "Clean Energy Sector", "label": "BELONGS TO"}}, {"data": {"id": "Lithium-ion EV Batteries|BELONGS_TO|Clean Energy Sector", "source": "Lithium-ion EV Batteries", "target": "Clean Energy Sector", "label": "BELONGS TO"}}, {"data": {"id": "Lithium-ion Non-EV Batteries|BELONGS_TO|Clean Energy Sector", "source": "Lithium-ion Non-EV Batteries", "target": "Clean Energy Sector", "label": "BELONGS TO"}}, {"data": {"id": "Natural Graphite|BELONGS_TO|Clean Energy Sector", "source": "Natural Graphite", "target": "Clean Energy Sector", "label": "BELONGS TO"}}, {"data": {"id": "Permanent Magnets|BELONGS_TO|Clean Energy Sector", "source": "Permanent Magnets", "target": "Clean Energy Sector", "label": "BELONGS TO"}}, {"data": {"id": "Critical Minerals|BELONGS_TO|Clean Energy Sector", "source": "Critical Minerals", "target": "Clean Energy Sector", "label": "BELONGS TO"}}, {"data": {"id": "Semiconductors|BELONGS_TO|Semiconductor Sector", "source": "Semiconductors", "target": "Semiconductor Sector", "label": "BELONGS TO"}}, {"data": {"id": "Steel Products|BELONGS_TO|Heavy Industry", "source": "Steel Products", "target": "Heavy Industry", "label": "BELONGS TO"}}, {"data": {"id": "Aluminum Products|BELONGS_TO|Heavy Industry", "source": "Aluminum Products", "target": "Heavy Industry", "label": "BELONGS TO"}}, {"data": {"id": "Ship-to-Shore Cranes|BELONGS_TO|Heavy Industry", "source": "Ship-to-Shore Cranes", "target": "Heavy Industry", "label": "BELONGS TO"}}, {"data": {"id": "Medical Gloves|BELONGS_TO|Critical Medical Supplies", "source": "Medical Gloves", "target": "Critical Medical Supplies", "label": "BELONGS TO"}}, {"data": {"id": "Facemasks (N95)|BELONGS_TO|Critical Medical Supplies", "source": "Facemasks (N95)", "target": "Critical Medical Supplies", "label": "BELONGS TO"}}, {"data": {"id": "Syringes and Needles|BELONGS_TO|Critical Medical Supplies", "source": "Syringes and Needles", "target": "Critical Medical Supplies", "label": "BELONGS TO"}}, {"data": {"id": "Clean Energy Sector|TARGETS|China", "source": "Clean Energy Sector", "target": "China", "label": "TARGETS"}}, {"data": {"id": "Semiconductor Sector|TARGETS|China", "source": "Semiconductor Sector", "target": "China", "label": "TARGETS"}}, {"data": {"id": "Heavy Industry|TARGETS|China", "source": "Heavy Industry", "target": "China", "label": "TARGETS"}}, {"data": {"id": "Critical Medical Supplies|TARGETS|China", "source": "Critical Medical Supplies", "target": "China", "label": "TARGETS"}}, {"data": {"id": "United States|IMPOSES_DUTIES_ON|China", "source": "United States", "target": "China", "label": "IMPOSES DUTIES ON"}}, {"data": {"id": "List 3|DIVERSIFIED_TO|USMCA Partners", "source": "List 3", "target": "USMCA Partners", "label": "DIVERSIFIED TO"}}, {"data": {"id": "List 3|DIVERSIFIED_TO|ASEAN", "source": "List 3", "target": "ASEAN", "label": "DIVERSIFIED TO"}}, {"data": {"id": "List 3|DIVERSIFIED_TO|EU 27", "source": "List 3", "target": "EU 27", "label": "DIVERSIFIED TO"}}, {"data": {"id": "List 2|DIVERSIFIED_TO|ASEAN", "source": "List 2", "target": "ASEAN", "label": "DIVERSIFIED TO"}}, {"data": {"id": "Machinery Exclusion Process|EXEMPTS_FROM|List 1", "source": "Machinery Exclusion Process", "target": "List 1", "label": "EXEMPTS FROM"}}, {"data": {"id": "Solar Manufacturing Equipment Exclusions|EXEMPTS_FROM|50% Proposed Solar Duty", "source": "Solar Manufacturing Equipment Exclusions", "target": "50% Proposed Solar Duty", "label": "EXEMPTS FROM"}}, {"data": {"id": "COVID-19 Medical Exclusions|EXEMPTS_FROM|List 3", "source": "COVID-19 Medical Exclusions", "target": "List 3", "label": "EXEMPTS FROM"}}];
+
+// --- Edge validation ---
+const nodeIdSet = new Set(allNodes.map(n => n.data.id));
+const validEdges = allEdges.filter(e =>
+  e.data && nodeIdSet.has(e.data.source) && nodeIdSet.has(e.data.target)
+);
+
+// --- Compute degree (undirected) ---
+const degree = {};
+allNodes.forEach(n => { degree[n.data.id] = 0; });
+validEdges.forEach(e => {
+  degree[e.data.source] = (degree[e.data.source] || 0) + 1;
+  degree[e.data.target] = (degree[e.data.target] || 0) + 1;
+});
+
+// --- Find root node (highest degree) ---
+let rootId = allNodes.length > 0 ? allNodes[0].data.id : null;
+let maxDeg = 0;
+Object.entries(degree).forEach(([id, deg]) => {
+  if (deg > maxDeg) { maxDeg = deg; rootId = id; }
+});
+
+// --- Build undirected adjacency list ---
+const adj = {};
+allNodes.forEach(n => { adj[n.data.id] = new Set(); });
+validEdges.forEach(e => {
+  if (adj[e.data.source]) adj[e.data.source].add(e.data.target);
+  if (adj[e.data.target]) adj[e.data.target].add(e.data.source);
+});
+
+// --- BFS up to depth 2, max 5 children per node (sorted by degree desc) ---
+function bfs(startId, maxDepth, maxChildren) {
+  const visited = new Map();
+  if (!startId) return visited;
+  const queue = [[startId, 0]];
+  visited.set(startId, 0);
+  while (queue.length > 0) {
+    const [id, depth] = queue.shift();
+    if (depth < maxDepth) {
+      const neighbors = Array.from(adj[id] || [])
+        .filter(n => !visited.has(n))
+        .sort((a, b) => (degree[b] || 0) - (degree[a] || 0))
+        .slice(0, maxChildren);
+      for (const neighbor of neighbors) {
+        visited.set(neighbor, depth + 1);
+        queue.push([neighbor, depth + 1]);
+      }
+    }
+  }
+  return visited;
+}
+
+// --- Compute focused subgraph ---
+const depthMap = bfs(rootId, 2, 5);
+const subNodeIds = new Set(depthMap.keys());
+
+const focusedNodes = allNodes.filter(n => subNodeIds.has(n.data.id));
+const focusedEdges = validEdges.filter(e =>
+  subNodeIds.has(e.data.source) && subNodeIds.has(e.data.target)
+);
+
+// --- Build legend ---
+const typeColors = {};
+allNodes.forEach(n => {
+  if (n.data && n.data.type && n.data.color) typeColors[n.data.type] = n.data.color;
+});
+const legend = document.getElementById('legend');
+Object.entries(typeColors).forEach(([type, color]) => {
+  const item = document.createElement('div');
+  item.className = 'legend-item';
+  item.innerHTML = `<div class="legend-dot" style="background:${color}"></div><span>${type}</span>`;
+  legend.appendChild(item);
+});
+
+// --- Cytoscape init ---
+const cy = cytoscape({
+  container: document.getElementById('cy'),
+  elements: [],
+  style: [
+    {
+      selector: 'node',
+      style: {
+        'background-color': 'data(color)',
+        'label': 'data(label)',
+        'color': '#ffffff',
+        'font-size': '11px',
+        'font-weight': '600',
+        'text-valign': 'center',
+        'text-halign': 'center',
+        'width': 52,
+        'height': 52,
+        'text-wrap': 'wrap',
+        'text-max-width': '48px',
+        'border-width': 2,
+        'border-color': 'rgba(255,255,255,0.6)',
+        'opacity': 0,
+      }
+    },
+    {
+      // Root node — larger, gold ring
+      selector: 'node.root',
+      style: {
+        'width': 80,
+        'height': 80,
+        'font-size': '12px',
+        'font-weight': '800',
+        'text-max-width': '72px',
+        'border-width': 4,
+        'border-color': '#f59e0b',
+      }
+    },
+    {
+      // Depth-1 nodes — slightly larger
+      selector: 'node.depth1',
+      style: {
+        'width': 62,
+        'height': 62,
+        'font-size': '11px',
+        'border-width': 2,
+        'border-color': 'rgba(255,255,255,0.8)',
+      }
+    },
+    {
+      selector: 'node.visible',
+      style: {
+        'opacity': 1,
+        'transition-property': 'opacity',
+        'transition-duration': '0.3s',
+      }
+    },
+    {
+      selector: 'node:selected',
+      style: {
+        'border-width': 3,
+        'border-color': '#1e3a5f',
+      }
+    },
+    {
+      selector: 'edge',
+      style: {
+        'width': 1.5,
+        'line-color': '#cbd5e1',
+        'target-arrow-color': '#cbd5e1',
+        'target-arrow-shape': 'triangle',
+        'curve-style': 'bezier',
+        'label': 'data(label)',
+        'font-size': '8px',
+        'color': '#94a3b8',
+        'text-background-color': '#f8fafc',
+        'text-background-opacity': 0.9,
+        'text-background-padding': '2px',
+        'opacity': 0,
+      }
+    },
+    {
+      selector: 'edge.visible',
+      style: {
+        'opacity': 0.9,
+        'transition-property': 'opacity',
+        'transition-duration': '0.4s',
+      }
+    },
+  ],
+  layout: { name: 'preset' },
+  userZoomingEnabled: true,
+  userPanningEnabled: true,
+  boxSelectionEnabled: false,
+  minZoom: 0.2,
+  maxZoom: 3,
+});
+
+// --- Render helpers ---
+function renderGraph(nodes, edges, label) {
+  cy.elements().remove();
+  document.getElementById('node-count').textContent = 'Loading...';
+  document.getElementById('popup').style.display = 'none';
+
+  let i = 0;
+  function addNext() {
+    if (i < nodes.length) {
+      const n = nodes[i];
+      try {
+        cy.add(n);
+        const el = cy.getElementById(n.data.id);
+        // Apply depth classes
+        const depth = depthMap.get(n.data.id);
+        if (depth === 0) el.addClass('root');
+        else if (depth === 1) el.addClass('depth1');
+        setTimeout(() => el.addClass('visible'), 20);
+      } catch (_) {}
+      i++;
+      document.getElementById('node-count').textContent =
+        `${i} / ${nodes.length} nodes`;
+      setTimeout(addNext, 60);
+    } else {
+      edges.forEach(e => { try { cy.add(e); } catch (_) {} });
+      setTimeout(() => {
+        cy.edges().addClass('visible');
+        runLayout();
+      }, 80);
+      document.getElementById('node-count').textContent =
+        `${nodes.length} nodes · ${edges.length} edges  |  ${label}`;
+    }
+  }
+  setTimeout(addNext, 200);
+}
+
+function runLayout() {
+  cy.layout({
+    name: 'cose',
+    animate: true,
+    animationDuration: 1200,
+    animationEasing: 'ease-in-out-cubic',
+    fit: true,
+    padding: 50,
+    nodeRepulsion: () => 10000,
+    edgeElasticity: () => 32,
+    idealEdgeLength: () => 90,
+    gravity: 0.25,
+    numIter: 1000,
+    coolingFactor: 0.99,
+  }).run();
+}
+
+// --- Toggle state ---
+let showingFull = false;
+document.getElementById('toggle-btn').addEventListener('click', () => {
+  showingFull = !showingFull;
+  document.getElementById('toggle-btn').textContent =
+    showingFull ? 'Show Focused (Depth 2)' : 'Show Full Graph';
+  if (showingFull) {
+    renderGraph(allNodes, validEdges, 'Full graph');
+  } else {
+    renderGraph(focusedNodes, focusedEdges, `Root: ${rootId} · depth ≤ 2`);
+  }
+});
+
+// --- Initial render ---
+if (allNodes.length === 0) {
+  document.getElementById('node-count').textContent = 'No graph data. Run analysis first.';
+} else {
+  renderGraph(focusedNodes, focusedEdges, `Root: ${rootId} · depth ≤ 2`);
+}
+
+// --- Click handler ---
+cy.on('tap', 'node', function(evt) {
+  const node = evt.target;
+  document.getElementById('popup-title').textContent = node.data('full_label') || node.data('label');
+  document.getElementById('popup-type').textContent = node.data('type') || '';
+  const snippet = node.data('snippet');
+  document.getElementById('popup-snippet').textContent =
+    snippet ? `"${snippet}"` : '(no source snippet)';
+  document.getElementById('popup').style.display = 'block';
+});
+
+cy.on('tap', function(evt) {
+  if (evt.target === cy) document.getElementById('popup').style.display = 'none';
+});
+</script>
+</div>
+
+  
+<details class="debug-panel">
+  <summary>Extracted Entities & Relations (42 nodes · 45 edges)</summary>
+  <div class="debug-content">
+    <div class="debug-stats">
+      <span>Nodes: <strong>42</strong></span>
+      <span>Edges: <strong>45</strong></span>
+    </div>
+    <p style="font-size:0.8rem;color:#64748b;margin:0.5rem 0">Country: 6, Exemption: 3, LegalBasis: 2, Product: 14, StrategicSector: 4, TariffList: 4, TariffRate: 9</p>
+    <h4>Entities</h4><table class="data-table"><thead><tr><th>type</th><th>name</th><th>snippet</th></tr></thead><tbody><tr><td>LegalBasis</td><td>Section 301 of Trade Act 1974</td><td>Statutory authority (19 U.S.C. 2411) under which the investi</td></tr><tr><td>LegalBasis</td><td>Section 307 of Trade Act 1974</td><td>Authority for subsequent modifications (Lists 3 and 4A)</td></tr><tr><td>TariffList</td><td>List 1</td><td>818 subheadings, $34B annual trade value, effective July 6, </td></tr><tr><td>TariffList</td><td>List 2</td><td>279 subheadings, $16B annual trade value, effective August 2</td></tr><tr><td>TariffList</td><td>List 3</td><td>5,745 subheadings, $200B annual trade value</td></tr><tr><td>TariffList</td><td>List 4A</td><td>3,782 subheadings, $300B annual trade value</td></tr><tr><td>TariffRate</td><td>25% Duty (List 1)</td><td>Original 25% rate on List 1</td></tr><tr><td>TariffRate</td><td>25% Duty (List 2)</td><td>Original 25% rate on List 2</td></tr><tr><td>TariffRate</td><td>25% Duty (List 3)</td><td>Increased from 10% on May 10, 2019</td></tr><tr><td>TariffRate</td><td>7.5% Duty (List 4A)</td><td>Reduced from 15% as part of 2019 Phase One Agreement</td></tr><tr><td>TariffRate</td><td>100% Proposed EV Duty</td><td>2024 proposed duty on electric vehicles</td></tr><tr><td>TariffRate</td><td>50% Proposed Semiconductor Duty</td><td>2024 proposed duty on semiconductors</td></tr><tr><td>TariffRate</td><td>50% Proposed Solar Duty</td><td>2024 proposed duty on solar cells</td></tr><tr><td>TariffRate</td><td>25% Proposed Battery Duty</td><td>2024 proposed duty on lithium-ion batteries</td></tr><tr><td>TariffRate</td><td>25% Proposed Steel & Aluminum Duty</td><td>2024 proposed duty on steel and aluminum products</td></tr><tr><td>Product</td><td>Electric Vehicles</td><td>Targeted at 100% under 2024 proposal</td></tr><tr><td>Product</td><td>Semiconductors</td><td>Targeted at 50%; China expanding foundational semiconductor </td></tr><tr><td>Product</td><td>Solar Cells</td><td>Targeted at 50%; China holds overwhelming global production </td></tr><tr><td>Product</td><td>Lithium-ion EV Batteries</td><td>Targeted at 25% under 2024 proposal</td></tr><tr><td>Product</td><td>Lithium-ion Non-EV Batteries</td><td>Targeted at 25% under 2024 proposal</td></tr><tr><td>Product</td><td>Natural Graphite</td><td>Critical mineral for EV batteries</td></tr><tr><td>Product</td><td>Permanent Magnets</td><td>Critical for EV motors, proposed 25%</td></tr><tr><td>Product</td><td>Steel Products</td><td>Proposed 25%; China's overproduction distorts global markets</td></tr><tr><td>Product</td><td>Aluminum Products</td><td>Proposed 25%; paired with steel in 2024 additions</td></tr><tr><td>Product</td><td>Ship-to-Shore Cranes</td><td>Proposed 25%; cybersecurity concerns cited</td></tr><tr><td>Product</td><td>Medical Gloves</td><td>Proposed 25%; pandemic preparedness</td></tr><tr><td>Product</td><td>Facemasks (N95)</td><td>Proposed 25%; pandemic preparedness</td></tr><tr><td>Product</td><td>Syringes and Needles</td><td>Proposed 50%; public health emergency readiness</td></tr><tr><td>Product</td><td>Critical Minerals</td><td>Targeted across multiple lines</td></tr><tr><td>StrategicSector</td><td>Clean Energy Sector</td><td>China's 'new three' exports: solar, batteries, EVs</td></tr><tr><td>StrategicSector</td><td>Semiconductor Sector</td><td>CHIPS and Science Act investment complement</td></tr><tr><td>StrategicSector</td><td>Critical Medical Supplies</td><td>Pandemic preparedness infrastructure</td></tr><tr><td>StrategicSector</td><td>Heavy Industry</td><td>Steel, aluminum, shipbuilding</td></tr><tr><td>Country</td><td>China</td><td>Target of all Section 301 actions</td></tr><tr><td>Country</td><td>United States</td><td>Imposing country</td></tr><tr><td>Country</td><td>USMCA Partners</td><td>Primary import share beneficiary (Canada, Mexico)</td></tr><tr><td>Country</td><td>ASEAN</td><td>Major beneficiary of import diversification</td></tr><tr><td>Country</td><td>EU 27</td><td>Modest import share gains</td></tr><tr><td>Country</td><td>India</td><td>Growing import share</td></tr><tr><td>Exemption</td><td>Machinery Exclusion Process</td><td>Proposed for 8-digit tariff lines in HTSUS Chapters 84 and 8</td></tr><tr><td>Exemption</td><td>Solar Manufacturing Equipment Exclusions</td><td>19 temporary exclusions proposed in Appendix L</td></tr><tr><td>Exemption</td><td>COVID-19 Medical Exclusions</td><td>Reinstated for select medical-care products</td></tr></tbody></table>
+    <h4>Relationships</h4><table class="data-table"><thead><tr><th>from</th><th>label</th><th>to</th></tr></thead><tbody><tr><td>Section 301 of Trade Act 1974</td><td>AUTHORIZES</td><td>List 1</td></tr><tr><td>Section 301 of Trade Act 1974</td><td>AUTHORIZES</td><td>List 2</td></tr><tr><td>Section 307 of Trade Act 1974</td><td>AUTHORIZES</td><td>List 3</td></tr><tr><td>Section 307 of Trade Act 1974</td><td>AUTHORIZES</td><td>List 4A</td></tr><tr><td>25% Duty (List 1)</td><td>APPLIES TO</td><td>List 1</td></tr><tr><td>25% Duty (List 2)</td><td>APPLIES TO</td><td>List 2</td></tr><tr><td>25% Duty (List 3)</td><td>APPLIES TO</td><td>List 3</td></tr><tr><td>7.5% Duty (List 4A)</td><td>APPLIES TO</td><td>List 4A</td></tr><tr><td>List 1</td><td>TARGETS</td><td>China</td></tr><tr><td>List 2</td><td>TARGETS</td><td>China</td></tr><tr><td>List 3</td><td>TARGETS</td><td>China</td></tr><tr><td>List 4A</td><td>TARGETS</td><td>China</td></tr><tr><td>100% Proposed EV Duty</td><td>APPLIES TO</td><td>Electric Vehicles</td></tr><tr><td>50% Proposed Semiconductor Duty</td><td>APPLIES TO</td><td>Semiconductors</td></tr><tr><td>50% Proposed Solar Duty</td><td>APPLIES TO</td><td>Solar Cells</td></tr><tr><td>25% Proposed Battery Duty</td><td>APPLIES TO</td><td>Lithium-ion EV Batteries</td></tr><tr><td>25% Proposed Battery Duty</td><td>APPLIES TO</td><td>Lithium-ion Non-EV Batteries</td></tr><tr><td>25% Proposed Steel & Aluminum Duty</td><td>APPLIES TO</td><td>Steel Products</td></tr><tr><td>25% Proposed Steel & Aluminum Duty</td><td>APPLIES TO</td><td>Aluminum Products</td></tr><tr><td>Electric Vehicles</td><td>BELONGS TO</td><td>Clean Energy Sector</td></tr><tr><td>Solar Cells</td><td>BELONGS TO</td><td>Clean Energy Sector</td></tr><tr><td>Lithium-ion EV Batteries</td><td>BELONGS TO</td><td>Clean Energy Sector</td></tr><tr><td>Lithium-ion Non-EV Batteries</td><td>BELONGS TO</td><td>Clean Energy Sector</td></tr><tr><td>Natural Graphite</td><td>BELONGS TO</td><td>Clean Energy Sector</td></tr><tr><td>Permanent Magnets</td><td>BELONGS TO</td><td>Clean Energy Sector</td></tr><tr><td>Critical Minerals</td><td>BELONGS TO</td><td>Clean Energy Sector</td></tr><tr><td>Semiconductors</td><td>BELONGS TO</td><td>Semiconductor Sector</td></tr><tr><td>Steel Products</td><td>BELONGS TO</td><td>Heavy Industry</td></tr><tr><td>Aluminum Products</td><td>BELONGS TO</td><td>Heavy Industry</td></tr><tr><td>Ship-to-Shore Cranes</td><td>BELONGS TO</td><td>Heavy Industry</td></tr><tr><td>Medical Gloves</td><td>BELONGS TO</td><td>Critical Medical Supplies</td></tr><tr><td>Facemasks (N95)</td><td>BELONGS TO</td><td>Critical Medical Supplies</td></tr><tr><td>Syringes and Needles</td><td>BELONGS TO</td><td>Critical Medical Supplies</td></tr><tr><td>Clean Energy Sector</td><td>TARGETS</td><td>China</td></tr><tr><td>Semiconductor Sector</td><td>TARGETS</td><td>China</td></tr><tr><td>Heavy Industry</td><td>TARGETS</td><td>China</td></tr><tr><td>Critical Medical Supplies</td><td>TARGETS</td><td>China</td></tr><tr><td>United States</td><td>IMPOSES DUTIES ON</td><td>China</td></tr><tr><td>List 3</td><td>DIVERSIFIED TO</td><td>USMCA Partners</td></tr><tr><td>List 3</td><td>DIVERSIFIED TO</td><td>ASEAN</td></tr><tr><td>List 3</td><td>DIVERSIFIED TO</td><td>EU 27</td></tr><tr><td>List 2</td><td>DIVERSIFIED TO</td><td>ASEAN</td></tr><tr><td>Machinery Exclusion Process</td><td>EXEMPTS FROM</td><td>List 1</td></tr><tr><td>Solar Manufacturing Equipment Exclusions</td><td>EXEMPTS FROM</td><td>50% Proposed Solar Duty</td></tr><tr><td>COVID-19 Medical Exclusions</td><td>EXEMPTS FROM</td><td>List 3</td></tr></tbody></table>
+  </div>
+</details>
+
+</div>
+</body>
+</html>

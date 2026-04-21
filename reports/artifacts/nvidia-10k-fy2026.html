@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Hannune · nvidia_10k_fy2026.html</title>
+<script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.28.1/cytoscape.min.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #ffffff;
+  color: #334155;
+  line-height: 1.6;
+}
+nav {
+  background: #333A2F;
+  padding: 14px 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+nav img { height: 36px; width: auto; }
+.nav-right { font-size: 14px; font-weight: 500; color: rgba(235,237,223,0.7); }
+.container { max-width: 1200px; margin: 0 auto; padding: 2rem 2rem 4rem; }
+.meta {
+  font-size: 0.8rem; color: #94a3b8;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+.meta strong { color: #475569; }
+.section-header {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #2563eb;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 2rem 0 0.75rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+.tldr-box {
+  background: #eff6ff;
+  border-left: 4px solid #2563eb;
+  border-radius: 0 10px 10px 0;
+  padding: 16px 20px;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #1e3a5f;
+}
+.metrics-row { display: flex; gap: 12px; flex-wrap: wrap; margin: 0.5rem 0; }
+.metric-card {
+  flex: 1; min-width: 120px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 14px 16px;
+  text-align: center;
+}
+.metric-value { font-size: 1.7rem; font-weight: 800; color: #2563eb; line-height: 1.1; }
+.metric-label { font-size: 0.72rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px; }
+.summary { font-size: 0.95rem; line-height: 1.8; }
+.summary h2, .summary h3, .summary h4 { color: #1e3a5f; margin: 1.25rem 0 0.5rem; font-weight: 700; }
+.summary h3 { font-size: 1rem; }
+.summary h4 { font-size: 0.9rem; }
+.summary p { margin-bottom: 0.75rem; color: #334155; }
+.summary strong { color: #1e3a5f; }
+table.data-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 0.85rem; margin: 0.5rem 0 1.5rem;
+}
+table.data-table th {
+  background: #f1f5f9; color: #475569;
+  padding: 8px 12px; text-align: left;
+  font-weight: 600; font-size: 0.78rem;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  border-bottom: 2px solid #e2e8f0;
+}
+table.data-table td {
+  padding: 7px 12px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #334155;
+}
+table.data-table tr:hover td { background: #f8fafc; }
+.chart-grid { display: grid; gap: 1rem; }
+.chart-col { min-width: 0; }
+.graph-wrapper {
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 580px;
+  position: relative;
+  margin-top: 0.5rem;
+}
+h4 { font-size: 0.9rem; font-weight: 700; color: #334155; margin: 1rem 0 0.4rem; }
+.fact-list { margin: 0.25rem 0 1rem; }
+.list-category { font-size: 0.78rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; margin: 0.75rem 0 0.25rem; }
+.list-items { list-style: none; padding: 0; }
+.list-items li { padding: 4px 0 4px 12px; border-left: 2px solid #e2e8f0; font-size: 0.88rem; color: #334155; margin-bottom: 2px; }
+.debug-panel { margin-top: 2rem; border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden; }
+.debug-panel summary { padding: 12px 16px; cursor: pointer; font-size: 0.85rem; font-weight: 600; color: #64748b; background: #f8fafc; user-select: none; }
+.debug-panel summary:hover { background: #f1f5f9; }
+.debug-content { padding: 16px; }
+.debug-stats { display: flex; gap: 1.5rem; font-size: 0.85rem; color: #64748b; margin-bottom: 0.5rem; }
+.debug-stats strong { color: #334155; }
+</style>
+</head>
+<body>
+
+<nav>
+  <img src="data:image/png;base64,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" alt="Hannune"/>
+  <span class="nav-right">Corporate Analysis · Graph RAG</span>
+</nav>
+
+<div class="container">
+
+  <div class="meta">
+    <strong>nvidia_10k_fy2026.html</strong> &nbsp;·&nbsp; Corporate Analysis &nbsp;·&nbsp; 20260420_161618
+  </div>
+
+  <div class="section-header">TL;DR</div><div class="tldr-box">The company maintains a massive market presence with an aggregate market value of voting stock held by non-affiliates of $4.0 trillion. While driving innovation through a cumulative R&D investment of $76.7 billion, the firm faces significant regulatory and operational hurdles, including a $4.5 billion H20 Excess Inventory and Purchase Obligations Charge in Q1 FY2026. Competitive advantages are anchored by a developer ecosystem of 7.5 million CUDA developers and the upcoming Rubin architecture, which targets a 10x reduction in cost per token compared to Blackwell.</div>
+
+  <div class="section-header">Key Metrics</div><div class="metrics-row"><div class="metric-card"><div class="metric-value">2</div><div class="metric-label">Business Segments</div></div><div class="metric-card"><div class="metric-value">5</div><div class="metric-label">Executives Named</div></div><div class="metric-card"><div class="metric-value">14</div><div class="metric-label">Risk Factors</div></div><div class="metric-card"><div class="metric-value">18</div><div class="metric-label">Competitors Identified</div></div><div class="metric-card"><div class="metric-value">9</div><div class="metric-label">Regions Covered</div></div><div class="metric-card"><div class="metric-value">50+</div><div class="metric-label">Products Mentioned</div></div></div>
+
+  <div class="section-header">Summary</div><div class="summary"><h3>Business Performance Overview</h3>
+<p>NVIDIA's financial profile is defined by extreme scale and a commanding market position, with non-affiliate voting stock valued at $4.0 trillion as of July 2025. The company's technological leadership is evidenced by its dominance in high-performance computing, powering 78% of supercomputers on the global TOP500 list and capturing 9 of the top 10 systems on the energy-efficient Green500 list. In fiscal year 2026, NVIDIA recognized a $4.5 billion charge related to excess inventory and purchase obligations for H20 products, reflecting the operational impact of shifting export controls on China.</p>
+<h3>Technology Platform &amp; Product Cycles</h3>
+<p>NVIDIA's competitive moat is built on a $76.7 billion cumulative R&amp;D investment supporting a rapid product evolution cycle. The transition from Blackwell to the NVIDIA Rubin platform targets a 10x reduction in cost per token, sustaining leadership in AI compute economics. Core platforms include Data Center (Blackwell architecture, Grace CPU, NVLink Fusion), Gaming (GeForce RTX 50 Series, GeForce NOW), Professional Visualization (RTX PRO GPUs, Omniverse), and Automotive (DRIVE Hyperion, DRIVE AGX). The software stack — CUDA, NVIDIA AI Enterprise, NIM, NeMo, and AI Blueprints — reaches 7.5 million developers and supports 6,000 accelerated applications.</p>
+<h3>Risk Profile</h3>
+<p>NVIDIA's risk landscape is dominated by export controls and geopolitical exposure. U.S. Government licensing requirements for A100, H100, H20, and H200 integrated circuits destined for China, Hong Kong, Macau, and Russia have materially impacted the company's addressable market. The Senate-passed GAIN AI Act would further restrict export control flexibility. Operational risks include customer concentration (top three customers), third-party supplier dependence, and the $4.5 billion H20 inventory writedown. Regulatory scrutiny also extends to potential USG revenue-sharing requirements on licensed sales.</p>
+<h3>Competitive Positioning</h3>
+<p>NVIDIA competes across GPU, AI accelerator, networking, and automotive markets against established players and new entrants. Direct accelerator competitors include Advanced Micro Devices, Intel, Huawei, and Tesla's internal silicon efforts. Networking competitors include Broadcom, Arista Networks, Cisco, and Marvell. Custom silicon pressure comes from hyperscaler-designed ASICs by Alphabet, Amazon, Microsoft, and Meta. In China, the Chinese government has encouraged customers to source from domestic alternatives, supporting China-based competitors. Differentiation rests on the integrated hardware-software platform spanning CUDA, systems, and applications.</p></div>
+
+  <div class="section-header">Data Tables</div><h4>Reportable Business Segments</h4><table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Segment</th>
+      <th>Key Products</th>
+      <th>Primary Markets</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Compute &amp; Networking</td>
+      <td>Data Center GPUs, DPUs, NVLink, InfiniBand, Automotive</td>
+      <td>AI training/inference, automotive</td>
+    </tr>
+    <tr>
+      <td>Graphics</td>
+      <td>GeForce GPUs, GeForce NOW, Quadro/RTX, Omniverse</td>
+      <td>Gaming, professional visualization</td>
+    </tr>
+  </tbody>
+</table><h4>Named Executive Officers</h4><table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Name</th>
+      <th>Role</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Jen-Hsun Huang</td>
+      <td>President and CEO</td>
+    </tr>
+    <tr>
+      <td>Colette M. Kress</td>
+      <td>EVP and CFO</td>
+    </tr>
+    <tr>
+      <td>Ajay K. Puri</td>
+      <td>EVP, Worldwide Field Operations</td>
+    </tr>
+    <tr>
+      <td>Debora Shoquist</td>
+      <td>EVP, Operations</td>
+    </tr>
+    <tr>
+      <td>Timothy S. Teter</td>
+      <td>EVP and General Counsel</td>
+    </tr>
+  </tbody>
+</table><h4>Primary Competitors by Category</h4><table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Category</th>
+      <th>Competitors</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>AI Accelerators &amp; GPUs</td>
+      <td>AMD, Intel, Huawei, Tesla</td>
+    </tr>
+    <tr>
+      <td>Hyperscaler Custom Silicon</td>
+      <td>Alphabet, Amazon, Microsoft, Meta, Alibaba, Baidu</td>
+    </tr>
+    <tr>
+      <td>Networking</td>
+      <td>Broadcom, Arista Networks, Cisco, Marvell, Lumentum</td>
+    </tr>
+    <tr>
+      <td>Embedded/Automotive</td>
+      <td>Qualcomm, Renesas, Ambarella, Samsung</td>
+    </tr>
+  </tbody>
+</table>
+
+  <div class="section-header">Visual Breakdown</div><div class="chart-grid" style="grid-template-columns: 1fr;"><div class="chart-col"><div>                            <div id="0da364fa-a56f-4bb9-9517-73c17e212c1a" class="plotly-graph-div" style="height:100%; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("0da364fa-a56f-4bb9-9517-73c17e212c1a")) {                    Plotly.newPlot(                        "0da364fa-a56f-4bb9-9517-73c17e212c1a",                        [{"domain":{"x":[0.0,1.0],"y":[0.0,1.0]},"hole":0.35,"hovertemplate":"label=%{label}\u003cbr\u003evalue=%{value}\u003cextra\u003e\u003c\u002fextra\u003e","labels":["Export Controls & Regulatory","Supply Chain","Competition & Market","Operational","Legal & IP"],"legendgroup":"","name":"","showlegend":true,"values":{"dtype":"i1","bdata":"BAMCAwI="},"type":"pie","textinfo":"label+percent","textposition":"inside"}],                        {"template":{"data":{"candlestick":[{"decreasing":{"line":{"color":"#000033"}},"increasing":{"line":{"color":"#000032"}},"type":"candlestick"}],"contourcarpet":[{"colorscale":[[0.0,"#000011"],[0.1111111111111111,"#000012"],[0.2222222222222222,"#000013"],[0.3333333333333333,"#000014"],[0.4444444444444444,"#000015"],[0.5555555555555556,"#000016"],[0.6666666666666666,"#000017"],[0.7777777777777778,"#000018"],[0.8888888888888888,"#000019"],[1.0,"#000020"]],"type":"contourcarpet"}],"contour":[{"colorscale":[[0.0,"#000011"],[0.1111111111111111,"#000012"],[0.2222222222222222,"#000013"],[0.3333333333333333,"#000014"],[0.4444444444444444,"#000015"],[0.5555555555555556,"#000016"],[0.6666666666666666,"#000017"],[0.7777777777777778,"#000018"],[0.8888888888888888,"#000019"],[1.0,"#000020"]],"type":"contour"}],"heatmap":[{"colorscale":[[0.0,"#000011"],[0.1111111111111111,"#000012"],[0.2222222222222222,"#000013"],[0.3333333333333333,"#000014"],[0.4444444444444444,"#000015"],[0.5555555555555556,"#000016"],[0.6666666666666666,"#000017"],[0.7777777777777778,"#000018"],[0.8888888888888888,"#000019"],[1.0,"#000020"]],"type":"heatmap"}],"histogram2d":[{"colorscale":[[0.0,"#000011"],[0.1111111111111111,"#000012"],[0.2222222222222222,"#000013"],[0.3333333333333333,"#000014"],[0.4444444444444444,"#000015"],[0.5555555555555556,"#000016"],[0.6666666666666666,"#000017"],[0.7777777777777778,"#000018"],[0.8888888888888888,"#000019"],[1.0,"#000020"]],"type":"histogram2d"}],"icicle":[{"textfont":{"color":"white"},"type":"icicle"}],"sankey":[{"textfont":{"color":"#000036"},"type":"sankey"}],"scatter":[{"marker":{"line":{"width":0}},"type":"scatter"}],"table":[{"cells":{"fill":{"color":"#000038"},"font":{"color":"#000037"},"line":{"color":"#000039"}},"header":{"fill":{"color":"#000040"},"font":{"color":"#000036"},"line":{"color":"#000039"}},"type":"table"}],"waterfall":[{"connector":{"line":{"color":"#000036","width":2}},"decreasing":{"marker":{"color":"#000033"}},"increasing":{"marker":{"color":"#000032"}},"totals":{"marker":{"color":"#000034"}},"type":"waterfall"}]},"layout":{"coloraxis":{"colorscale":[[0.0,"#000011"],[0.1111111111111111,"#000012"],[0.2222222222222222,"#000013"],[0.3333333333333333,"#000014"],[0.4444444444444444,"#000015"],[0.5555555555555556,"#000016"],[0.6666666666666666,"#000017"],[0.7777777777777778,"#000018"],[0.8888888888888888,"#000019"],[1.0,"#000020"]]},"colorscale":{"diverging":[[0.0,"#000021"],[0.1111111111111111,"#000022"],[0.2222222222222222,"#000023"],[0.3333333333333333,"#000024"],[0.4444444444444444,"#000025"],[0.5555555555555556,"#000026"],[0.6666666666666666,"#000027"],[0.7777777777777778,"#000028"],[0.8888888888888888,"#000029"],[1.0,"#000030"]],"sequential":[[0.0,"#000011"],[0.1111111111111111,"#000012"],[0.2222222222222222,"#000013"],[0.3333333333333333,"#000014"],[0.4444444444444444,"#000015"],[0.5555555555555556,"#000016"],[0.6666666666666666,"#000017"],[0.7777777777777778,"#000018"],[0.8888888888888888,"#000019"],[1.0,"#000020"]],"sequentialminus":[[0.0,"#000011"],[0.1111111111111111,"#000012"],[0.2222222222222222,"#000013"],[0.3333333333333333,"#000014"],[0.4444444444444444,"#000015"],[0.5555555555555556,"#000016"],[0.6666666666666666,"#000017"],[0.7777777777777778,"#000018"],[0.8888888888888888,"#000019"],[1.0,"#000020"]]},"colorway":["#000001","#000002","#000003","#000004","#000005","#000006","#000007","#000008","#000009","#000010"]}},"legend":{"tracegroupgap":0,"bgcolor":"rgba(0,0,0,0)","bordercolor":"#e2e8f0","borderwidth":1},"title":{"text":"Risk Factors by Category","font":{"color":"#2563eb","size":14},"x":0},"piecolorway":["#2563eb","#16a34a","#dc2626","#d97706","#7c3aed","#0891b2"],"font":{"color":"#334155"},"margin":{"l":40,"r":20,"t":50,"b":40},"xaxis":{"gridcolor":"#e2e8f0","linecolor":"#cbd5e1","tickangle":0},"yaxis":{"gridcolor":"#e2e8f0","linecolor":"#cbd5e1"},"paper_bgcolor":"#ffffff","plot_bgcolor":"#f8fafc","bargap":0.4},                        {"responsive": true}                    )                };            </script>        </div></div></div>
+
+  <div class="section-header">Key Items</div><table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+    </tr>
+    <tr>
+      <th>Category</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Market Position</th>
+      <td>78% share of TOP500 supercomputers</td>
+    </tr>
+    <tr>
+      <th>Market Position</th>
+      <td>9 of top 10 Green500 energy-efficient systems</td>
+    </tr>
+    <tr>
+      <th>Market Position</th>
+      <td>$4.0 trillion aggregate market value (voting stock, non-affiliates)</td>
+    </tr>
+    <tr>
+      <th>Financial Signals</th>
+      <td>$76.7 billion cumulative R&amp;D investment</td>
+    </tr>
+    <tr>
+      <th>Financial Signals</th>
+      <td>$4.5 billion H20 excess inventory charge in Q1 FY2026</td>
+    </tr>
+    <tr>
+      <th>Financial Signals</th>
+      <td>H200 licensing program revenue still limited</td>
+    </tr>
+    <tr>
+      <th>Technology Milestones</th>
+      <td>NVIDIA Rubin platform unveiled in FY2026</td>
+    </tr>
+    <tr>
+      <th>Technology Milestones</th>
+      <td>NVIDIA Blackwell Ultra platform shipping</td>
+    </tr>
+    <tr>
+      <th>Technology Milestones</th>
+      <td>NVIDIA NVLink Fusion for hyperscaler ASIC designers</td>
+    </tr>
+    <tr>
+      <th>Technology Milestones</th>
+      <td>7.5 million CUDA developers in ecosystem</td>
+    </tr>
+    <tr>
+      <th>Key Risk Factors</th>
+      <td>Export Control Restrictions on China</td>
+    </tr>
+    <tr>
+      <th>Key Risk Factors</th>
+      <td>Customer Concentration Risk</td>
+    </tr>
+    <tr>
+      <th>Key Risk Factors</th>
+      <td>Third-party supplier dependency (TSMC CoWoS)</td>
+    </tr>
+    <tr>
+      <th>Key Risk Factors</th>
+      <td>GAIN AI Act legislative risk</td>
+    </tr>
+    <tr>
+      <th>Key Risk Factors</th>
+      <td>H20 inventory impairment exposure</td>
+    </tr>
+  </tbody>
+</table>
+
+  <div class="section-header">Knowledge Graph</div>
+  <p style="font-size:0.8rem;color:#94a3b8;margin-bottom:0.5rem">
+    49 nodes · 45 edges
+    &nbsp;— drag to reposition, scroll to zoom, click node for details
+  </p>
+  <div class="graph-wrapper">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  .graph-wrapper {
+    background: #f8fafc;
+    color: #1a1a2a;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    overflow: hidden;
+  }
+  #cy {
+    width: 100%;
+    height: 560px;
+    background: #f8fafc;
+  }
+  #legend {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255,255,255,0.95);
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 11px;
+    max-width: 180px;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  #legend h4 {
+    color: #2563eb;
+    margin-bottom: 6px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin: 3px 0;
+    color: #475569;
+  }
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  #popup {
+    position: absolute;
+    bottom: 14px;
+    left: 14px;
+    background: #ffffff;
+    border: 1px solid #2563eb;
+    border-radius: 10px;
+    padding: 12px 16px;
+    max-width: 320px;
+    display: none;
+    z-index: 20;
+    box-shadow: 0 4px 16px rgba(37,99,235,0.12);
+  }
+  #popup-close {
+    float: right;
+    cursor: pointer;
+    color: #94a3b8;
+    font-size: 14px;
+    line-height: 1;
+  }
+  #popup-title {
+    font-weight: 700;
+    color: #2563eb;
+    font-size: 13px;
+    margin-bottom: 2px;
+    padding-right: 20px;
+  }
+  #popup-type {
+    font-size: 10px;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+  #popup-snippet {
+    font-size: 12px;
+    color: #475569;
+    line-height: 1.5;
+    border-left: 2px solid #2563eb;
+    padding-left: 8px;
+    font-style: italic;
+  }
+  #controls {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    z-index: 10;
+  }
+  #node-count {
+    background: rgba(255,255,255,0.85);
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-size: 11px;
+    color: #94a3b8;
+  }
+  #toggle-btn {
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.03em;
+  }
+  #toggle-btn:hover { background: #1d4ed8; }
+</style>
+
+
+<div id="cy"></div>
+<div id="controls">
+  <div id="node-count">Loading graph...</div>
+  <button id="toggle-btn">Show Full Graph</button>
+</div>
+<div id="legend"><h4>Node Types</h4></div>
+<div id="popup">
+  <span id="popup-close" onclick="document.getElementById('popup').style.display='none'">✕</span>
+  <div id="popup-title"></div>
+  <div id="popup-type"></div>
+  <div id="popup-snippet"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.28.1/cytoscape.min.js"></script>
+<script>
+const allNodes = [{"data": {"id": "Jen-Hsun Huang", "label": "Jen-Hsun Huang", "full_label": "Jen-Hsun Huang", "type": "Executive", "color": "#4f8ef7", "snippet": "President and CEO"}}, {"data": {"id": "Colette M. Kress", "label": "Colette M. Kress", "full_label": "Colette M. Kress", "type": "Executive", "color": "#4f8ef7", "snippet": "EVP and CFO"}}, {"data": {"id": "Ajay K. Puri", "label": "Ajay K. Puri", "full_label": "Ajay K. Puri", "type": "Executive", "color": "#4f8ef7", "snippet": "EVP, Worldwide Field Operations"}}, {"data": {"id": "Debora Shoquist", "label": "Debora Shoquist", "full_label": "Debora Shoquist", "type": "Executive", "color": "#4f8ef7", "snippet": "EVP, Operations"}}, {"data": {"id": "Timothy S. Teter", "label": "Timothy S. Teter", "full_label": "Timothy S. Teter", "type": "Executive", "color": "#4f8ef7", "snippet": "EVP and General Counsel"}}, {"data": {"id": "Compute & Networking", "label": "Compute & Networking", "full_label": "Compute & Networking", "type": "BusinessSegment", "color": "#00d4aa", "snippet": "Reportable segment covering Data Center, DPU, networking, automotive"}}, {"data": {"id": "Graphics", "label": "Graphics", "full_label": "Graphics", "type": "BusinessSegment", "color": "#00d4aa", "snippet": "Reportable segment covering Gaming, Professional Visualization, Omniverse"}}, {"data": {"id": "Data Center", "label": "Data Center", "full_label": "Data Center", "type": "Product", "color": "#00b894", "snippet": "Platform for AI training and inference"}}, {"data": {"id": "Gaming", "label": "Gaming", "full_label": "Gaming", "type": "Product", "color": "#00b894", "snippet": "GeForce RTX platforms and GeForce NOW"}}, {"data": {"id": "Professional Visualization", "label": "Professional Visuali…", "full_label": "Professional Visualization", "type": "Product", "color": "#00b894", "snippet": "Quadro/NVIDIA RTX GPUs"}}, {"data": {"id": "Automotive", "label": "Automotive", "full_label": "Automotive", "type": "Product", "color": "#00b894", "snippet": "DRIVE platform"}}, {"data": {"id": "Blackwell architecture", "label": "Blackwell architecture", "full_label": "Blackwell architecture", "type": "Product", "color": "#00b894", "snippet": "Data-center-scale offering with extreme co-design"}}, {"data": {"id": "NVIDIA Rubin platform", "label": "NVIDIA Rubin platform", "full_label": "NVIDIA Rubin platform", "type": "Product", "color": "#00b894", "snippet": "Next-gen platform targeting 10x cost-per-token reduction"}}, {"data": {"id": "CUDA", "label": "CUDA", "full_label": "CUDA", "type": "Product", "color": "#00b894", "snippet": "Foundational development platform, 7.5M developers"}}, {"data": {"id": "NVIDIA AI Enterprise", "label": "NVIDIA AI Enterprise", "full_label": "NVIDIA AI Enterprise", "type": "Product", "color": "#00b894", "snippet": "Operating system for enterprise AI applications"}}, {"data": {"id": "NVIDIA NIM", "label": "NVIDIA NIM", "full_label": "NVIDIA NIM", "type": "Product", "color": "#00b894", "snippet": "Inference microservices for token throughput"}}, {"data": {"id": "NVIDIA NeMo", "label": "NVIDIA NeMo", "full_label": "NVIDIA NeMo", "type": "Product", "color": "#00b894", "snippet": "Curation, fine-tuning, reinforcement learning"}}, {"data": {"id": "GeForce RTX 50 Series", "label": "GeForce RTX 50 Series", "full_label": "GeForce RTX 50 Series", "type": "Product", "color": "#00b894", "snippet": "Blackwell consumer GPUs"}}, {"data": {"id": "DRIVE Hyperion", "label": "DRIVE Hyperion", "full_label": "DRIVE Hyperion", "type": "Product", "color": "#00b894", "snippet": "End-to-end AV solution stack"}}, {"data": {"id": "Grace CPU", "label": "Grace CPU", "full_label": "Grace CPU", "type": "Product", "color": "#00b894", "snippet": "Data center CPU"}}, {"data": {"id": "NVLink Fusion", "label": "NVLink Fusion", "full_label": "NVLink Fusion", "type": "Product", "color": "#00b894", "snippet": "Enables hyperscaler and custom ASIC designs"}}, {"data": {"id": "H20 integrated circuits", "label": "H20 integrated circu…", "full_label": "H20 integrated circuits", "type": "Product", "color": "#00b894", "snippet": "Export-restricted China-focused product"}}, {"data": {"id": "H200 products", "label": "H200 products", "full_label": "H200 products", "type": "Product", "color": "#00b894", "snippet": "Permitted with specific USG licenses"}}, {"data": {"id": "A100 integrated circuits", "label": "A100 integrated circ…", "full_label": "A100 integrated circuits", "type": "Product", "color": "#00b894", "snippet": "Original export-restricted chip"}}, {"data": {"id": "H100 integrated circuits", "label": "H100 integrated circ…", "full_label": "H100 integrated circuits", "type": "Product", "color": "#00b894", "snippet": "Flagship Hopper architecture chip"}}, {"data": {"id": "Export Control Restrictions", "label": "Export Control Restr…", "full_label": "Export Control Restrictions", "type": "RiskFactor", "color": "#ff6b6b", "snippet": "Shifting USG export controls on China"}}, {"data": {"id": "Customer Concentration Risk", "label": "Customer Concentrati…", "full_label": "Customer Concentration Risk", "type": "RiskFactor", "color": "#ff6b6b", "snippet": "Concentrated top-customer revenue"}}, {"data": {"id": "H20 Inventory Charge", "label": "H20 Inventory Charge", "full_label": "H20 Inventory Charge", "type": "RiskFactor", "color": "#ff6b6b", "snippet": "$4.5 billion Q1 FY2026 charge"}}, {"data": {"id": "GAIN AI Act", "label": "GAIN AI Act", "full_label": "GAIN AI Act", "type": "RiskFactor", "color": "#ff6b6b", "snippet": "Senate-passed legislation restricting export control flexibility"}}, {"data": {"id": "Third-party Supplier Dependency", "label": "Third-party Supplier…", "full_label": "Third-party Supplier Dependency", "type": "RiskFactor", "color": "#ff6b6b", "snippet": "TSMC CoWoS packaging capacity"}}, {"data": {"id": "China Market Foreclosure", "label": "China Market Foreclo…", "full_label": "China Market Foreclosure", "type": "RiskFactor", "color": "#ff6b6b", "snippet": "Effectively foreclosed from China data center compute"}}, {"data": {"id": "Intense Market Competition", "label": "Intense Market Compe…", "full_label": "Intense Market Competition", "type": "RiskFactor", "color": "#ff6b6b", "snippet": "Rapid technology change, converging competitors"}}, {"data": {"id": "Intellectual Property Risk", "label": "Intellectual Propert…", "full_label": "Intellectual Property Risk", "type": "RiskFactor", "color": "#ff6b6b", "snippet": "Licensing and IP protection exposures"}}, {"data": {"id": "Advanced Micro Devices, Inc.", "label": "Advanced Micro Devic…", "full_label": "Advanced Micro Devices, Inc.", "type": "Competitor", "color": "#ffd700", "snippet": "Direct GPU and CPU competitor"}}, {"data": {"id": "Intel Corporation", "label": "Intel Corporation", "full_label": "Intel Corporation", "type": "Competitor", "color": "#ffd700", "snippet": "GPU, CPU, AI accelerator competitor"}}, {"data": {"id": "Huawei Technologies Co. Ltd.", "label": "Huawei Technologies …", "full_label": "Huawei Technologies Co. Ltd.", "type": "Competitor", "color": "#ffd700", "snippet": "Chinese AI silicon alternative"}}, {"data": {"id": "Broadcom", "label": "Broadcom", "full_label": "Broadcom", "type": "Competitor", "color": "#ffd700", "snippet": "Networking and custom ASIC"}}, {"data": {"id": "Alphabet Inc.", "label": "Alphabet Inc.", "full_label": "Alphabet Inc.", "type": "Competitor", "color": "#ffd700", "snippet": "TPU and custom silicon"}}, {"data": {"id": "Amazon, Inc.", "label": "Amazon, Inc.", "full_label": "Amazon, Inc.", "type": "Competitor", "color": "#ffd700", "snippet": "Trainium, Inferentia custom silicon"}}, {"data": {"id": "Microsoft Corporation", "label": "Microsoft Corporation", "full_label": "Microsoft Corporation", "type": "Competitor", "color": "#ffd700", "snippet": "Maia AI accelerator"}}, {"data": {"id": "Tesla, Inc.", "label": "Tesla, Inc.", "full_label": "Tesla, Inc.", "type": "Competitor", "color": "#ffd700", "snippet": "Internal AI chip design"}}, {"data": {"id": "Qualcomm Incorporated", "label": "Qualcomm Incorporated", "full_label": "Qualcomm Incorporated", "type": "Competitor", "color": "#ffd700", "snippet": "Mobile and automotive SoCs"}}, {"data": {"id": "Samsung", "label": "Samsung", "full_label": "Samsung", "type": "Competitor", "color": "#ffd700", "snippet": "HBM supplier and custom silicon"}}, {"data": {"id": "United States", "label": "United States", "full_label": "United States", "type": "Region", "color": "#a78bfa", "snippet": "Headquartered in Santa Clara, California"}}, {"data": {"id": "China", "label": "China", "full_label": "China", "type": "Region", "color": "#a78bfa", "snippet": "Export-restricted data center market"}}, {"data": {"id": "Taiwan", "label": "Taiwan", "full_label": "Taiwan", "type": "Region", "color": "#a78bfa", "snippet": "Primary manufacturing via TSMC"}}, {"data": {"id": "Israel", "label": "Israel", "full_label": "Israel", "type": "Region", "color": "#a78bfa", "snippet": "Mellanox-origin networking engineering"}}, {"data": {"id": "Asia", "label": "Asia", "full_label": "Asia", "type": "Region", "color": "#a78bfa", "snippet": "Concentrated supply chain base"}}, {"data": {"id": "Middle East", "label": "Middle East", "full_label": "Middle East", "type": "Region", "color": "#a78bfa", "snippet": "Expanding sovereign AI demand"}}];
+const allEdges = [{"data": {"id": "Jen-Hsun Huang|DISCUSSES|NVIDIA Rubin platform", "source": "Jen-Hsun Huang", "target": "NVIDIA Rubin platform", "label": "DISCUSSES"}}, {"data": {"id": "Jen-Hsun Huang|DISCUSSES|Compute & Networking", "source": "Jen-Hsun Huang", "target": "Compute & Networking", "label": "DISCUSSES"}}, {"data": {"id": "Colette M. Kress|DISCUSSES|H20 Inventory Charge", "source": "Colette M. Kress", "target": "H20 Inventory Charge", "label": "DISCUSSES"}}, {"data": {"id": "Data Center|BELONGS_TO|Compute & Networking", "source": "Data Center", "target": "Compute & Networking", "label": "BELONGS TO"}}, {"data": {"id": "Automotive|BELONGS_TO|Compute & Networking", "source": "Automotive", "target": "Compute & Networking", "label": "BELONGS TO"}}, {"data": {"id": "Gaming|BELONGS_TO|Graphics", "source": "Gaming", "target": "Graphics", "label": "BELONGS TO"}}, {"data": {"id": "Professional Visualization|BELONGS_TO|Graphics", "source": "Professional Visualization", "target": "Graphics", "label": "BELONGS TO"}}, {"data": {"id": "Blackwell architecture|BELONGS_TO|Data Center", "source": "Blackwell architecture", "target": "Data Center", "label": "BELONGS TO"}}, {"data": {"id": "NVIDIA Rubin platform|BELONGS_TO|Data Center", "source": "NVIDIA Rubin platform", "target": "Data Center", "label": "BELONGS TO"}}, {"data": {"id": "Grace CPU|BELONGS_TO|Data Center", "source": "Grace CPU", "target": "Data Center", "label": "BELONGS TO"}}, {"data": {"id": "NVLink Fusion|BELONGS_TO|Data Center", "source": "NVLink Fusion", "target": "Data Center", "label": "BELONGS TO"}}, {"data": {"id": "H20 integrated circuits|BELONGS_TO|Data Center", "source": "H20 integrated circuits", "target": "Data Center", "label": "BELONGS TO"}}, {"data": {"id": "H200 products|BELONGS_TO|Data Center", "source": "H200 products", "target": "Data Center", "label": "BELONGS TO"}}, {"data": {"id": "A100 integrated circuits|BELONGS_TO|Data Center", "source": "A100 integrated circuits", "target": "Data Center", "label": "BELONGS TO"}}, {"data": {"id": "H100 integrated circuits|BELONGS_TO|Data Center", "source": "H100 integrated circuits", "target": "Data Center", "label": "BELONGS TO"}}, {"data": {"id": "GeForce RTX 50 Series|BELONGS_TO|Gaming", "source": "GeForce RTX 50 Series", "target": "Gaming", "label": "BELONGS TO"}}, {"data": {"id": "DRIVE Hyperion|BELONGS_TO|Automotive", "source": "DRIVE Hyperion", "target": "Automotive", "label": "BELONGS TO"}}, {"data": {"id": "CUDA|BELONGS_TO|NVIDIA AI Enterprise", "source": "CUDA", "target": "NVIDIA AI Enterprise", "label": "BELONGS TO"}}, {"data": {"id": "NVIDIA NIM|BELONGS_TO|NVIDIA AI Enterprise", "source": "NVIDIA NIM", "target": "NVIDIA AI Enterprise", "label": "BELONGS TO"}}, {"data": {"id": "NVIDIA NeMo|BELONGS_TO|NVIDIA AI Enterprise", "source": "NVIDIA NeMo", "target": "NVIDIA AI Enterprise", "label": "BELONGS TO"}}, {"data": {"id": "H20 integrated circuits|FACES|Export Control Restrictions", "source": "H20 integrated circuits", "target": "Export Control Restrictions", "label": "FACES"}}, {"data": {"id": "H100 integrated circuits|FACES|Export Control Restrictions", "source": "H100 integrated circuits", "target": "Export Control Restrictions", "label": "FACES"}}, {"data": {"id": "A100 integrated circuits|FACES|Export Control Restrictions", "source": "A100 integrated circuits", "target": "Export Control Restrictions", "label": "FACES"}}, {"data": {"id": "Data Center|FACES|Export Control Restrictions", "source": "Data Center", "target": "Export Control Restrictions", "label": "FACES"}}, {"data": {"id": "Data Center|FACES|H20 Inventory Charge", "source": "Data Center", "target": "H20 Inventory Charge", "label": "FACES"}}, {"data": {"id": "Data Center|FACES|China Market Foreclosure", "source": "Data Center", "target": "China Market Foreclosure", "label": "FACES"}}, {"data": {"id": "Compute & Networking|FACES|GAIN AI Act", "source": "Compute & Networking", "target": "GAIN AI Act", "label": "FACES"}}, {"data": {"id": "Compute & Networking|FACES|Customer Concentration Risk", "source": "Compute & Networking", "target": "Customer Concentration Risk", "label": "FACES"}}, {"data": {"id": "Blackwell architecture|FACES|Third-party Supplier Dependency", "source": "Blackwell architecture", "target": "Third-party Supplier Dependency", "label": "FACES"}}, {"data": {"id": "Advanced Micro Devices, Inc.|COMPETES_WITH|Data Center", "source": "Advanced Micro Devices, Inc.", "target": "Data Center", "label": "COMPETES WITH"}}, {"data": {"id": "Advanced Micro Devices, Inc.|COMPETES_WITH|Gaming", "source": "Advanced Micro Devices, Inc.", "target": "Gaming", "label": "COMPETES WITH"}}, {"data": {"id": "Intel Corporation|COMPETES_WITH|Data Center", "source": "Intel Corporation", "target": "Data Center", "label": "COMPETES WITH"}}, {"data": {"id": "Huawei Technologies Co. Ltd.|COMPETES_WITH|Data Center", "source": "Huawei Technologies Co. Ltd.", "target": "Data Center", "label": "COMPETES WITH"}}, {"data": {"id": "Broadcom|COMPETES_WITH|Compute & Networking", "source": "Broadcom", "target": "Compute & Networking", "label": "COMPETES WITH"}}, {"data": {"id": "Alphabet Inc.|COMPETES_WITH|Data Center", "source": "Alphabet Inc.", "target": "Data Center", "label": "COMPETES WITH"}}, {"data": {"id": "Amazon, Inc.|COMPETES_WITH|Data Center", "source": "Amazon, Inc.", "target": "Data Center", "label": "COMPETES WITH"}}, {"data": {"id": "Microsoft Corporation|COMPETES_WITH|Data Center", "source": "Microsoft Corporation", "target": "Data Center", "label": "COMPETES WITH"}}, {"data": {"id": "Tesla, Inc.|COMPETES_WITH|Automotive", "source": "Tesla, Inc.", "target": "Automotive", "label": "COMPETES WITH"}}, {"data": {"id": "Qualcomm Incorporated|COMPETES_WITH|Automotive", "source": "Qualcomm Incorporated", "target": "Automotive", "label": "COMPETES WITH"}}, {"data": {"id": "Samsung|COMPETES_WITH|Data Center", "source": "Samsung", "target": "Data Center", "label": "COMPETES WITH"}}, {"data": {"id": "Data Center|GENERATES_REVENUE_IN|United States", "source": "Data Center", "target": "United States", "label": "GENERATES REVENUE IN"}}, {"data": {"id": "Data Center|GENERATES_REVENUE_IN|China", "source": "Data Center", "target": "China", "label": "GENERATES REVENUE IN"}}, {"data": {"id": "Gaming|GENERATES_REVENUE_IN|China", "source": "Gaming", "target": "China", "label": "GENERATES REVENUE IN"}}, {"data": {"id": "Data Center|GENERATES_REVENUE_IN|Taiwan", "source": "Data Center", "target": "Taiwan", "label": "GENERATES REVENUE IN"}}, {"data": {"id": "Data Center|GENERATES_REVENUE_IN|Middle East", "source": "Data Center", "target": "Middle East", "label": "GENERATES REVENUE IN"}}];
+
+// --- Edge validation ---
+const nodeIdSet = new Set(allNodes.map(n => n.data.id));
+const validEdges = allEdges.filter(e =>
+  e.data && nodeIdSet.has(e.data.source) && nodeIdSet.has(e.data.target)
+);
+
+// --- Compute degree (undirected) ---
+const degree = {};
+allNodes.forEach(n => { degree[n.data.id] = 0; });
+validEdges.forEach(e => {
+  degree[e.data.source] = (degree[e.data.source] || 0) + 1;
+  degree[e.data.target] = (degree[e.data.target] || 0) + 1;
+});
+
+// --- Find root node (highest degree) ---
+let rootId = allNodes.length > 0 ? allNodes[0].data.id : null;
+let maxDeg = 0;
+Object.entries(degree).forEach(([id, deg]) => {
+  if (deg > maxDeg) { maxDeg = deg; rootId = id; }
+});
+
+// --- Build undirected adjacency list ---
+const adj = {};
+allNodes.forEach(n => { adj[n.data.id] = new Set(); });
+validEdges.forEach(e => {
+  if (adj[e.data.source]) adj[e.data.source].add(e.data.target);
+  if (adj[e.data.target]) adj[e.data.target].add(e.data.source);
+});
+
+// --- BFS up to depth 2, max 5 children per node (sorted by degree desc) ---
+function bfs(startId, maxDepth, maxChildren) {
+  const visited = new Map();
+  if (!startId) return visited;
+  const queue = [[startId, 0]];
+  visited.set(startId, 0);
+  while (queue.length > 0) {
+    const [id, depth] = queue.shift();
+    if (depth < maxDepth) {
+      const neighbors = Array.from(adj[id] || [])
+        .filter(n => !visited.has(n))
+        .sort((a, b) => (degree[b] || 0) - (degree[a] || 0))
+        .slice(0, maxChildren);
+      for (const neighbor of neighbors) {
+        visited.set(neighbor, depth + 1);
+        queue.push([neighbor, depth + 1]);
+      }
+    }
+  }
+  return visited;
+}
+
+// --- Compute focused subgraph ---
+const depthMap = bfs(rootId, 2, 5);
+const subNodeIds = new Set(depthMap.keys());
+
+const focusedNodes = allNodes.filter(n => subNodeIds.has(n.data.id));
+const focusedEdges = validEdges.filter(e =>
+  subNodeIds.has(e.data.source) && subNodeIds.has(e.data.target)
+);
+
+// --- Build legend ---
+const typeColors = {};
+allNodes.forEach(n => {
+  if (n.data && n.data.type && n.data.color) typeColors[n.data.type] = n.data.color;
+});
+const legend = document.getElementById('legend');
+Object.entries(typeColors).forEach(([type, color]) => {
+  const item = document.createElement('div');
+  item.className = 'legend-item';
+  item.innerHTML = `<div class="legend-dot" style="background:${color}"></div><span>${type}</span>`;
+  legend.appendChild(item);
+});
+
+// --- Cytoscape init ---
+const cy = cytoscape({
+  container: document.getElementById('cy'),
+  elements: [],
+  style: [
+    {
+      selector: 'node',
+      style: {
+        'background-color': 'data(color)',
+        'label': 'data(label)',
+        'color': '#ffffff',
+        'font-size': '11px',
+        'font-weight': '600',
+        'text-valign': 'center',
+        'text-halign': 'center',
+        'width': 52,
+        'height': 52,
+        'text-wrap': 'wrap',
+        'text-max-width': '48px',
+        'border-width': 2,
+        'border-color': 'rgba(255,255,255,0.6)',
+        'opacity': 0,
+      }
+    },
+    {
+      // Root node — larger, gold ring
+      selector: 'node.root',
+      style: {
+        'width': 80,
+        'height': 80,
+        'font-size': '12px',
+        'font-weight': '800',
+        'text-max-width': '72px',
+        'border-width': 4,
+        'border-color': '#f59e0b',
+      }
+    },
+    {
+      // Depth-1 nodes — slightly larger
+      selector: 'node.depth1',
+      style: {
+        'width': 62,
+        'height': 62,
+        'font-size': '11px',
+        'border-width': 2,
+        'border-color': 'rgba(255,255,255,0.8)',
+      }
+    },
+    {
+      selector: 'node.visible',
+      style: {
+        'opacity': 1,
+        'transition-property': 'opacity',
+        'transition-duration': '0.3s',
+      }
+    },
+    {
+      selector: 'node:selected',
+      style: {
+        'border-width': 3,
+        'border-color': '#1e3a5f',
+      }
+    },
+    {
+      selector: 'edge',
+      style: {
+        'width': 1.5,
+        'line-color': '#cbd5e1',
+        'target-arrow-color': '#cbd5e1',
+        'target-arrow-shape': 'triangle',
+        'curve-style': 'bezier',
+        'label': 'data(label)',
+        'font-size': '8px',
+        'color': '#94a3b8',
+        'text-background-color': '#f8fafc',
+        'text-background-opacity': 0.9,
+        'text-background-padding': '2px',
+        'opacity': 0,
+      }
+    },
+    {
+      selector: 'edge.visible',
+      style: {
+        'opacity': 0.9,
+        'transition-property': 'opacity',
+        'transition-duration': '0.4s',
+      }
+    },
+  ],
+  layout: { name: 'preset' },
+  userZoomingEnabled: true,
+  userPanningEnabled: true,
+  boxSelectionEnabled: false,
+  minZoom: 0.2,
+  maxZoom: 3,
+});
+
+// --- Render helpers ---
+function renderGraph(nodes, edges, label) {
+  cy.elements().remove();
+  document.getElementById('node-count').textContent = 'Loading...';
+  document.getElementById('popup').style.display = 'none';
+
+  let i = 0;
+  function addNext() {
+    if (i < nodes.length) {
+      const n = nodes[i];
+      try {
+        cy.add(n);
+        const el = cy.getElementById(n.data.id);
+        // Apply depth classes
+        const depth = depthMap.get(n.data.id);
+        if (depth === 0) el.addClass('root');
+        else if (depth === 1) el.addClass('depth1');
+        setTimeout(() => el.addClass('visible'), 20);
+      } catch (_) {}
+      i++;
+      document.getElementById('node-count').textContent =
+        `${i} / ${nodes.length} nodes`;
+      setTimeout(addNext, 60);
+    } else {
+      edges.forEach(e => { try { cy.add(e); } catch (_) {} });
+      setTimeout(() => {
+        cy.edges().addClass('visible');
+        runLayout();
+      }, 80);
+      document.getElementById('node-count').textContent =
+        `${nodes.length} nodes · ${edges.length} edges  |  ${label}`;
+    }
+  }
+  setTimeout(addNext, 200);
+}
+
+function runLayout() {
+  cy.layout({
+    name: 'cose',
+    animate: true,
+    animationDuration: 1200,
+    animationEasing: 'ease-in-out-cubic',
+    fit: true,
+    padding: 50,
+    nodeRepulsion: () => 10000,
+    edgeElasticity: () => 32,
+    idealEdgeLength: () => 90,
+    gravity: 0.25,
+    numIter: 1000,
+    coolingFactor: 0.99,
+  }).run();
+}
+
+// --- Toggle state ---
+let showingFull = false;
+document.getElementById('toggle-btn').addEventListener('click', () => {
+  showingFull = !showingFull;
+  document.getElementById('toggle-btn').textContent =
+    showingFull ? 'Show Focused (Depth 2)' : 'Show Full Graph';
+  if (showingFull) {
+    renderGraph(allNodes, validEdges, 'Full graph');
+  } else {
+    renderGraph(focusedNodes, focusedEdges, `Root: ${rootId} · depth ≤ 2`);
+  }
+});
+
+// --- Initial render ---
+if (allNodes.length === 0) {
+  document.getElementById('node-count').textContent = 'No graph data. Run analysis first.';
+} else {
+  renderGraph(focusedNodes, focusedEdges, `Root: ${rootId} · depth ≤ 2`);
+}
+
+// --- Click handler ---
+cy.on('tap', 'node', function(evt) {
+  const node = evt.target;
+  document.getElementById('popup-title').textContent = node.data('full_label') || node.data('label');
+  document.getElementById('popup-type').textContent = node.data('type') || '';
+  const snippet = node.data('snippet');
+  document.getElementById('popup-snippet').textContent =
+    snippet ? `"${snippet}"` : '(no source snippet)';
+  document.getElementById('popup').style.display = 'block';
+});
+
+cy.on('tap', function(evt) {
+  if (evt.target === cy) document.getElementById('popup').style.display = 'none';
+});
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.28.1/cytoscape.min.js"></script>
+<script>
+const allNodes = [{"data": {"id": "Jen-Hsun Huang", "label": "Jen-Hsun Huang", "full_label": "Jen-Hsun Huang", "type": "Executive", "color": "#4f8ef7", "snippet": "President and CEO"}}, {"data": {"id": "Colette M. Kress", "label": "Colette M. Kress", "full_label": "Colette M. Kress", "type": "Executive", "color": "#4f8ef7", "snippet": "EVP and CFO"}}, {"data": {"id": "Ajay K. Puri", "label": "Ajay K. Puri", "full_label": "Ajay K. Puri", "type": "Executive", "color": "#4f8ef7", "snippet": "EVP, Worldwide Field Operations"}}, {"data": {"id": "Debora Shoquist", "label": "Debora Shoquist", "full_label": "Debora Shoquist", "type": "Executive", "color": "#4f8ef7", "snippet": "EVP, Operations"}}, {"data": {"id": "Timothy S. Teter", "label": "Timothy S. Teter", "full_label": "Timothy S. Teter", "type": "Executive", "color": "#4f8ef7", "snippet": "EVP and General Counsel"}}, {"data": {"id": "Compute & Networking", "label": "Compute & Networking", "full_label": "Compute & Networking", "type": "BusinessSegment", "color": "#00d4aa", "snippet": "Reportable segment covering Data Center, DPU, networking, automotive"}}, {"data": {"id": "Graphics", "label": "Graphics", "full_label": "Graphics", "type": "BusinessSegment", "color": "#00d4aa", "snippet": "Reportable segment covering Gaming, Professional Visualization, Omniverse"}}, {"data": {"id": "Data Center", "label": "Data Center", "full_label": "Data Center", "type": "Product", "color": "#00b894", "snippet": "Platform for AI training and inference"}}, {"data": {"id": "Gaming", "label": "Gaming", "full_label": "Gaming", "type": "Product", "color": "#00b894", "snippet": "GeForce RTX platforms and GeForce NOW"}}, {"data": {"id": "Professional Visualization", "label": "Professional Visuali…", "full_label": "Professional Visualization", "type": "Product", "color": "#00b894", "snippet": "Quadro/NVIDIA RTX GPUs"}}, {"data": {"id": "Automotive", "label": "Automotive", "full_label": "Automotive", "type": "Product", "color": "#00b894", "snippet": "DRIVE platform"}}, {"data": {"id": "Blackwell architecture", "label": "Blackwell architecture", "full_label": "Blackwell architecture", "type": "Product", "color": "#00b894", "snippet": "Data-center-scale offering with extreme co-design"}}, {"data": {"id": "NVIDIA Rubin platform", "label": "NVIDIA Rubin platform", "full_label": "NVIDIA Rubin platform", "type": "Product", "color": "#00b894", "snippet": "Next-gen platform targeting 10x cost-per-token reduction"}}, {"data": {"id": "CUDA", "label": "CUDA", "full_label": "CUDA", "type": "Product", "color": "#00b894", "snippet": "Foundational development platform, 7.5M developers"}}, {"data": {"id": "NVIDIA AI Enterprise", "label": "NVIDIA AI Enterprise", "full_label": "NVIDIA AI Enterprise", "type": "Product", "color": "#00b894", "snippet": "Operating system for enterprise AI applications"}}, {"data": {"id": "NVIDIA NIM", "label": "NVIDIA NIM", "full_label": "NVIDIA NIM", "type": "Product", "color": "#00b894", "snippet": "Inference microservices for token throughput"}}, {"data": {"id": "NVIDIA NeMo", "label": "NVIDIA NeMo", "full_label": "NVIDIA NeMo", "type": "Product", "color": "#00b894", "snippet": "Curation, fine-tuning, reinforcement learning"}}, {"data": {"id": "GeForce RTX 50 Series", "label": "GeForce RTX 50 Series", "full_label": "GeForce RTX 50 Series", "type": "Product", "color": "#00b894", "snippet": "Blackwell consumer GPUs"}}, {"data": {"id": "DRIVE Hyperion", "label": "DRIVE Hyperion", "full_label": "DRIVE Hyperion", "type": "Product", "color": "#00b894", "snippet": "End-to-end AV solution stack"}}, {"data": {"id": "Grace CPU", "label": "Grace CPU", "full_label": "Grace CPU", "type": "Product", "color": "#00b894", "snippet": "Data center CPU"}}, {"data": {"id": "NVLink Fusion", "label": "NVLink Fusion", "full_label": "NVLink Fusion", "type": "Product", "color": "#00b894", "snippet": "Enables hyperscaler and custom ASIC designs"}}, {"data": {"id": "H20 integrated circuits", "label": "H20 integrated circu…", "full_label": "H20 integrated circuits", "type": "Product", "color": "#00b894", "snippet": "Export-restricted China-focused product"}}, {"data": {"id": "H200 products", "label": "H200 products", "full_label": "H200 products", "type": "Product", "color": "#00b894", "snippet": "Permitted with specific USG licenses"}}, {"data": {"id": "A100 integrated circuits", "label": "A100 integrated circ…", "full_label": "A100 integrated circuits", "type": "Product", "color": "#00b894", "snippet": "Original export-restricted chip"}}, {"data": {"id": "H100 integrated circuits", "label": "H100 integrated circ…", "full_label": "H100 integrated circuits", "type": "Product", "color": "#00b894", "snippet": "Flagship Hopper architecture chip"}}, {"data": {"id": "Export Control Restrictions", "label": "Export Control Restr…", "full_label": "Export Control Restrictions", "type": "RiskFactor", "color": "#ff6b6b", "snippet": "Shifting USG export controls on China"}}, {"data": {"id": "Customer Concentration Risk", "label": "Customer Concentrati…", "full_label": "Customer Concentration Risk", "type": "RiskFactor", "color": "#ff6b6b", "snippet": "Concentrated top-customer revenue"}}, {"data": {"id": "H20 Inventory Charge", "label": "H20 Inventory Charge", "full_label": "H20 Inventory Charge", "type": "RiskFactor", "color": "#ff6b6b", "snippet": "$4.5 billion Q1 FY2026 charge"}}, {"data": {"id": "GAIN AI Act", "label": "GAIN AI Act", "full_label": "GAIN AI Act", "type": "RiskFactor", "color": "#ff6b6b", "snippet": "Senate-passed legislation restricting export control flexibility"}}, {"data": {"id": "Third-party Supplier Dependency", "label": "Third-party Supplier…", "full_label": "Third-party Supplier Dependency", "type": "RiskFactor", "color": "#ff6b6b", "snippet": "TSMC CoWoS packaging capacity"}}, {"data": {"id": "China Market Foreclosure", "label": "China Market Foreclo…", "full_label": "China Market Foreclosure", "type": "RiskFactor", "color": "#ff6b6b", "snippet": "Effectively foreclosed from China data center compute"}}, {"data": {"id": "Intense Market Competition", "label": "Intense Market Compe…", "full_label": "Intense Market Competition", "type": "RiskFactor", "color": "#ff6b6b", "snippet": "Rapid technology change, converging competitors"}}, {"data": {"id": "Intellectual Property Risk", "label": "Intellectual Propert…", "full_label": "Intellectual Property Risk", "type": "RiskFactor", "color": "#ff6b6b", "snippet": "Licensing and IP protection exposures"}}, {"data": {"id": "Advanced Micro Devices, Inc.", "label": "Advanced Micro Devic…", "full_label": "Advanced Micro Devices, Inc.", "type": "Competitor", "color": "#ffd700", "snippet": "Direct GPU and CPU competitor"}}, {"data": {"id": "Intel Corporation", "label": "Intel Corporation", "full_label": "Intel Corporation", "type": "Competitor", "color": "#ffd700", "snippet": "GPU, CPU, AI accelerator competitor"}}, {"data": {"id": "Huawei Technologies Co. Ltd.", "label": "Huawei Technologies …", "full_label": "Huawei Technologies Co. Ltd.", "type": "Competitor", "color": "#ffd700", "snippet": "Chinese AI silicon alternative"}}, {"data": {"id": "Broadcom", "label": "Broadcom", "full_label": "Broadcom", "type": "Competitor", "color": "#ffd700", "snippet": "Networking and custom ASIC"}}, {"data": {"id": "Alphabet Inc.", "label": "Alphabet Inc.", "full_label": "Alphabet Inc.", "type": "Competitor", "color": "#ffd700", "snippet": "TPU and custom silicon"}}, {"data": {"id": "Amazon, Inc.", "label": "Amazon, Inc.", "full_label": "Amazon, Inc.", "type": "Competitor", "color": "#ffd700", "snippet": "Trainium, Inferentia custom silicon"}}, {"data": {"id": "Microsoft Corporation", "label": "Microsoft Corporation", "full_label": "Microsoft Corporation", "type": "Competitor", "color": "#ffd700", "snippet": "Maia AI accelerator"}}, {"data": {"id": "Tesla, Inc.", "label": "Tesla, Inc.", "full_label": "Tesla, Inc.", "type": "Competitor", "color": "#ffd700", "snippet": "Internal AI chip design"}}, {"data": {"id": "Qualcomm Incorporated", "label": "Qualcomm Incorporated", "full_label": "Qualcomm Incorporated", "type": "Competitor", "color": "#ffd700", "snippet": "Mobile and automotive SoCs"}}, {"data": {"id": "Samsung", "label": "Samsung", "full_label": "Samsung", "type": "Competitor", "color": "#ffd700", "snippet": "HBM supplier and custom silicon"}}, {"data": {"id": "United States", "label": "United States", "full_label": "United States", "type": "Region", "color": "#a78bfa", "snippet": "Headquartered in Santa Clara, California"}}, {"data": {"id": "China", "label": "China", "full_label": "China", "type": "Region", "color": "#a78bfa", "snippet": "Export-restricted data center market"}}, {"data": {"id": "Taiwan", "label": "Taiwan", "full_label": "Taiwan", "type": "Region", "color": "#a78bfa", "snippet": "Primary manufacturing via TSMC"}}, {"data": {"id": "Israel", "label": "Israel", "full_label": "Israel", "type": "Region", "color": "#a78bfa", "snippet": "Mellanox-origin networking engineering"}}, {"data": {"id": "Asia", "label": "Asia", "full_label": "Asia", "type": "Region", "color": "#a78bfa", "snippet": "Concentrated supply chain base"}}, {"data": {"id": "Middle East", "label": "Middle East", "full_label": "Middle East", "type": "Region", "color": "#a78bfa", "snippet": "Expanding sovereign AI demand"}}];
+const allEdges = [{"data": {"id": "Jen-Hsun Huang|DISCUSSES|NVIDIA Rubin platform", "source": "Jen-Hsun Huang", "target": "NVIDIA Rubin platform", "label": "DISCUSSES"}}, {"data": {"id": "Jen-Hsun Huang|DISCUSSES|Compute & Networking", "source": "Jen-Hsun Huang", "target": "Compute & Networking", "label": "DISCUSSES"}}, {"data": {"id": "Colette M. Kress|DISCUSSES|H20 Inventory Charge", "source": "Colette M. Kress", "target": "H20 Inventory Charge", "label": "DISCUSSES"}}, {"data": {"id": "Data Center|BELONGS_TO|Compute & Networking", "source": "Data Center", "target": "Compute & Networking", "label": "BELONGS TO"}}, {"data": {"id": "Automotive|BELONGS_TO|Compute & Networking", "source": "Automotive", "target": "Compute & Networking", "label": "BELONGS TO"}}, {"data": {"id": "Gaming|BELONGS_TO|Graphics", "source": "Gaming", "target": "Graphics", "label": "BELONGS TO"}}, {"data": {"id": "Professional Visualization|BELONGS_TO|Graphics", "source": "Professional Visualization", "target": "Graphics", "label": "BELONGS TO"}}, {"data": {"id": "Blackwell architecture|BELONGS_TO|Data Center", "source": "Blackwell architecture", "target": "Data Center", "label": "BELONGS TO"}}, {"data": {"id": "NVIDIA Rubin platform|BELONGS_TO|Data Center", "source": "NVIDIA Rubin platform", "target": "Data Center", "label": "BELONGS TO"}}, {"data": {"id": "Grace CPU|BELONGS_TO|Data Center", "source": "Grace CPU", "target": "Data Center", "label": "BELONGS TO"}}, {"data": {"id": "NVLink Fusion|BELONGS_TO|Data Center", "source": "NVLink Fusion", "target": "Data Center", "label": "BELONGS TO"}}, {"data": {"id": "H20 integrated circuits|BELONGS_TO|Data Center", "source": "H20 integrated circuits", "target": "Data Center", "label": "BELONGS TO"}}, {"data": {"id": "H200 products|BELONGS_TO|Data Center", "source": "H200 products", "target": "Data Center", "label": "BELONGS TO"}}, {"data": {"id": "A100 integrated circuits|BELONGS_TO|Data Center", "source": "A100 integrated circuits", "target": "Data Center", "label": "BELONGS TO"}}, {"data": {"id": "H100 integrated circuits|BELONGS_TO|Data Center", "source": "H100 integrated circuits", "target": "Data Center", "label": "BELONGS TO"}}, {"data": {"id": "GeForce RTX 50 Series|BELONGS_TO|Gaming", "source": "GeForce RTX 50 Series", "target": "Gaming", "label": "BELONGS TO"}}, {"data": {"id": "DRIVE Hyperion|BELONGS_TO|Automotive", "source": "DRIVE Hyperion", "target": "Automotive", "label": "BELONGS TO"}}, {"data": {"id": "CUDA|BELONGS_TO|NVIDIA AI Enterprise", "source": "CUDA", "target": "NVIDIA AI Enterprise", "label": "BELONGS TO"}}, {"data": {"id": "NVIDIA NIM|BELONGS_TO|NVIDIA AI Enterprise", "source": "NVIDIA NIM", "target": "NVIDIA AI Enterprise", "label": "BELONGS TO"}}, {"data": {"id": "NVIDIA NeMo|BELONGS_TO|NVIDIA AI Enterprise", "source": "NVIDIA NeMo", "target": "NVIDIA AI Enterprise", "label": "BELONGS TO"}}, {"data": {"id": "H20 integrated circuits|FACES|Export Control Restrictions", "source": "H20 integrated circuits", "target": "Export Control Restrictions", "label": "FACES"}}, {"data": {"id": "H100 integrated circuits|FACES|Export Control Restrictions", "source": "H100 integrated circuits", "target": "Export Control Restrictions", "label": "FACES"}}, {"data": {"id": "A100 integrated circuits|FACES|Export Control Restrictions", "source": "A100 integrated circuits", "target": "Export Control Restrictions", "label": "FACES"}}, {"data": {"id": "Data Center|FACES|Export Control Restrictions", "source": "Data Center", "target": "Export Control Restrictions", "label": "FACES"}}, {"data": {"id": "Data Center|FACES|H20 Inventory Charge", "source": "Data Center", "target": "H20 Inventory Charge", "label": "FACES"}}, {"data": {"id": "Data Center|FACES|China Market Foreclosure", "source": "Data Center", "target": "China Market Foreclosure", "label": "FACES"}}, {"data": {"id": "Compute & Networking|FACES|GAIN AI Act", "source": "Compute & Networking", "target": "GAIN AI Act", "label": "FACES"}}, {"data": {"id": "Compute & Networking|FACES|Customer Concentration Risk", "source": "Compute & Networking", "target": "Customer Concentration Risk", "label": "FACES"}}, {"data": {"id": "Blackwell architecture|FACES|Third-party Supplier Dependency", "source": "Blackwell architecture", "target": "Third-party Supplier Dependency", "label": "FACES"}}, {"data": {"id": "Advanced Micro Devices, Inc.|COMPETES_WITH|Data Center", "source": "Advanced Micro Devices, Inc.", "target": "Data Center", "label": "COMPETES WITH"}}, {"data": {"id": "Advanced Micro Devices, Inc.|COMPETES_WITH|Gaming", "source": "Advanced Micro Devices, Inc.", "target": "Gaming", "label": "COMPETES WITH"}}, {"data": {"id": "Intel Corporation|COMPETES_WITH|Data Center", "source": "Intel Corporation", "target": "Data Center", "label": "COMPETES WITH"}}, {"data": {"id": "Huawei Technologies Co. Ltd.|COMPETES_WITH|Data Center", "source": "Huawei Technologies Co. Ltd.", "target": "Data Center", "label": "COMPETES WITH"}}, {"data": {"id": "Broadcom|COMPETES_WITH|Compute & Networking", "source": "Broadcom", "target": "Compute & Networking", "label": "COMPETES WITH"}}, {"data": {"id": "Alphabet Inc.|COMPETES_WITH|Data Center", "source": "Alphabet Inc.", "target": "Data Center", "label": "COMPETES WITH"}}, {"data": {"id": "Amazon, Inc.|COMPETES_WITH|Data Center", "source": "Amazon, Inc.", "target": "Data Center", "label": "COMPETES WITH"}}, {"data": {"id": "Microsoft Corporation|COMPETES_WITH|Data Center", "source": "Microsoft Corporation", "target": "Data Center", "label": "COMPETES WITH"}}, {"data": {"id": "Tesla, Inc.|COMPETES_WITH|Automotive", "source": "Tesla, Inc.", "target": "Automotive", "label": "COMPETES WITH"}}, {"data": {"id": "Qualcomm Incorporated|COMPETES_WITH|Automotive", "source": "Qualcomm Incorporated", "target": "Automotive", "label": "COMPETES WITH"}}, {"data": {"id": "Samsung|COMPETES_WITH|Data Center", "source": "Samsung", "target": "Data Center", "label": "COMPETES WITH"}}, {"data": {"id": "Data Center|GENERATES_REVENUE_IN|United States", "source": "Data Center", "target": "United States", "label": "GENERATES REVENUE IN"}}, {"data": {"id": "Data Center|GENERATES_REVENUE_IN|China", "source": "Data Center", "target": "China", "label": "GENERATES REVENUE IN"}}, {"data": {"id": "Gaming|GENERATES_REVENUE_IN|China", "source": "Gaming", "target": "China", "label": "GENERATES REVENUE IN"}}, {"data": {"id": "Data Center|GENERATES_REVENUE_IN|Taiwan", "source": "Data Center", "target": "Taiwan", "label": "GENERATES REVENUE IN"}}, {"data": {"id": "Data Center|GENERATES_REVENUE_IN|Middle East", "source": "Data Center", "target": "Middle East", "label": "GENERATES REVENUE IN"}}];
+
+// --- Edge validation ---
+const nodeIdSet = new Set(allNodes.map(n => n.data.id));
+const validEdges = allEdges.filter(e =>
+  e.data && nodeIdSet.has(e.data.source) && nodeIdSet.has(e.data.target)
+);
+
+// --- Compute degree (undirected) ---
+const degree = {};
+allNodes.forEach(n => { degree[n.data.id] = 0; });
+validEdges.forEach(e => {
+  degree[e.data.source] = (degree[e.data.source] || 0) + 1;
+  degree[e.data.target] = (degree[e.data.target] || 0) + 1;
+});
+
+// --- Find root node (highest degree) ---
+let rootId = allNodes.length > 0 ? allNodes[0].data.id : null;
+let maxDeg = 0;
+Object.entries(degree).forEach(([id, deg]) => {
+  if (deg > maxDeg) { maxDeg = deg; rootId = id; }
+});
+
+// --- Build undirected adjacency list ---
+const adj = {};
+allNodes.forEach(n => { adj[n.data.id] = new Set(); });
+validEdges.forEach(e => {
+  if (adj[e.data.source]) adj[e.data.source].add(e.data.target);
+  if (adj[e.data.target]) adj[e.data.target].add(e.data.source);
+});
+
+// --- BFS up to depth 2, max 5 children per node (sorted by degree desc) ---
+function bfs(startId, maxDepth, maxChildren) {
+  const visited = new Map();
+  if (!startId) return visited;
+  const queue = [[startId, 0]];
+  visited.set(startId, 0);
+  while (queue.length > 0) {
+    const [id, depth] = queue.shift();
+    if (depth < maxDepth) {
+      const neighbors = Array.from(adj[id] || [])
+        .filter(n => !visited.has(n))
+        .sort((a, b) => (degree[b] || 0) - (degree[a] || 0))
+        .slice(0, maxChildren);
+      for (const neighbor of neighbors) {
+        visited.set(neighbor, depth + 1);
+        queue.push([neighbor, depth + 1]);
+      }
+    }
+  }
+  return visited;
+}
+
+// --- Compute focused subgraph ---
+const depthMap = bfs(rootId, 2, 5);
+const subNodeIds = new Set(depthMap.keys());
+
+const focusedNodes = allNodes.filter(n => subNodeIds.has(n.data.id));
+const focusedEdges = validEdges.filter(e =>
+  subNodeIds.has(e.data.source) && subNodeIds.has(e.data.target)
+);
+
+// --- Build legend ---
+const typeColors = {};
+allNodes.forEach(n => {
+  if (n.data && n.data.type && n.data.color) typeColors[n.data.type] = n.data.color;
+});
+const legend = document.getElementById('legend');
+Object.entries(typeColors).forEach(([type, color]) => {
+  const item = document.createElement('div');
+  item.className = 'legend-item';
+  item.innerHTML = `<div class="legend-dot" style="background:${color}"></div><span>${type}</span>`;
+  legend.appendChild(item);
+});
+
+// --- Cytoscape init ---
+const cy = cytoscape({
+  container: document.getElementById('cy'),
+  elements: [],
+  style: [
+    {
+      selector: 'node',
+      style: {
+        'background-color': 'data(color)',
+        'label': 'data(label)',
+        'color': '#ffffff',
+        'font-size': '11px',
+        'font-weight': '600',
+        'text-valign': 'center',
+        'text-halign': 'center',
+        'width': 52,
+        'height': 52,
+        'text-wrap': 'wrap',
+        'text-max-width': '48px',
+        'border-width': 2,
+        'border-color': 'rgba(255,255,255,0.6)',
+        'opacity': 0,
+      }
+    },
+    {
+      // Root node — larger, gold ring
+      selector: 'node.root',
+      style: {
+        'width': 80,
+        'height': 80,
+        'font-size': '12px',
+        'font-weight': '800',
+        'text-max-width': '72px',
+        'border-width': 4,
+        'border-color': '#f59e0b',
+      }
+    },
+    {
+      // Depth-1 nodes — slightly larger
+      selector: 'node.depth1',
+      style: {
+        'width': 62,
+        'height': 62,
+        'font-size': '11px',
+        'border-width': 2,
+        'border-color': 'rgba(255,255,255,0.8)',
+      }
+    },
+    {
+      selector: 'node.visible',
+      style: {
+        'opacity': 1,
+        'transition-property': 'opacity',
+        'transition-duration': '0.3s',
+      }
+    },
+    {
+      selector: 'node:selected',
+      style: {
+        'border-width': 3,
+        'border-color': '#1e3a5f',
+      }
+    },
+    {
+      selector: 'edge',
+      style: {
+        'width': 1.5,
+        'line-color': '#cbd5e1',
+        'target-arrow-color': '#cbd5e1',
+        'target-arrow-shape': 'triangle',
+        'curve-style': 'bezier',
+        'label': 'data(label)',
+        'font-size': '8px',
+        'color': '#94a3b8',
+        'text-background-color': '#f8fafc',
+        'text-background-opacity': 0.9,
+        'text-background-padding': '2px',
+        'opacity': 0,
+      }
+    },
+    {
+      selector: 'edge.visible',
+      style: {
+        'opacity': 0.9,
+        'transition-property': 'opacity',
+        'transition-duration': '0.4s',
+      }
+    },
+  ],
+  layout: { name: 'preset' },
+  userZoomingEnabled: true,
+  userPanningEnabled: true,
+  boxSelectionEnabled: false,
+  minZoom: 0.2,
+  maxZoom: 3,
+});
+
+// --- Render helpers ---
+function renderGraph(nodes, edges, label) {
+  cy.elements().remove();
+  document.getElementById('node-count').textContent = 'Loading...';
+  document.getElementById('popup').style.display = 'none';
+
+  let i = 0;
+  function addNext() {
+    if (i < nodes.length) {
+      const n = nodes[i];
+      try {
+        cy.add(n);
+        const el = cy.getElementById(n.data.id);
+        // Apply depth classes
+        const depth = depthMap.get(n.data.id);
+        if (depth === 0) el.addClass('root');
+        else if (depth === 1) el.addClass('depth1');
+        setTimeout(() => el.addClass('visible'), 20);
+      } catch (_) {}
+      i++;
+      document.getElementById('node-count').textContent =
+        `${i} / ${nodes.length} nodes`;
+      setTimeout(addNext, 60);
+    } else {
+      edges.forEach(e => { try { cy.add(e); } catch (_) {} });
+      setTimeout(() => {
+        cy.edges().addClass('visible');
+        runLayout();
+      }, 80);
+      document.getElementById('node-count').textContent =
+        `${nodes.length} nodes · ${edges.length} edges  |  ${label}`;
+    }
+  }
+  setTimeout(addNext, 200);
+}
+
+function runLayout() {
+  cy.layout({
+    name: 'cose',
+    animate: true,
+    animationDuration: 1200,
+    animationEasing: 'ease-in-out-cubic',
+    fit: true,
+    padding: 50,
+    nodeRepulsion: () => 10000,
+    edgeElasticity: () => 32,
+    idealEdgeLength: () => 90,
+    gravity: 0.25,
+    numIter: 1000,
+    coolingFactor: 0.99,
+  }).run();
+}
+
+// --- Toggle state ---
+let showingFull = false;
+document.getElementById('toggle-btn').addEventListener('click', () => {
+  showingFull = !showingFull;
+  document.getElementById('toggle-btn').textContent =
+    showingFull ? 'Show Focused (Depth 2)' : 'Show Full Graph';
+  if (showingFull) {
+    renderGraph(allNodes, validEdges, 'Full graph');
+  } else {
+    renderGraph(focusedNodes, focusedEdges, `Root: ${rootId} · depth ≤ 2`);
+  }
+});
+
+// --- Initial render ---
+if (allNodes.length === 0) {
+  document.getElementById('node-count').textContent = 'No graph data. Run analysis first.';
+} else {
+  renderGraph(focusedNodes, focusedEdges, `Root: ${rootId} · depth ≤ 2`);
+}
+
+// --- Click handler ---
+cy.on('tap', 'node', function(evt) {
+  const node = evt.target;
+  document.getElementById('popup-title').textContent = node.data('full_label') || node.data('label');
+  document.getElementById('popup-type').textContent = node.data('type') || '';
+  const snippet = node.data('snippet');
+  document.getElementById('popup-snippet').textContent =
+    snippet ? `"${snippet}"` : '(no source snippet)';
+  document.getElementById('popup').style.display = 'block';
+});
+
+cy.on('tap', function(evt) {
+  if (evt.target === cy) document.getElementById('popup').style.display = 'none';
+});
+</script>
+</div>
+
+  
+<details class="debug-panel">
+  <summary>Extracted Entities & Relations (49 nodes · 45 edges)</summary>
+  <div class="debug-content">
+    <div class="debug-stats">
+      <span>Nodes: <strong>49</strong></span>
+      <span>Edges: <strong>45</strong></span>
+    </div>
+    <p style="font-size:0.8rem;color:#64748b;margin:0.5rem 0">BusinessSegment: 2, Competitor: 10, Executive: 5, Product: 18, Region: 6, RiskFactor: 8</p>
+    <h4>Entities</h4><table class="data-table"><thead><tr><th>type</th><th>name</th><th>snippet</th></tr></thead><tbody><tr><td>Executive</td><td>Jen-Hsun Huang</td><td>President and CEO</td></tr><tr><td>Executive</td><td>Colette M. Kress</td><td>EVP and CFO</td></tr><tr><td>Executive</td><td>Ajay K. Puri</td><td>EVP, Worldwide Field Operations</td></tr><tr><td>Executive</td><td>Debora Shoquist</td><td>EVP, Operations</td></tr><tr><td>Executive</td><td>Timothy S. Teter</td><td>EVP and General Counsel</td></tr><tr><td>BusinessSegment</td><td>Compute & Networking</td><td>Reportable segment covering Data Center, DPU, networking, au</td></tr><tr><td>BusinessSegment</td><td>Graphics</td><td>Reportable segment covering Gaming, Professional Visualizati</td></tr><tr><td>Product</td><td>Data Center</td><td>Platform for AI training and inference</td></tr><tr><td>Product</td><td>Gaming</td><td>GeForce RTX platforms and GeForce NOW</td></tr><tr><td>Product</td><td>Professional Visualization</td><td>Quadro/NVIDIA RTX GPUs</td></tr><tr><td>Product</td><td>Automotive</td><td>DRIVE platform</td></tr><tr><td>Product</td><td>Blackwell architecture</td><td>Data-center-scale offering with extreme co-design</td></tr><tr><td>Product</td><td>NVIDIA Rubin platform</td><td>Next-gen platform targeting 10x cost-per-token reduction</td></tr><tr><td>Product</td><td>CUDA</td><td>Foundational development platform, 7.5M developers</td></tr><tr><td>Product</td><td>NVIDIA AI Enterprise</td><td>Operating system for enterprise AI applications</td></tr><tr><td>Product</td><td>NVIDIA NIM</td><td>Inference microservices for token throughput</td></tr><tr><td>Product</td><td>NVIDIA NeMo</td><td>Curation, fine-tuning, reinforcement learning</td></tr><tr><td>Product</td><td>GeForce RTX 50 Series</td><td>Blackwell consumer GPUs</td></tr><tr><td>Product</td><td>DRIVE Hyperion</td><td>End-to-end AV solution stack</td></tr><tr><td>Product</td><td>Grace CPU</td><td>Data center CPU</td></tr><tr><td>Product</td><td>NVLink Fusion</td><td>Enables hyperscaler and custom ASIC designs</td></tr><tr><td>Product</td><td>H20 integrated circuits</td><td>Export-restricted China-focused product</td></tr><tr><td>Product</td><td>H200 products</td><td>Permitted with specific USG licenses</td></tr><tr><td>Product</td><td>A100 integrated circuits</td><td>Original export-restricted chip</td></tr><tr><td>Product</td><td>H100 integrated circuits</td><td>Flagship Hopper architecture chip</td></tr><tr><td>RiskFactor</td><td>Export Control Restrictions</td><td>Shifting USG export controls on China</td></tr><tr><td>RiskFactor</td><td>Customer Concentration Risk</td><td>Concentrated top-customer revenue</td></tr><tr><td>RiskFactor</td><td>H20 Inventory Charge</td><td>$4.5 billion Q1 FY2026 charge</td></tr><tr><td>RiskFactor</td><td>GAIN AI Act</td><td>Senate-passed legislation restricting export control flexibi</td></tr><tr><td>RiskFactor</td><td>Third-party Supplier Dependency</td><td>TSMC CoWoS packaging capacity</td></tr><tr><td>RiskFactor</td><td>China Market Foreclosure</td><td>Effectively foreclosed from China data center compute</td></tr><tr><td>RiskFactor</td><td>Intense Market Competition</td><td>Rapid technology change, converging competitors</td></tr><tr><td>RiskFactor</td><td>Intellectual Property Risk</td><td>Licensing and IP protection exposures</td></tr><tr><td>Competitor</td><td>Advanced Micro Devices, Inc.</td><td>Direct GPU and CPU competitor</td></tr><tr><td>Competitor</td><td>Intel Corporation</td><td>GPU, CPU, AI accelerator competitor</td></tr><tr><td>Competitor</td><td>Huawei Technologies Co. Ltd.</td><td>Chinese AI silicon alternative</td></tr><tr><td>Competitor</td><td>Broadcom</td><td>Networking and custom ASIC</td></tr><tr><td>Competitor</td><td>Alphabet Inc.</td><td>TPU and custom silicon</td></tr><tr><td>Competitor</td><td>Amazon, Inc.</td><td>Trainium, Inferentia custom silicon</td></tr><tr><td>Competitor</td><td>Microsoft Corporation</td><td>Maia AI accelerator</td></tr><tr><td>Competitor</td><td>Tesla, Inc.</td><td>Internal AI chip design</td></tr><tr><td>Competitor</td><td>Qualcomm Incorporated</td><td>Mobile and automotive SoCs</td></tr><tr><td>Competitor</td><td>Samsung</td><td>HBM supplier and custom silicon</td></tr><tr><td>Region</td><td>United States</td><td>Headquartered in Santa Clara, California</td></tr><tr><td>Region</td><td>China</td><td>Export-restricted data center market</td></tr><tr><td>Region</td><td>Taiwan</td><td>Primary manufacturing via TSMC</td></tr><tr><td>Region</td><td>Israel</td><td>Mellanox-origin networking engineering</td></tr><tr><td>Region</td><td>Asia</td><td>Concentrated supply chain base</td></tr><tr><td>Region</td><td>Middle East</td><td>Expanding sovereign AI demand</td></tr></tbody></table>
+    <h4>Relationships</h4><table class="data-table"><thead><tr><th>from</th><th>label</th><th>to</th></tr></thead><tbody><tr><td>Jen-Hsun Huang</td><td>DISCUSSES</td><td>NVIDIA Rubin platform</td></tr><tr><td>Jen-Hsun Huang</td><td>DISCUSSES</td><td>Compute & Networking</td></tr><tr><td>Colette M. Kress</td><td>DISCUSSES</td><td>H20 Inventory Charge</td></tr><tr><td>Data Center</td><td>BELONGS TO</td><td>Compute & Networking</td></tr><tr><td>Automotive</td><td>BELONGS TO</td><td>Compute & Networking</td></tr><tr><td>Gaming</td><td>BELONGS TO</td><td>Graphics</td></tr><tr><td>Professional Visualization</td><td>BELONGS TO</td><td>Graphics</td></tr><tr><td>Blackwell architecture</td><td>BELONGS TO</td><td>Data Center</td></tr><tr><td>NVIDIA Rubin platform</td><td>BELONGS TO</td><td>Data Center</td></tr><tr><td>Grace CPU</td><td>BELONGS TO</td><td>Data Center</td></tr><tr><td>NVLink Fusion</td><td>BELONGS TO</td><td>Data Center</td></tr><tr><td>H20 integrated circuits</td><td>BELONGS TO</td><td>Data Center</td></tr><tr><td>H200 products</td><td>BELONGS TO</td><td>Data Center</td></tr><tr><td>A100 integrated circuits</td><td>BELONGS TO</td><td>Data Center</td></tr><tr><td>H100 integrated circuits</td><td>BELONGS TO</td><td>Data Center</td></tr><tr><td>GeForce RTX 50 Series</td><td>BELONGS TO</td><td>Gaming</td></tr><tr><td>DRIVE Hyperion</td><td>BELONGS TO</td><td>Automotive</td></tr><tr><td>CUDA</td><td>BELONGS TO</td><td>NVIDIA AI Enterprise</td></tr><tr><td>NVIDIA NIM</td><td>BELONGS TO</td><td>NVIDIA AI Enterprise</td></tr><tr><td>NVIDIA NeMo</td><td>BELONGS TO</td><td>NVIDIA AI Enterprise</td></tr><tr><td>H20 integrated circuits</td><td>FACES</td><td>Export Control Restrictions</td></tr><tr><td>H100 integrated circuits</td><td>FACES</td><td>Export Control Restrictions</td></tr><tr><td>A100 integrated circuits</td><td>FACES</td><td>Export Control Restrictions</td></tr><tr><td>Data Center</td><td>FACES</td><td>Export Control Restrictions</td></tr><tr><td>Data Center</td><td>FACES</td><td>H20 Inventory Charge</td></tr><tr><td>Data Center</td><td>FACES</td><td>China Market Foreclosure</td></tr><tr><td>Compute & Networking</td><td>FACES</td><td>GAIN AI Act</td></tr><tr><td>Compute & Networking</td><td>FACES</td><td>Customer Concentration Risk</td></tr><tr><td>Blackwell architecture</td><td>FACES</td><td>Third-party Supplier Dependency</td></tr><tr><td>Advanced Micro Devices, Inc.</td><td>COMPETES WITH</td><td>Data Center</td></tr><tr><td>Advanced Micro Devices, Inc.</td><td>COMPETES WITH</td><td>Gaming</td></tr><tr><td>Intel Corporation</td><td>COMPETES WITH</td><td>Data Center</td></tr><tr><td>Huawei Technologies Co. Ltd.</td><td>COMPETES WITH</td><td>Data Center</td></tr><tr><td>Broadcom</td><td>COMPETES WITH</td><td>Compute & Networking</td></tr><tr><td>Alphabet Inc.</td><td>COMPETES WITH</td><td>Data Center</td></tr><tr><td>Amazon, Inc.</td><td>COMPETES WITH</td><td>Data Center</td></tr><tr><td>Microsoft Corporation</td><td>COMPETES WITH</td><td>Data Center</td></tr><tr><td>Tesla, Inc.</td><td>COMPETES WITH</td><td>Automotive</td></tr><tr><td>Qualcomm Incorporated</td><td>COMPETES WITH</td><td>Automotive</td></tr><tr><td>Samsung</td><td>COMPETES WITH</td><td>Data Center</td></tr><tr><td>Data Center</td><td>GENERATES REVENUE IN</td><td>United States</td></tr><tr><td>Data Center</td><td>GENERATES REVENUE IN</td><td>China</td></tr><tr><td>Gaming</td><td>GENERATES REVENUE IN</td><td>China</td></tr><tr><td>Data Center</td><td>GENERATES REVENUE IN</td><td>Taiwan</td></tr><tr><td>Data Center</td><td>GENERATES REVENUE IN</td><td>Middle East</td></tr></tbody></table>
+  </div>
+</details>
+
+</div>
+</body>
+</html>
