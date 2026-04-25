@@ -9,7 +9,8 @@
     "nav": {
       "primary": [
         { "key": "demos", "label": "Demos", "href": "https://demo.hannune.ai", "target": "_blank", "rel": "noopener noreferrer" },
-        { "key": "reports", "label": "Reports", "href": "#reports" }
+        { "key": "reports", "label": "Reports", "href": "#reports" },
+        { "key": "pricing", "label": "Pricing", "href": "/pricing.html" }
       ],
       "actions": [
         {
@@ -260,6 +261,12 @@
   },
 
   "footer": {
-    "text": "Hannune. All rights reserved."
+    "text": "Hannune. All rights reserved. Seoul, Republic of Korea.",
+    "paddle_note": "ER API payments processed by Paddle.com as Merchant of Record",
+    "links": [
+      { "label": "Terms of Service", "href": "/terms.html" },
+      { "label": "Privacy Policy", "href": "/privacy.html" },
+      { "label": "Refund Policy", "href": "/refund.html" }
+    ]
   }
 }

@@ -1028,6 +1028,8 @@ function renderGenericContent(container, content) {
 function renderFooter() {
     const yearSpan = document.getElementById('footer-year');
     const textSpan = document.getElementById('footer-text');
+    const linksDiv = document.getElementById('footer-links');
+    const paddleP = document.getElementById('footer-paddle');
 
     if (yearSpan) {
         yearSpan.textContent = new Date().getFullYear();
@@ -1035,6 +1037,19 @@ function renderFooter() {
 
     if (textSpan && contentData.footer && contentData.footer.text) {
         textSpan.textContent = contentData.footer.text;
+    }
+
+    if (linksDiv && contentData.footer && contentData.footer.links) {
+        contentData.footer.links.forEach(link => {
+            const a = document.createElement('a');
+            a.href = link.href;
+            a.textContent = link.label;
+            linksDiv.appendChild(a);
+        });
+    }
+
+    if (paddleP && contentData.footer && contentData.footer.paddle_note) {
+        paddleP.textContent = contentData.footer.paddle_note;
     }
 }
 
