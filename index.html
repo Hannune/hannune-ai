@@ -1,59 +1,1105 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <title></title>
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hannune — AI Studio for Graph RAG Systems</title>
+<meta name="description" content="Hannune is a Seoul-based AI studio building production Graph RAG systems. Entity Resolution API, analytics platform 2asy.ai, and custom Graph RAG consulting.">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta name="googlebot" content="index, follow">
+<meta name="last-modified" content="2026-04-26">
+<link rel="canonical" href="https://hannune.ai/">
+<meta property="og:title" content="Hannune — AI Studio for Graph RAG Systems">
+<meta property="og:description" content="Hannune is a Seoul-based AI studio building production Graph RAG systems.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hannune.ai/">
+<meta property="og:site_name" content="Hannune">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hannune.ai/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Hannune — AI Studio for Graph RAG Systems">
+<meta name="twitter:description" content="Hannune is a Seoul-based AI studio building production Graph RAG systems.">
+<link rel="stylesheet" href="styles.css">
+<style>
+/* ── Offerings Section ─────────────────────── */
+.section-offerings {
+  background-color: #fff;
+}
+.offerings-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 2rem;
+}
+.offering-card {
+  background: var(--color-light);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  border-top: 4px solid var(--color-dark);
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
+}
+.offering-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+.offering-eyebrow {
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 0.6rem;
+}
+.offering-title {
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: var(--color-dark);
+  margin-bottom: 0.75rem;
+}
+.offering-desc {
+  font-size: 0.9rem;
+  color: var(--color-accent);
+  line-height: 1.7;
+  flex: 1;
+  margin-bottom: 1.5rem;
+}
+.offering-link {
+  display: inline-block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-dark);
+  text-decoration: none;
+  border-bottom: 2px solid var(--color-dark);
+  padding-bottom: 2px;
+  transition: opacity var(--transition-fast);
+}
+.offering-link:hover { opacity: 0.65; }
+.offering-status {
+  display: inline-block;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(122,130,112,0.15);
+  color: var(--color-accent);
+  margin-bottom: 1rem;
+}
+.offering-status.live {
+  background: rgba(111,207,151,0.2);
+  color: #1a7a42;
+}
+.offering-status.available {
+  background: rgba(51,58,47,0.1);
+  color: var(--color-dark);
+}
+@media (max-width: 960px) {
+  .offerings-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Hero (main page variant) ──────────────── */
+.hero-main {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding-top: 80px;
+  overflow: hidden;
+  background: var(--color-light);
+}
+.hero-main .hero-content { text-align: center; z-index: 2; }
+.hero-main .hero-title {
+  font-size: clamp(3rem, 10vw, 6.5rem);
+  font-weight: 700;
+  color: var(--color-dark);
+  line-height: 1;
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.02em;
+}
+.hero-main .hero-subtitle {
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  color: var(--color-accent);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ── Dropdown Nav ─────────────────────────── */
+.nav-dropdown { position: relative; }
+
+.nav-dropdown-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 500;
+  color: var(--color-light);
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: var(--spacing-xs) 0;
+  position: relative;
+}
+.nav-dropdown-toggle::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--color-light);
+  transition: width var(--transition-smooth);
+}
+.nav-dropdown.open .nav-dropdown-toggle::after,
+.nav-dropdown-toggle:hover::after { width: 100%; }
+
+.nav-chevron {
+  font-size: 0.9rem;
+  line-height: 1;
+  transition: transform 0.2s ease;
+  opacity: 0.85;
+}
+.nav-dropdown.open .nav-chevron { transform: rotate(180deg); }
+
+.nav-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 1rem);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-dark);
+  border: 1px solid rgba(235,237,223,0.12);
+  border-radius: 8px;
+  padding: 0.4rem 0;
+  min-width: 190px;
+  list-style: none;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.35);
+  z-index: 200;
+}
+.nav-dropdown.open .nav-dropdown-menu { display: block; }
+
+.nav-dropdown-menu::before,
+.nav-dropdown-menu::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+}
+.nav-dropdown-menu::before { top: -7px; border-bottom: 7px solid rgba(235,237,223,0.15); }
+.nav-dropdown-menu::after  { top: -6px; border-bottom: 7px solid var(--color-dark); }
+
+.nav-dropdown-menu li a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.1rem;
+  color: var(--color-light);
+  text-decoration: none;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  transition: background var(--transition-fast);
+}
+.nav-dropdown-menu li a:hover { background: rgba(235,237,223,0.1); }
+.drop-sublabel {
+  font-size: 0.72rem;
+  color: var(--color-accent);
+  margin-left: auto;
+  padding-left: 0.5rem;
+}
+.drop-divider {
+  height: 1px;
+  background: rgba(235,237,223,0.1);
+  margin: 0.35rem 0;
+}
+
+@media (max-width: 768px) {
+  .nav-dropdown-menu {
+    position: static;
+    transform: none;
+    box-shadow: none;
+    border: none;
+    border-radius: 0;
+    background: rgba(235,237,223,0.05);
+    min-width: auto;
+    padding: 0;
+  }
+  .nav-dropdown-menu::before,
+  .nav-dropdown-menu::after { display: none; }
+  .nav-dropdown-menu li a { padding: 0.5rem 2.5rem; justify-content: center; }
+  .drop-sublabel { display: none; }
+  .nav-dropdown-toggle { width: 100%; justify-content: center; }
+}
+
+/* ── Contact hover dropdown ────────────────── */
+.nav-dropdown-hover:hover .nav-dropdown-menu { display: block; }
+.nav-dropdown-link {
+  font-weight: 500;
+  color: var(--color-light);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: var(--spacing-xs) 0;
+  position: relative;
+}
+.nav-dropdown-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 0; height: 2px;
+  background-color: var(--color-light);
+  transition: width var(--transition-smooth);
+}
+.nav-dropdown-hover:hover .nav-dropdown-link::after,
+.nav-dropdown-link:hover::after { width: 100%; }
+@media (max-width: 768px) {
+  .nav-dropdown-hover .nav-dropdown-menu { display: none !important; }
+  .nav-dropdown-link { width: 100%; justify-content: center; }
+}
+
+/* ── Footer social icons ───────────────────── */
+.footer-bottom-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.footer-social {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.footer-social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+.footer-social-link:hover { color: var(--color-light); }
+.footer-copy {
+  font-size: 0.875rem;
+}
+.last-updated {
+  font-size: 0.75rem;
+  color: var(--color-accent);
+  opacity: 0.6;
+  margin-top: 0.25rem;
+}
+
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Hannune",
+  "alternateName": "한누네",
+  "description": "A Seoul-based AI studio building production Graph RAG systems and AI agents for enterprise teams.",
+  "foundingDate": "2021",
+  "url": "https://hannune.ai",
+  "logo": "https://hannune.ai/logo.png",
+  "email": "contact@hannune.ai",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Seoul",
+    "addressCountry": "KR"
+  },
+  "founder": {
+    "@type": "Person",
+    "name": "TaeHo Kim",
+    "alternateName": "김태호"
+  },
+  "sameAs": [
+    "https://www.linkedin.com/company/hannune",
+    "https://github.com/Hannune",
+    "https://app.hannune.ai",
+    "https://2asy.ai"
+  ],
+  "knowsAbout": [
+    "Graph RAG",
+    "Entity Resolution",
+    "AI Agents",
+    "LangGraph",
+    "Neo4j",
+    "vLLM",
+    "Korean NLP",
+    "Multi-agent Systems"
+  ],
+  "makesOffer": [
+    {
+      "@type": "Offer",
+      "name": "Graph RAG Consulting",
+      "description": "Productized Graph RAG engagements with fixed scope and pricing",
+      "url": "https://hannune.ai/#consulting"
+    },
+    {
+      "@type": "Offer",
+      "name": "Entity Resolution API",
+      "description": "SaaS subscription for record deduplication and linking",
+      "url": "https://app.hannune.ai"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "Graph RAG Consulting",
+  "provider": {
+    "@type": "Organization",
+    "name": "Hannune"
+  },
+  "areaServed": "Worldwide",
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Graph RAG Consulting Packages",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Starter PoC",
+          "description": "3-week Graph RAG prototype validation"
+        },
+        "price": "8999",
+        "priceCurrency": "USD"
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Standard Production",
+          "description": "6-week production Graph RAG system delivery"
+        },
+        "price": "38999",
+        "priceCurrency": "USD"
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Enterprise Full Agent",
+          "description": "12+ week multi-agent system on customer infrastructure"
+        }
+      }
+    ]
+  }
+}
+</script>
 </head>
 <body>
-    <!-- Custom Cursor -->
-    <div class="cursor-dot"></div>
-    <div class="cursor-outline"></div>
 
-    <!-- Navigation - dynamically populated -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="#hero" class="nav-logo">
-                <img src="logo.png" alt="" class="logo-img" id="logo-img">
-            </a>
-            <ul class="nav-menu" id="nav-menu"></ul>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+<div class="cursor-dot"></div>
+<div class="cursor-outline"></div>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- Navigation -->
+<nav class="navbar" aria-label="Main navigation">
+  <div class="nav-container">
+    <a href="/" class="nav-logo">
+      <img src="logo.png" alt="Hannune" class="logo-img">
+    </a>
+    <ul class="nav-menu" id="nav-menu">
+
+      <!-- Flat: products -->
+      <li><a href="#consulting" class="nav-link">Graph RAG</a></li>
+      <li><a href="https://app.hannune.ai" class="nav-link" target="_blank" rel="noopener noreferrer">App</a></li>
+      <li><a href="https://2asy.ai" class="nav-link" target="_blank" rel="noopener noreferrer">2asy</a></li>
+
+      <!-- Work dropdown -->
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+          Work <span class="nav-chevron">▾</span>
+        </button>
+        <ul class="nav-dropdown-menu" role="menu">
+          <li role="none"><a href="#demos" role="menuitem">Demos</a></li>
+          <li role="none"><a href="#reports" role="menuitem">Reports</a></li>
+        </ul>
+      </li>
+
+      <!-- Connect dropdown -->
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+          Connect <span class="nav-chevron">▾</span>
+        </button>
+        <ul class="nav-dropdown-menu" role="menu">
+          <li role="none"><a href="mailto:contact@hannune.ai" role="menuitem">Email</a></li>
+          <li role="none"><a href="https://www.linkedin.com/company/hannune" role="menuitem" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+          <li role="none"><a href="https://github.com/Hannune" role="menuitem" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+        </ul>
+      </li>
+
+      <!-- Contact: scroll to section -->
+      <li><a href="#contact" class="nav-link">Contact</a></li>
+
+    </ul>
+    <div class="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero-main" aria-label="Hero">
+  <div class="container">
+    <div class="hero-content">
+      <h1 class="hero-title">Hannune</h1>
+      <p class="hero-subtitle">A Seoul-based AI studio building production Graph RAG systems.</p>
+    </div>
+  </div>
+  <div class="hero-background">
+    <div class="floating-shape shape-1"></div>
+    <div class="floating-shape shape-2"></div>
+    <div class="floating-shape shape-3"></div>
+  </div>
+</section>
+
+<main id="main-content">
+
+<!-- Three Offerings -->
+<section id="offerings" class="section section-offerings">
+  <div class="section-background">
+    <div class="floating-shape shape-1"></div>
+    <div class="floating-shape shape-2"></div>
+    <div class="floating-shape shape-3"></div>
+  </div>
+  <div class="container">
+    <h2 class="section-title">What Hannune Builds</h2>
+    <div class="offerings-grid">
+
+      <!-- ER API -->
+      <div class="offering-card">
+        <p class="offering-eyebrow">01 · Product</p>
+        <span class="offering-status">Waitlist · Q3 2026</span>
+        <h3 class="offering-title">Entity Resolution API</h3>
+        <p class="offering-desc">Entity Resolution as a service. Deduplication and entity linking across datasets — built on Splink with an LLM disambiguation layer. No self-hosting required. Subscribe from $19/mo.</p>
+        <a href="https://app.hannune.ai" class="offering-link" target="_blank" rel="noopener noreferrer">Visit app.hannune.ai →</a>
+      </div>
+
+      <!-- 2asy -->
+      <div class="offering-card">
+        <p class="offering-eyebrow">02 · Platform</p>
+        <span class="offering-status live">Live now</span>
+        <h3 class="offering-title">2asy.ai</h3>
+        <p class="offering-desc">Graph RAG-powered analytics platform that ingests global economic and geopolitical news daily, extracts causal relationships, and publishes structured analyses with interactive knowledge graphs.</p>
+        <a href="https://2asy.ai" class="offering-link" target="_blank" rel="noopener noreferrer">Visit 2asy.ai →</a>
+      </div>
+
+      <!-- Consulting -->
+      <div class="offering-card">
+        <p class="offering-eyebrow">03 · Service</p>
+        <span class="offering-status available">Available now</span>
+        <h3 class="offering-title">Consulting</h3>
+        <p class="offering-desc">Custom Graph RAG implementation for enterprise teams. Fixed scope, fixed price, fixed timeline. Built on 8+ years of production AI experience across Netflix, Sony, and LG Energy Solution.</p>
+        <a href="#consulting" class="offering-link">See packages ↓</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Consulting Pricing -->
+<section id="consulting" class="section section-selected-work">
+  <div class="section-background">
+    <div class="floating-shape shape-1"></div>
+    <div class="floating-shape shape-2"></div>
+    <div class="floating-shape shape-3"></div>
+  </div>
+  <div class="container">
+    <p class="section-eyebrow">03 · Service <span class="section-status-badge badge-available">Available now</span></p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:end;margin-bottom:3rem;padding-bottom:2rem;border-bottom:1px solid rgba(51,58,47,0.1);">
+      <h2 class="section-title" style="text-align:left;margin-bottom:0;">Graph RAG Consulting</h2>
+      <p style="font-size:1rem;color:var(--color-accent);line-height:1.7;">Productized Graph RAG engagements with fixed scope, fixed price, and fixed timeline. Built on 8 years of production AI experience across Netflix, Sony, and LG Energy Solution, backed by 2 AI optimization patents. Lean studio model — no agency overhead, direct collaboration with the team building your system.</p>
+    </div>
+
+    <div class="consulting-grid">
+      <div class="consulting-card">
+        <p class="consulting-package-label">Package 01 · Validate</p>
+        <h3 class="consulting-name">Starter</h3>
+        <p class="consulting-desc">Prove Graph RAG fits your domain before committing to production.</p>
+        <p class="consulting-price">$8,999<span class="unit"> fixed</span></p>
+        <p class="consulting-price-note"></p>
+        <p class="consulting-duration">3 weeks · Fixed scope</p>
+        <ul class="consulting-features">
+          <li><span class="consulting-feat-label">Scope</span><span>Single data source Graph RAG prototype</span></li>
+          <li><span class="consulting-feat-label">Stack</span><span>LangGraph · Neo4j · vLLM · FastAPI</span></li>
+          <li><span class="consulting-feat-label">Output</span><span>Working prototype + evaluation report</span></li>
+          <li><span class="consulting-feat-label">Incl.</span><span>Architecture recommendation doc</span></li>
+        </ul>
+        <a href="mailto:contact@hannune.ai?subject=Consulting%20inquiry%20-%20Starter%20PoC" class="btn btn-primary">Book discovery call</a>
+      </div>
+
+      <div class="consulting-card">
+        <p class="consulting-package-label">Package 02 · Build</p>
+        <h3 class="consulting-name">Standard</h3>
+        <p class="consulting-desc">Full production Graph RAG system, deployed and running.</p>
+        <p class="consulting-price">$38,999<span class="unit"> fixed</span></p>
+        <p class="consulting-price-note"></p>
+        <p class="consulting-duration">6 weeks · Fixed scope</p>
+        <ul class="consulting-features">
+          <li><span class="consulting-feat-label">Scope</span><span>Multi-source Graph RAG, production deploy</span></li>
+          <li><span class="consulting-feat-label">Stack</span><span>Above + ElasticSearch · LiteLLM · Docker</span></li>
+          <li><span class="consulting-feat-label">Output</span><span>Production system + 1 month hypercare</span></li>
+          <li><span class="consulting-feat-label">Incl.</span><span>Full codebase transfer + docs + training</span></li>
+          <li><span class="consulting-feat-label">SLA</span><span>6-week delivery guarantee</span></li>
+        </ul>
+        <a href="mailto:contact@hannune.ai?subject=Consulting%20inquiry%20-%20Standard%20Production" class="btn btn-primary">Book discovery call</a>
+      </div>
+
+      <div class="consulting-card">
+        <p class="consulting-package-label">Package 03 · Scale</p>
+        <h3 class="consulting-name">Enterprise</h3>
+        <p class="consulting-desc">Multi-agent systems on your infrastructure, fully owned.</p>
+        <p class="consulting-price consulting-price-text">Contact for pricing</p>
+        <p class="consulting-price-note">Typical range $100K–$250K+</p>
+        <p class="consulting-duration">12+ weeks · Custom scope</p>
+        <ul class="consulting-features">
+          <li><span class="consulting-feat-label">Scope</span><span>Multi-agent architecture + on-prem deploy</span></li>
+          <li><span class="consulting-feat-label">Stack</span><span>Above + Crawl4AI · custom MCP servers</span></li>
+          <li><span class="consulting-feat-label">Output</span><span>Full system + 3 months on-call support</span></li>
+          <li><span class="consulting-feat-label">Incl.</span><span>Air-gapped option · custom LLM fine-tune</span></li>
+          <li><span class="consulting-feat-label">SLA</span><span>Dedicated team &amp; support</span></li>
+        </ul>
+        <a href="mailto:contact@hannune.ai?subject=Enterprise%20proposal%20request" class="btn btn-primary">Request proposal</a>
+      </div>
+    </div>
+
+    <div class="retainer-band">
+      <div>
+        <p style="font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-accent);margin-bottom:0.4rem;">Add-on · Ongoing</p>
+        <h3 style="font-size:1.4rem;font-weight:700;color:var(--color-dark);margin-bottom:0.35rem;">Ops Retainer</h3>
+        <p style="font-size:0.875rem;color:var(--color-accent);">Keep the system tuned, updated, and monitored.</p>
+      </div>
+      <p style="font-size:0.9rem;color:var(--color-accent);line-height:1.7;">Available after any completed package. Includes: monthly optimization pass, ingestion pipeline maintenance, model updates, priority Slack support, and up to 8 hours of additive development per month.</p>
+      <div>
+        <span class="retainer-price-from">From</span>
+        <p class="retainer-price">$3,499<span class="unit"> /mo</span></p>
+        <p class="retainer-min">Min. 3 months</p>
+      </div>
+    </div>
+
+    <div class="custom-band">
+      <div>
+        <h3>Custom engagements</h3>
+        <p>Retainer-only arrangements, training programs, or scope beyond the three packages. We reply within 2 business days.</p>
+      </div>
+      <a href="mailto:contact@hannune.ai?subject=Custom%20engagement" class="btn btn-primary">Request a call</a>
+    </div>
+  </div>
+</section>
+
+<!-- Recent Work -->
+<section id="recent-work" class="section section-demos">
+  <div class="section-background">
+    <div class="floating-shape shape-1"></div>
+    <div class="floating-shape shape-2"></div>
+    <div class="floating-shape shape-3"></div>
+  </div>
+  <div class="container">
+    <h2 class="section-title">Recent Work</h2>
+    <div class="work-cards-grid">
+      <div class="work-card">
+        <p class="work-eyebrow">Case 01 · Multi-agent pipeline</p>
+        <h3 class="work-company">LG Energy Solution</h3>
+        <p class="work-meta">Enterprise · 2026 Q1</p>
+        <p class="work-desc">Built a LangGraph-based multi-agent pipeline for talent data acquisition across global sources. Integrated Crawl4AI for structured extraction, EXAONE for domain-specific reasoning, and a custom evaluation framework for output quality.</p>
+        <div class="work-tags">
+          <span class="work-tag">LangGraph</span>
+          <span class="work-tag">Crawl4AI</span>
+          <span class="work-tag">EXAONE</span>
+          <span class="work-tag">Multi-agent</span>
         </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="hero" class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1 class="hero-title" id="hero-title"></h1>
-                <p class="hero-subtitle" id="hero-subtitle"></p>
-            </div>
+      </div>
+      <div class="work-card">
+        <p class="work-eyebrow">Case 02 · Domain-specific search</p>
+        <h3 class="work-company">Gahyun Tax Accounting</h3>
+        <p class="work-meta">SMB · Korean tax domain</p>
+        <p class="work-desc">Developed a Korean-language tax search system for a professional accounting firm. Combined Graph RAG over tax code, precedents, and internal case files with a domain-tuned retrieval layer for fast practitioner lookup.</p>
+        <div class="work-tags">
+          <span class="work-tag">Graph RAG</span>
+          <span class="work-tag">Neo4j</span>
+          <span class="work-tag">Korean NLP</span>
+          <span class="work-tag">Domain search</span>
         </div>
-        <div class="hero-background">
-            <div class="floating-shape shape-1"></div>
-            <div class="floating-shape shape-2"></div>
-            <div class="floating-shape shape-3"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Trust Band -->
+<div class="trust-band">
+  <div class="container">
+    <div class="trust-grid">
+      <div>
+        <p class="trust-number">8 yrs</p>
+        <p class="trust-label">Production AI experience across enterprise clients</p>
+      </div>
+      <div>
+        <p class="trust-number">95%</p>
+        <p class="trust-label">LLM cost reduction via local GPU infrastructure</p>
+      </div>
+      <div>
+        <p class="trust-number">2 patents</p>
+        <p class="trust-label">AI optimization patents registered in South Korea</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 2asy Section -->
+<section id="2asy" class="section section-2asy">
+  <div class="section-background">
+    <div class="floating-shape shape-1"></div>
+    <div class="floating-shape shape-2"></div>
+    <div class="floating-shape shape-3"></div>
+  </div>
+  <div class="container">
+    <h2 class="section-title">2asy.ai — Graph RAG in Production</h2>
+    <p class="section-intro">An automated analysis platform that uses the same Graph RAG pipeline built for clients. Every day, it ingests global economic and geopolitical news, extracts causal relationships, and publishes structured analyses with interactive knowledge graphs.</p>
+    <p class="section-intro section-intro-secondary">Currently tracking oil, energy, and geopolitical developments — the pipeline is domain-agnostic and extends to any document-heavy vertical.</p>
+    <div class="asy-preview">
+      <img src="images/2asy-preview.png" alt="2asy.ai preview showing knowledge graph and analysis" loading="lazy">
+    </div>
+    <ul class="asy-stats">
+      <li>~2,400 articles ingested daily</li>
+      <li>~100 articles selected for knowledge graph</li>
+      <li>Causal graph visualization on every edition</li>
+      <li>Runs on Neo4j + LangGraph + Ghost CMS</li>
+    </ul>
+    <div class="asy-cta-wrap">
+      <a href="https://2asy.ai" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Visit 2asy.ai →</a>
+    </div>
+  </div>
+</section>
+
+<!-- Reports -->
+<section id="reports" class="section section-reports">
+  <div class="section-background">
+    <div class="floating-shape shape-1"></div>
+    <div class="floating-shape shape-2"></div>
+    <div class="floating-shape shape-3"></div>
+  </div>
+  <div class="container">
+    <h2 class="section-title">Reports — Same Pipeline, Different Domains</h2>
+    <p class="section-intro">While 2asy focuses on global macro and geopolitics, the same Graph RAG pipeline works across any document-heavy domain. These are sample analyses on corporate filings, regulatory decisions, and trade policy.</p>
+    <div class="reports-grid">
+
+      <a href="reports/nvidia-10k-fy2026.html" class="report-card">
+        <div class="report-thumb">
+          <img src="https://img.youtube.com/vi/9lCzd_2-LWc/hqdefault.jpg" alt="NVIDIA 10-K FY2026" loading="lazy">
+          <span class="report-domain-badge report-domain-corporate">Corporate</span>
+          <span class="report-duration-badge">60s</span>
         </div>
-    </section>
-
-    <!-- Dynamic sections container -->
-    <main id="sections-container"></main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div id="footer-links" class="footer-legal"></div>
-            <p>© <span id="footer-year"></span> <span id="footer-text"></span></p>
-            <p id="footer-paddle" class="footer-paddle"></p>
+        <div class="report-body">
+          <h3 class="report-title">NVIDIA 10-K FY2026</h3>
+          <p class="report-description">Knowledge graph extraction from NVIDIA's SEC 10-K filing using iXBRL parsing.</p>
+          <span class="report-view-link">View →</span>
         </div>
-    </footer>
+      </a>
 
-    <script src="script.js"></script>
+      <a href="reports/microsoft-activision-cma.html" class="report-card">
+        <div class="report-thumb">
+          <img src="https://img.youtube.com/vi/m8OID3yTKIg/hqdefault.jpg" alt="Microsoft–Activision CMA Final Report" loading="lazy">
+          <span class="report-domain-badge report-domain-ma">M&amp;A</span>
+          <span class="report-duration-badge">60s</span>
+        </div>
+        <div class="report-body">
+          <h3 class="report-title">Microsoft–Activision: CMA Final Report</h3>
+          <p class="report-description">How the UK CMA blocked Microsoft's $68.7B Activision acquisition, mapped from the 418-page final report.</p>
+          <span class="report-view-link">View →</span>
+        </div>
+      </a>
+
+      <a href="reports/ustr-section-301-2024.html" class="report-card">
+        <div class="report-thumb">
+          <img src="https://img.youtube.com/vi/nfGnB-8vCc8/hqdefault.jpg" alt="USTR Section 301: 2024 Four-Year Review" loading="lazy">
+          <span class="report-domain-badge report-domain-trade-policy">Trade Policy</span>
+          <span class="report-duration-badge">60s</span>
+        </div>
+        <div class="report-body">
+          <h3 class="report-title">USTR Section 301: 2024 Four-Year Review</h3>
+          <p class="report-description">US tariff policy on Chinese imports analyzed from the USTR's 187-page review, including 2024 proposed increases.</p>
+          <span class="report-view-link">View →</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- Live Demos -->
+<section id="demos" class="section section-what-i-build">
+  <div class="section-background">
+    <div class="floating-shape shape-1"></div>
+    <div class="floating-shape shape-2"></div>
+    <div class="floating-shape shape-3"></div>
+  </div>
+  <div class="container">
+    <div class="section-title-row">
+      <h2 class="section-title">Live Demos</h2>
+      <a class="demo-title-link" href="https://demo.hannune.ai" target="_blank" rel="noopener noreferrer"><span class="demo-arrow">↗</span></a>
+    </div>
+    <p class="section-intro">Three working AI systems, live and interactive. Each demo reflects a real use case (not a prototype).</p>
+    <div class="decisions-grid">
+
+      <div class="decision-card demo-card">
+        <div class="demo-card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <h4 class="decision-title"><a class="demo-title-link" href="https://demo.hannune.ai/ask-about-hannune/" target="_blank" rel="noopener noreferrer">Ask Hannune <span class="demo-arrow">↗</span></a></h4>
+        <p class="decision-description">Multi-turn AI assistant that answers questions about Hannune based on a structured profile.</p>
+        <div class="demo-card-tags">
+          <span class="demo-tag">Multi-turn</span>
+          <span class="demo-tag">Profile-grounded</span>
+          <span class="demo-tag">Conversational</span>
+        </div>
+      </div>
+
+      <div class="decision-card demo-card">
+        <div class="demo-card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <h4 class="decision-title"><a class="demo-title-link" href="https://demo.hannune.ai/rag/" target="_blank" rel="noopener noreferrer">Document Q&amp;A <span class="demo-arrow">↗</span></a></h4>
+        <p class="decision-description">Upload a PDF and have a multi-turn conversation about its contents using RAG.</p>
+        <div class="demo-card-tags">
+          <span class="demo-tag">PDF Upload</span>
+          <span class="demo-tag">RAG</span>
+          <span class="demo-tag">Multi-turn</span>
+        </div>
+      </div>
+
+      <div class="decision-card demo-card">
+        <div class="demo-card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+        </div>
+        <h4 class="decision-title"><a class="demo-title-link" href="https://demo.hannune.ai/extraction/" target="_blank" rel="noopener noreferrer">Document Extraction <span class="demo-arrow">↗</span></a></h4>
+        <p class="decision-description">Upload a PDF and automatically extract structured fields as JSON.</p>
+        <div class="demo-card-tags">
+          <span class="demo-tag">PDF Upload</span>
+          <span class="demo-tag">Structured Output</span>
+          <span class="demo-tag">JSON</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Selected Work -->
+<section id="selected-work" class="section section-selected-work">
+  <div class="section-background">
+    <div class="floating-shape shape-1"></div>
+    <div class="floating-shape shape-2"></div>
+    <div class="floating-shape shape-3"></div>
+  </div>
+  <div class="container">
+    <h2 class="section-title">Selected Work</h2>
+    <p class="section-intro">Production systems delivered for enterprise clients.</p>
+    <div class="decisions-grid">
+
+      <div class="decision-card">
+        <h4 class="decision-title">LG Energy Solution — Talent Data Automation</h4>
+        <p class="decision-description">Replaced manual candidate data collection by building an AI-driven system that navigates complex websites, extracts structured data, and delivers consistent outputs for internal operations. Tech: Crawl4AI, LangGraph, FastAPI, Python.</p>
+      </div>
+
+      <div class="decision-card">
+        <h4 class="decision-title">AI-powered Legal &amp; Tax Document Search</h4>
+        <p class="decision-description">Reduced time-intensive legal document search for a tax professional client. Search time reduced from up to 5 hours to under 40 minutes, with accuracy improved by over 50%. Tech: LangChain, Ollama, ChromaDB, FastAPI, Docker.</p>
+      </div>
+
+      <div class="decision-card">
+        <h4 class="decision-title">Scenera (TnM AI) — Enterprise AI Systems</h4>
+        <p class="decision-description">Delivered multiple AI systems for enterprise clients across data access, IoT pipelines, video analytics, predictive maintenance, and edge deployment. Tech: Python, FastAPI, Docker, LangChain, SQL, Azure.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- What Hannune Builds (patterns) -->
+<section id="what-hannune-builds" class="section section-what-i-build">
+  <div class="section-background">
+    <div class="floating-shape shape-1"></div>
+    <div class="floating-shape shape-2"></div>
+    <div class="floating-shape shape-3"></div>
+  </div>
+  <div class="container">
+    <h2 class="section-title">What Hannune Builds</h2>
+    <p class="section-intro">Hannune builds systems that reduce manual work across data-heavy, search-heavy, and operational workflows.</p>
+    <div class="patterns-grid">
+
+      <div class="pattern-card">
+        <h4 class="pattern-title">Workflow automation</h4>
+        <div class="pattern-items">
+          <span class="pattern-tag">Manual processes replaced by automated AI pipelines</span>
+          <span class="pattern-tag">Large-scale data collection, extraction, and structuring</span>
+          <span class="pattern-tag">End-to-end document and content workflows</span>
+        </div>
+      </div>
+
+      <div class="pattern-card">
+        <h4 class="pattern-title">Search and agent systems</h4>
+        <div class="pattern-items">
+          <span class="pattern-tag">Query understanding and retrieval pipelines</span>
+          <span class="pattern-tag">Extraction, validation, and structured output generation</span>
+          <span class="pattern-tag">Systems that reduce repetitive document search and review</span>
+        </div>
+      </div>
+
+      <div class="pattern-card">
+        <h4 class="pattern-title">Production deployment</h4>
+        <div class="pattern-items">
+          <span class="pattern-tag">Docker-based infrastructure for reliable operation</span>
+          <span class="pattern-tag">REST API integration into client environments</span>
+          <span class="pattern-tag">Systems running continuously with minimal manual intervention</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Identity -->
+<section id="identity" class="section section-identity">
+  <div class="section-background">
+    <div class="floating-shape shape-1"></div>
+    <div class="floating-shape shape-2"></div>
+    <div class="floating-shape shape-3"></div>
+  </div>
+  <div class="container">
+    <h2 class="section-title">Identity</h2>
+    <p class="section-intro">Hannune works with enterprise and professional clients who need one accountable technical owner from system design to deployment.</p>
+    <ul class="highlights-list">
+      <li>Build and deliver AI systems end-to-end</li>
+      <li>Own architecture, implementation, and deployment directly</li>
+      <li>Contract-based work for enterprise and professional clients</li>
+      <li>Solo by design — centralized responsibility and consistent technical judgment</li>
+    </ul>
+    <div class="structure-block">
+      <h4>Operating Model</h4>
+      <p>One technical owner from system design to deployment, with no handoff gaps between planning, implementation, and operation.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Fit -->
+<section id="fit" class="section section-fit">
+  <div class="section-background">
+    <div class="floating-shape shape-1"></div>
+    <div class="floating-shape shape-2"></div>
+    <div class="floating-shape shape-3"></div>
+  </div>
+  <div class="container">
+    <h2 class="section-title">Fit</h2>
+    <p class="section-intro">Hannune works best where AI can replace real manual workflows and be deployed into actual operations.</p>
+    <div class="boundaries-grid">
+      <div class="boundary-card boundary-fit">
+        <h3 class="boundary-heading">When this is a good fit</h3>
+        <p class="boundary-description">Teams spending too much time on manual data collection, document search, review, extraction, or repetitive operational workflows. Enterprise or professional clients who need a production-ready system and want one accountable owner from design to deployment.</p>
+      </div>
+      <div class="boundary-card boundary-nonfit">
+        <h3 class="boundary-heading">When this may not be a fit</h3>
+        <p class="boundary-description">Projects centered only on research, experimentation, or vague exploration without a clear workflow, operational problem, or deployment goal may be better served elsewhere.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="section section-contact">
+  <div class="section-background">
+    <div class="floating-shape shape-1"></div>
+    <div class="floating-shape shape-2"></div>
+    <div class="floating-shape shape-3"></div>
+  </div>
+  <div class="container">
+    <h2 class="section-title">Get In Touch</h2>
+    <div class="contact-content">
+      <div class="contact-info">
+        <p class="contact-intro">If your team is spending too much time on manual data, search, or document workflows, Hannune can design and deliver a production-ready AI system.</p>
+        <div class="social-links">
+          <a class="social-link" href="mailto:contact@hannune.ai" title="contact@hannune.ai">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          </a>
+          <a class="social-link" href="https://www.linkedin.com/in/taeho-kim-26b139262/" target="_blank" rel="noopener noreferrer" title="LinkedIn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+          </a>
+          <a class="social-link" href="https://github.com/Hannune" target="_blank" rel="noopener noreferrer" title="GitHub">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          </a>
+        </div>
+      </div>
+      <form class="contact-form" id="contact-form">
+        <div class="form-group">
+          <input type="text" name="name" placeholder="Your Name" required autocomplete="name">
+        </div>
+        <div class="form-group">
+          <input type="email" name="email" placeholder="Your Email" required autocomplete="email">
+        </div>
+        <div class="form-group">
+          <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Send Message</button>
+        <div class="form-status" id="form-status"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom-row">
+      <div style="flex:1;"></div>
+      <div class="footer-legal" style="justify-content:center;">
+        <a href="https://app.hannune.ai/terms" target="_blank" rel="noopener noreferrer">Terms</a>
+        <a href="https://app.hannune.ai/privacy" target="_blank" rel="noopener noreferrer">Privacy</a>
+        <a href="https://app.hannune.ai/refund" target="_blank" rel="noopener noreferrer">Refund</a>
+      </div>
+      <div style="flex:1;display:flex;justify-content:flex-end;">
+        <div class="footer-social">
+          <a href="mailto:contact@hannune.ai" class="footer-social-link" aria-label="Email">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/taeho-kim-26b139262/" class="footer-social-link" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <a href="https://github.com/Hannune" class="footer-social-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.2c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <p class="footer-copy">© 2026 Hannune. All rights reserved. Seoul, Republic of Korea.</p>
+    <p class="footer-paddle">ER API payments processed by Paddle.com as Merchant of Record</p>
+    <p class="last-updated"><time datetime="2026-04-26">Last updated: April 26, 2026</time></p>
+  </div>
+</footer>
+
+<script>
+  // ── Dropdown menus ─────────────────────────
+  const dropdowns = document.querySelectorAll('.nav-dropdown');
+
+  function closeAll(except) {
+    dropdowns.forEach(d => {
+      if (d !== except) {
+        d.classList.remove('open');
+        d.querySelector('.nav-dropdown-toggle').setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  dropdowns.forEach(dropdown => {
+    const toggle = dropdown.querySelector('.nav-dropdown-toggle');
+    toggle.addEventListener('click', e => {
+      e.stopPropagation();
+      const isOpen = dropdown.classList.contains('open');
+      closeAll(dropdown);
+      dropdown.classList.toggle('open', !isOpen);
+      toggle.setAttribute('aria-expanded', String(!isOpen));
+    });
+    // Close on menu item click (anchor links like #consulting)
+    dropdown.querySelectorAll('.nav-dropdown-menu a').forEach(a => {
+      a.addEventListener('click', () => {
+        dropdown.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+        // also close mobile menu
+        hamburger && hamburger.classList.remove('active');
+        navMenu && navMenu.classList.remove('active');
+      });
+    });
+  });
+
+  // Close on outside click
+  document.addEventListener('click', () => closeAll(null));
+
+  // Close on Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeAll(null);
+  });
+
+  // ── Hamburger (mobile) ──────────────────────
+  const hamburger = document.querySelector('.hamburger');
+  const navMenu = document.querySelector('.nav-menu');
+  if (hamburger && navMenu) {
+    hamburger.addEventListener('click', e => {
+      e.stopPropagation();
+      hamburger.classList.toggle('active');
+      navMenu.classList.toggle('active');
+    });
+  }
+
+  // ── Custom cursor ───────────────────────────
+  const cursorDot = document.querySelector('.cursor-dot');
+  const cursorOutline = document.querySelector('.cursor-outline');
+  if (cursorDot && cursorOutline) {
+    let mouseX = 0, mouseY = 0, outlineX = 0, outlineY = 0;
+    document.addEventListener('mousemove', e => {
+      mouseX = e.clientX; mouseY = e.clientY;
+      cursorDot.style.transform = `translate(${mouseX - 4}px, ${mouseY - 4}px)`;
+      document.body.classList.add('cursor-active');
+    });
+    (function animateOutline() {
+      outlineX += (mouseX - outlineX) * 0.15;
+      outlineY += (mouseY - outlineY) * 0.15;
+      cursorOutline.style.transform = `translate(${outlineX - 20}px, ${outlineY - 20}px)`;
+      requestAnimationFrame(animateOutline);
+    })();
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+    });
+  }
+
+  // ── Navbar scroll ───────────────────────────
+  window.addEventListener('scroll', () => {
+    const navbar = document.querySelector('.navbar');
+    if (navbar) navbar.style.boxShadow = window.scrollY > 50 ? '0 4px 20px rgba(0,0,0,0.15)' : '0 2px 10px rgba(0,0,0,0.1)';
+  });
+
+  // ── Contact form (Formspree) ─────────────────
+  const contactForm = document.getElementById('contact-form');
+  const formStatus  = document.getElementById('form-status');
+  if (contactForm) {
+    contactForm.addEventListener('submit', async e => {
+      e.preventDefault();
+      formStatus.style.display = 'none';
+      try {
+        const res = await fetch('https://formspree.io/f/xzdbnayo', {
+          method: 'POST',
+          body: new FormData(contactForm),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          formStatus.className = 'form-status success';
+          formStatus.textContent = 'Message sent successfully.';
+          contactForm.reset();
+        } else {
+          formStatus.className = 'form-status error';
+          formStatus.textContent = 'Failed to send message. Please try again.';
+        }
+      } catch {
+        formStatus.className = 'form-status error';
+        formStatus.textContent = 'Network error. Please try again.';
+      }
+      formStatus.style.display = 'block';
+      setTimeout(() => { formStatus.style.display = 'none'; }, 5000);
+    });
+  }
+</script>
+
 </body>
 </html>

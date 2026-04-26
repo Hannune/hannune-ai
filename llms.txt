@@ -1,0 +1,60 @@
+# Hannune
+
+> A Seoul-based AI studio building production Graph RAG systems and
+AI agents for enterprise teams. Founded 2021. 8+ years of production
+AI experience across Netflix, Sony, and LG Energy Solution. 2 AI
+optimization patents registered in South Korea.
+
+## What we do
+
+Hannune offers three categories of services:
+
+1. **Graph RAG Consulting** — Productized engagements with fixed
+   scope, fixed price, and fixed timeline. Three packages: Starter
+   PoC ($8,999, 3 weeks), Standard Production ($38,999, 6 weeks),
+   Enterprise Full Agent (custom pricing, 12+ weeks). Plus Ops
+   Retainer (from $3,499/month) for ongoing support.
+
+2. **Entity Resolution API** — A SaaS subscription product launching
+   Q3 2026. Public tier pricing ($0/$19/$99/$499 per month). Built
+   on Splink with LLM disambiguation. Hosted at app.hannune.ai.
+
+3. **2asy.ai** — Graph RAG-powered analytics platform. A separate
+   product hosted at 2asy.ai.
+
+## Recent work
+
+- LG Energy Solution: LangGraph-based multi-agent pipeline for
+  global talent data acquisition, integrating Crawl4AI and EXAONE.
+- Gahyun Tax Accounting: Korean-language tax search system with
+  Graph RAG over tax code, precedents, and case files.
+- Microsoft Activision CMA Final Report: AI-powered legal and tax
+  document search.
+- Scenera (TinM AI): Enterprise AI systems for multiple sectors.
+
+## Technical stack
+
+LangGraph, Neo4j, vLLM, FastAPI, Crawl4AI, EXAONE, ElasticSearch,
+LiteLLM, Docker. Korean-language NLP and bilingual (Korean/English)
+document processing as core specialties.
+
+## Contact
+
+- Website: https://hannune.ai
+- ER API: https://app.hannune.ai
+- 2asy: https://2asy.ai
+- Email: contact@hannune.ai
+- Location: Seoul, Republic of Korea
+
+## Key pages
+
+- Consulting pricing: https://hannune.ai/#consulting
+- ER API pricing: https://app.hannune.ai/pricing
+- ER API terms: https://app.hannune.ai/terms
+- ER API privacy: https://app.hannune.ai/privacy
+- Selected work: https://hannune.ai/#work
+- Live demos: https://hannune.ai/#demos
+
+## Last updated
+
+2026-04-26
