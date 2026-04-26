@@ -28,13 +28,8 @@
 <!-- Status Bar -->
 <div class="status-bar" role="banner" aria-label="Service availability">
   <span class="status-bar-item">
-    <span class="status-dot"></span>
-    Consulting available now
-  </span>
-  <span class="status-bar-sep" aria-hidden="true">·</span>
-  <span class="status-bar-item">
     <span class="status-dot waitlist"></span>
-    ER API waitlist open — Q2 2026 launch
+    ER API waitlist open — Q2 2026 launch via Paddle
   </span>
   <span class="status-bar-sep" aria-hidden="true">·</span>
   <span class="status-bar-item">
@@ -193,17 +188,18 @@
     <p class="section-eyebrow">02 · Service <span class="section-status-badge badge-available">Available now</span></p>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:end;margin-bottom:3rem;padding-bottom:2rem;border-bottom:1px solid rgba(51,58,47,0.1);">
       <h2 class="section-title" style="text-align:left;margin-bottom:0;">Graph RAG Consulting</h2>
-      <p style="font-size:1rem;color:var(--color-accent);line-height:1.7;">Productized Graph RAG engagements with fixed scope, fixed price, and fixed timeline. Delivered by a senior AI engineer with 8 years of production experience (Netflix, Sony, LG Energy Solution) and 2 AI optimization patents. No agency overhead — you work directly with the person building your system.</p>
+      <p style="font-size:1rem;color:var(--color-accent);line-height:1.7;">Productized Graph RAG engagements with fixed scope, fixed price, and fixed timeline. Built on 8 years of production AI experience across Netflix, Sony, and LG Energy Solution, backed by 2 AI optimization patents. Lean studio model — no agency overhead, direct collaboration with the team building your system.</p>
     </div>
 
     <div class="consulting-grid">
       <!-- Package 01 -->
       <div class="consulting-card">
         <p class="consulting-package-label">Package 01 · Validate</p>
-        <h3 class="consulting-name">Starter PoC</h3>
+        <h3 class="consulting-name">Starter</h3>
         <p class="consulting-desc">Prove Graph RAG fits your domain before committing to production.</p>
         <p class="consulting-price">$8,999<span class="unit"> fixed</span></p>
-        <p class="consulting-duration">3 weeks · 1 senior engineer</p>
+        <p class="consulting-price-note"></p>
+        <p class="consulting-duration">3 weeks · Fixed scope</p>
         <ul class="consulting-features">
           <li><span class="consulting-feat-label">Scope</span><span>Single data source Graph RAG prototype</span></li>
           <li><span class="consulting-feat-label">Stack</span><span>LangGraph · Neo4j · vLLM · FastAPI</span></li>
@@ -214,12 +210,13 @@
       </div>
 
       <!-- Package 02 (featured) -->
-      <div class="consulting-card featured">
+      <div class="consulting-card">
         <p class="consulting-package-label">Package 02 · Build</p>
-        <h3 class="consulting-name">Standard Production</h3>
+        <h3 class="consulting-name">Standard</h3>
         <p class="consulting-desc">Full production Graph RAG system, deployed and running.</p>
         <p class="consulting-price">$38,999<span class="unit"> fixed</span></p>
-        <p class="consulting-duration">6 weeks · 1 senior engineer</p>
+        <p class="consulting-price-note"></p>
+        <p class="consulting-duration">6 weeks · Fixed scope</p>
         <ul class="consulting-features">
           <li><span class="consulting-feat-label">Scope</span><span>Multi-source Graph RAG, production deploy</span></li>
           <li><span class="consulting-feat-label">Stack</span><span>Above + ElasticSearch · LiteLLM · Docker</span></li>
@@ -233,17 +230,17 @@
       <!-- Package 03 -->
       <div class="consulting-card">
         <p class="consulting-package-label">Package 03 · Scale</p>
-        <h3 class="consulting-name">Enterprise Full Agent</h3>
+        <h3 class="consulting-name">Enterprise</h3>
         <p class="consulting-desc">Multi-agent systems on your infrastructure, fully owned.</p>
-        <p class="consulting-price">Contact for pricing</p>
+        <p class="consulting-price consulting-price-text">Contact for pricing</p>
         <p class="consulting-price-note">Typical range $100K–$250K+</p>
-        <p class="consulting-duration">12+ weeks · senior team</p>
+        <p class="consulting-duration">12+ weeks · Custom scope</p>
         <ul class="consulting-features">
           <li><span class="consulting-feat-label">Scope</span><span>Multi-agent architecture + on-prem deploy</span></li>
           <li><span class="consulting-feat-label">Stack</span><span>Above + Crawl4AI · custom MCP servers</span></li>
           <li><span class="consulting-feat-label">Output</span><span>Full system + 3 months on-call support</span></li>
           <li><span class="consulting-feat-label">Incl.</span><span>Air-gapped option · custom LLM fine-tune</span></li>
-          <li><span class="consulting-feat-label">SLA</span><span>Dedicated senior engineer</span></li>
+          <li><span class="consulting-feat-label">SLA</span><span>Dedicated team &amp; support</span></li>
         </ul>
         <a href="mailto:contact@hannune.ai?subject=Enterprise%20proposal%20request" class="btn btn-primary">Request proposal</a>
       </div>
@@ -360,7 +357,7 @@
       </div>
       <div class="faq-item">
         <h4>Who processes payments?</h4>
-        <p>Once the ER API launches, Paddle.com will act as the Merchant of Record for all subscriptions. They handle global tax compliance (VAT, GST, sales tax), PCI compliance, and refund processing. Consulting invoices are paid directly via bank transfer.</p>
+        <p>ER API subscriptions are processed by Paddle.com as Merchant of Record. They handle global tax compliance (VAT, GST, sales tax), PCI compliance, and refund processing for ER API only. Consulting engagements are NOT processed through Paddle — they are billed separately via direct invoice and bank transfer under signed Statements of Work.</p>
       </div>
       <div class="faq-item">
         <h4>What's your refund policy?</h4>

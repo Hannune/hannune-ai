@@ -1,7 +1,7 @@
 {
   "site": {
     "title": "Hannune — AI Automation Engineer",
-    "description": "I build production AI systems that replace manual data, search, and document workflows for enterprise and professional clients, with full ownership from system design to deployment.",
+    "description": "Hannune builds production AI systems that replace manual data, search, and document workflows for enterprise and professional clients, with full ownership from system design to deployment.",
     "logo_alt": "Hannune"
   },
 
@@ -44,7 +44,7 @@
 
   "hero": {
     "title": "AI Automation Engineer | AI Systems Builder",
-    "subtitle": "I help companies replace manual data, search, and document workflows with production-ready AI systems."
+    "subtitle": "Hannune helps companies replace manual data, search, and document workflows with production-ready AI systems."
   },
 
   "section_order": ["2asy", "reports", "demos", "selected-work", "what-i-build", "identity", "fit", "contact"],
@@ -53,7 +53,7 @@
     "2asy": {
       "title": "2asy.ai — Graph RAG in Production",
       "content": {
-        "intro": "An automated analysis platform I run that uses the same Graph RAG pipeline I build for clients. Every day, it ingests global economic and geopolitical news, extracts causal relationships, and publishes structured analyses with interactive knowledge graphs.",
+        "intro": "An automated analysis platform that uses the same Graph RAG pipeline built for clients. Every day, it ingests global economic and geopolitical news, extracts causal relationships, and publishes structured analyses with interactive knowledge graphs.",
         "secondary_intro": "Currently tracking oil, energy, and geopolitical developments — the pipeline is domain-agnostic and extends to any document-heavy vertical.",
         "preview_image": "images/2asy-preview.png",
         "preview_alt": "2asy.ai preview showing knowledge graph and analysis",
@@ -178,7 +178,7 @@
     "what-i-build": {
       "title": "What I Build",
       "content": {
-        "intro": "I build systems that reduce manual work across data-heavy, search-heavy, and operational workflows.",
+        "intro": "Hannune builds systems that reduce manual work across data-heavy, search-heavy, and operational workflows.",
         "patterns": [
           {
             "title": "Workflow automation",
@@ -211,7 +211,7 @@
     "identity": {
       "title": "Identity",
       "content": {
-        "intro": "I work with enterprise and professional clients who need one accountable technical owner from system design to deployment.",
+        "intro": "Hannune works with enterprise and professional clients who need one accountable technical owner from system design to deployment.",
         "points": [
           "Build and deliver AI systems end-to-end",
           "Own architecture, implementation, and deployment directly",
@@ -228,7 +228,7 @@
     "fit": {
       "title": "Fit",
       "content": {
-        "intro": "I work best where AI can replace real manual workflows and be deployed into actual operations.",
+        "intro": "Hannune works best where AI can replace real manual workflows and be deployed into actual operations.",
         "fit": {
           "heading": "When this is a good fit",
           "description": "Teams spending too much time on manual data collection, document search, review, extraction, or repetitive operational workflows. Enterprise or professional clients who need a production-ready system and want one accountable owner from design to deployment."
