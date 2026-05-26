@@ -1,0 +1,23 @@
+[
+  {
+    "slug": "claude-code-production-operator",
+    "file": "claude-code.jpg",
+    "photographer": "Miha Meglic",
+    "photographer_url": "https://unsplash.com/@miha_meglic",
+    "photo_url": "https://unsplash.com/photos/a-control-room-with-a-desk-and-two-chairs-p7Bfwn_VKRQ"
+  },
+  {
+    "slug": "graph-rag-normalization",
+    "file": "graph-rag.jpg",
+    "photographer": "Conny Schneider",
+    "photographer_url": "https://unsplash.com/@choys_",
+    "photo_url": "https://unsplash.com/photos/a-blue-background-with-lines-and-dots-xuTJZ7uD7PI"
+  },
+  {
+    "slug": "entity-resolution-api",
+    "file": "entity-resolution.jpg",
+    "photographer": "Martin Martz",
+    "photographer_url": "https://unsplash.com/@martz90",
+    "photo_url": "https://unsplash.com/photos/a-dark-background-with-a-purple-geometric-design-Wa-3T6d0rBo"
+  }
+]

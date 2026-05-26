@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entity Resolution as an API: How I Built It, Over-Fit It, and Fixed It — Hannune</title>
+    <meta name="description" content="I turned entity resolution into a single API call by wrapping Splink with a registry that learns aliases over time. Then I over-fit my own evaluation set. An honest account of building ER API and why good numbers on your own data can be the most misleading signal.">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <link rel="canonical" href="https://hannune.ai/blog/entity-resolution-api.html">
+    <meta property="og:title" content="Entity Resolution as an API: How I Built It, Over-Fit It, and Fixed It">
+    <meta property="og:description" content="Turning entity resolution into a single API call by wrapping Splink, then walking into the classic over-fit trap, and how I fixed it with a held-out evaluation set.">
+    <meta property="og:url" content="https://hannune.ai/blog/entity-resolution-api.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Hannune">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Entity Resolution as an API: How I Built It, Over-Fit It, and Fixed It">
+    <meta name="twitter:description" content="Wrapping Splink into an API, then walking into the classic over-fit trap and fixing it.">
+    <meta property="og:image" content="https://hannune.ai/blog/images/entity-resolution.jpg">
+    <meta name="twitter:image" content="https://hannune.ai/blog/images/entity-resolution.jpg">
+    <link rel="stylesheet" href="../styles.css">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Entity Resolution as an API: How I Built It, Over-Fit It, and Fixed It",
+      "description": "I turned entity resolution into a single API call by wrapping Splink with a registry that learns aliases over time, then over-fit my own evaluation set and fixed it with a held-out set.",
+      "datePublished": "2026-05-26",
+      "dateModified": "2026-05-26",
+      "inLanguage": "en",
+      "author": {
+        "@type": "Person",
+        "name": "TaeHo Kim",
+        "alternateName": "김태호",
+        "url": "https://hannune.ai/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Hannune",
+        "logo": { "@type": "ImageObject", "url": "https://hannune.ai/logo.png" }
+      },
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://hannune.ai/blog/entity-resolution-api.html" },
+      "keywords": ["entity resolution", "record linkage", "deduplication", "Splink", "FastAPI", "ER API", "over-fitting", "held-out evaluation"],
+      "about": ["entity resolution", "record linkage", "data deduplication"]
+    }
+    </script>
+    <style>
+      .post-body { max-width: 760px; margin: 0 auto; }
+      .post-body h2 { font-size: 1.6rem; margin-top: 2.5rem; margin-bottom: 0.9rem; color: var(--color-dark); }
+      .post-body p { font-size: 1.02rem; line-height: 1.8; color: var(--color-dark); margin-bottom: 1.1rem; }
+      .post-body ul, .post-body ol { margin: 0 0 1.3rem 1.3rem; }
+      .post-body li { font-size: 1.02rem; line-height: 1.75; margin-bottom: 0.6rem; }
+      .post-body .lede { font-size: 1.18rem; line-height: 1.7; color: var(--color-accent); margin-bottom: 1.8rem; }
+      .post-body code { background: rgba(51,58,47,0.08); padding: 0.1rem 0.35rem; border-radius: 4px; font-size: 0.92em; }
+      .post-hero { display: block; width: 100%; max-width: 900px; margin: 1.5rem auto 0.5rem; aspect-ratio: 1200 / 630; object-fit: cover; border-radius: 12px; }
+      .photo-credit { max-width: 900px; margin: 0 auto 2rem; font-size: 0.78rem; color: var(--color-accent); opacity: 0.75; text-align: right; }
+      .photo-credit a { color: inherit; }
+    </style>
+</head>
+<body>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-logo">
+                <img src="../logo.png" alt="Hannune" class="logo-img">
+            </a>
+        </div>
+    </nav>
+
+    <main class="rd-page">
+        <div class="container">
+
+            <a href="index.html" class="report-back-link">← Back to writing</a>
+
+            <div class="rd-header">
+                <h1 class="rd-title">Entity Resolution as an API: How I Built It, Over-Fit It, and Fixed It</h1>
+                <p class="rd-meta">By TaeHo Kim (Hannune) &nbsp;·&nbsp; Published May 26, 2026</p>
+            </div>
+
+            <img class="post-hero" src="images/entity-resolution.jpg" alt="Purple geometric pattern of connected shapes representing entity matching" width="1200" height="630" loading="eager">
+            <p class="photo-credit">Photo by <a href="https://unsplash.com/@martz90" target="_blank" rel="noopener noreferrer">Martin Martz</a> on <a href="https://unsplash.com/photos/a-dark-background-with-a-purple-geometric-design-Wa-3T6d0rBo" target="_blank" rel="noopener noreferrer">Unsplash</a></p>
+
+            <article class="post-body">
+
+                <p class="lede">Entity resolution sounds simple until you try to build it. I have been turning it into an API called ER API, built on the open-source library Splink. This is an honest account of the design, including the part where I fooled myself by over-fitting my own evaluation set.</p>
+
+                <h2>What is entity resolution and why is it hard?</h2>
+                <p>Entity resolution answers one question: are these two records the same real-world thing? It sounds like a lookup. It is not. Names vary, abbreviations diverge, and the same company appears with a dozen spellings across a dozen documents. "Goldman Sachs", "Goldman Sachs &amp; Co.", and "GS Group" all refer to one entity, and a naive string match misses that.</p>
+                <p>Doing this reliably at scale means probabilistic matching, not exact matching. That is real engineering, and most teams do not want to build it from scratch.</p>
+
+                <h2>Why I wrapped Splink instead of building from scratch</h2>
+                <p>ER API is a FastAPI service that wraps Splink, an open-source probabilistic record-linkage library built by the UK Ministry of Justice data team. Splink does the hard statistical work well, but it has a setup curve. The idea behind ER API is simple: you send records, you get back match decisions, and you never stand up a probabilistic matching pipeline yourself.</p>
+                <p>Credit where it is due. Splink is the engine. ER API is the layer that makes that engine usable through a single endpoint, with an added disambiguation step for the hard cases.</p>
+
+                <h2>The registry: how do matches get better over time?</h2>
+                <p>The part I did not plan for was the registry. Every time ER API confirms a match, it learns a new alias. "Goldman Sachs", "Goldman Sachs &amp; Co.", and "GS Group" collapse to one canonical entry. The registry grows, and future matches improve without retraining.</p>
+                <p>That compounding behavior was not in the original spec. I added it mid-build because the alternative, starting cold on every request, produced too many false negatives on well-known entities. A system that forgets everything between requests is a system that keeps making the same mistakes.</p>
+
+                <h2>The trap: over-fitting my own evaluation set</h2>
+                <p>Then I walked into the classic trap. I was tuning match thresholds against a ground-truth set I had built myself. The results looked good, better than I expected, so I shipped that configuration.</p>
+                <p>When I tested ER API against a different dataset, quality dropped noticeably. The threshold was right for my evaluation set. It was not right for the problem. I had over-fit to my own test data, which means I had measured my ability to memorize one distribution, not my ability to generalize to new ones.</p>
+
+                <h2>How I fixed it: a held-out evaluation set</h2>
+                <p>The fix was not subtle, but the mistake still caught me. If you tune and evaluate on the same distribution, you are not measuring quality. You are measuring overlap. I rebuilt the evaluation process around a held-out set that I never touch during tuning.</p>
+                <p>The reported quality got more modest. The actual behavior got more honest. That trade is always worth it, because the only number that matters is the one you see on data you did not tune against.</p>
+
+                <h2>What is next</h2>
+                <p>ER API is still in active development. Registry persistence, a batch endpoint, and documentation are the next steps before launch. If you work on record linkage, deduplication, or entity resolution, I am looking for a small group of early users to give it a real workout. The contact link is below.</p>
+
+            </article>
+
+            <div class="rd-cta">
+                <h2>Work on record linkage or deduplication?</h2>
+                <a href="../index.html#contact" class="btn btn-primary">Ask about ER API early access →</a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; <span id="footer-year">2026</span> Hannune. All rights reserved. Seoul, Republic of Korea.</p>
+        </div>
+    </footer>
+
+    <script>
+      var fy = document.getElementById('footer-year');
+      if (fy) fy.textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

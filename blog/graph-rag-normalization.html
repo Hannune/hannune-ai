@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Real Work in Graph RAG Is Not Extraction — Hannune</title>
+    <meta name="description" content="Building the seed knowledge graph for 2asy.ai taught me that extraction is the easy part of Graph RAG. The real work is normalization: collapsing 360 relation types into 80 canonical forms, merging duplicate entities, and fixing evidence so the causal graph is walkable.">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <link rel="canonical" href="https://hannune.ai/blog/graph-rag-normalization.html">
+    <meta property="og:title" content="The Real Work in Graph RAG Is Not Extraction">
+    <meta property="og:description" content="Extraction is the easy part of Graph RAG. The real work is normalization: 360 relation types down to 80 canonical forms, duplicate entities merged, evidence fixed so the causal graph is walkable.">
+    <meta property="og:url" content="https://hannune.ai/blog/graph-rag-normalization.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Hannune">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The Real Work in Graph RAG Is Not Extraction">
+    <meta name="twitter:description" content="Extraction is the easy part of Graph RAG. The real work is normalization.">
+    <meta property="og:image" content="https://hannune.ai/blog/images/graph-rag.jpg">
+    <meta name="twitter:image" content="https://hannune.ai/blog/images/graph-rag.jpg">
+    <link rel="stylesheet" href="../styles.css">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "The Real Work in Graph RAG Is Not Extraction",
+      "description": "Building the seed knowledge graph for 2asy.ai taught me that extraction is the easy part of Graph RAG. The real work is normalization: collapsing relation types into a canonical vocabulary, merging duplicate entities, and fixing evidence so the causal graph is walkable.",
+      "datePublished": "2026-05-26",
+      "dateModified": "2026-05-26",
+      "inLanguage": "en",
+      "author": {
+        "@type": "Person",
+        "name": "TaeHo Kim",
+        "alternateName": "김태호",
+        "url": "https://hannune.ai/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Hannune",
+        "logo": { "@type": "ImageObject", "url": "https://hannune.ai/logo.png" }
+      },
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://hannune.ai/blog/graph-rag-normalization.html" },
+      "keywords": ["Graph RAG", "knowledge graph", "entity normalization", "relation types", "Neo4j", "2asy.ai", "local LLM", "causal graph"],
+      "about": ["Graph RAG", "knowledge graph normalization", "entity resolution"]
+    }
+    </script>
+    <style>
+      .post-body { max-width: 760px; margin: 0 auto; }
+      .post-body h2 { font-size: 1.6rem; margin-top: 2.5rem; margin-bottom: 0.9rem; color: var(--color-dark); }
+      .post-body p { font-size: 1.02rem; line-height: 1.8; color: var(--color-dark); margin-bottom: 1.1rem; }
+      .post-body ul, .post-body ol { margin: 0 0 1.3rem 1.3rem; }
+      .post-body li { font-size: 1.02rem; line-height: 1.75; margin-bottom: 0.6rem; }
+      .post-body .lede { font-size: 1.18rem; line-height: 1.7; color: var(--color-accent); margin-bottom: 1.8rem; }
+      .post-body code { background: rgba(51,58,47,0.08); padding: 0.1rem 0.35rem; border-radius: 4px; font-size: 0.92em; }
+      .post-hero { display: block; width: 100%; max-width: 900px; margin: 1.5rem auto 0.5rem; aspect-ratio: 1200 / 630; object-fit: cover; border-radius: 12px; }
+      .photo-credit { max-width: 900px; margin: 0 auto 2rem; font-size: 0.78rem; color: var(--color-accent); opacity: 0.75; text-align: right; }
+      .photo-credit a { color: inherit; }
+    </style>
+</head>
+<body>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-logo">
+                <img src="../logo.png" alt="Hannune" class="logo-img">
+            </a>
+        </div>
+    </nav>
+
+    <main class="rd-page">
+        <div class="container">
+
+            <a href="index.html" class="report-back-link">← Back to writing</a>
+
+            <div class="rd-header">
+                <h1 class="rd-title">The Real Work in Graph RAG Is Not Extraction</h1>
+                <p class="rd-meta">By TaeHo Kim (Hannune) &nbsp;·&nbsp; Published May 26, 2026</p>
+            </div>
+
+            <img class="post-hero" src="images/graph-rag.jpg" alt="Abstract blue network of nodes and connecting lines representing a knowledge graph" width="1200" height="630" loading="eager">
+            <p class="photo-credit">Photo by <a href="https://unsplash.com/@choys_" target="_blank" rel="noopener noreferrer">Conny Schneider</a> on <a href="https://unsplash.com/photos/a-blue-background-with-lines-and-dots-xuTJZ7uD7PI" target="_blank" rel="noopener noreferrer">Unsplash</a></p>
+
+            <article class="post-body">
+
+                <p class="lede">Extraction is the easy part of Graph RAG. I learned this building the seed knowledge graph for 2asy.ai. The pipeline ran, the numbers looked fine, and the graph was still broken. The real work was normalization, and it took far longer than extraction.</p>
+
+                <h2>Why does a freshly extracted knowledge graph look fine but break?</h2>
+                <p>I built a seed knowledge graph for 2asy.ai from roughly 450 documents, extracting more than 3,000 entities and over 1,000 events. The extraction pipeline ran cleanly. The counts looked healthy. Then I actually looked at the graph, and it was not navigable.</p>
+                <p>A knowledge graph is only useful when you can walk it: follow an entity to an event, an event to its cause, a cause to the entity behind it. Mine could not be walked, because the same real-world idea had been recorded under many different names. The numbers measured volume, not consistency.</p>
+
+                <h2>The relation layer: how 360 labels became 80 canonical types</h2>
+                <p>The relation types were the worst offender. Over 360 distinct labels had accumulated. The language model named the same structural idea differently depending on the article it was reading at the time. <code>caused_by</code>, <code>is_caused_by</code>, and <code>was_caused_by</code> were three labels for one relationship. <code>triggers</code>, <code>trigger</code>, and <code>triggered_by</code> were three more.</p>
+                <p>A graph with 360 relation types is not a knowledge graph. It is an expensive document store. So I stopped extracting and went backward. I mapped every relation type down to 80 canonical forms and renamed the edges, hundreds of them. The graph shrank in variety and became navigable for the first time.</p>
+
+                <h2>The entity layer: why "aluminium" and "aluminum" break a causal chain</h2>
+                <p>The entity layer had a different failure. "Aluminium", "aluminum", and "ALUMINUM" were three separate nodes with zero edges connecting them. A causal chain breaks cleanly at the first spelling inconsistency, because the graph does not know the three nodes are the same metal.</p>
+                <p>I merged the duplicates. I also fixed evidence substrings so each relation points back to the exact sentence that produced it, not a paraphrased approximation. Evidence that does not match its source is evidence you cannot trust later.</p>
+
+                <h2>How do you stop the cleanup from happening twice?</h2>
+                <p>Cleaning once is not enough if the next extraction run reinvents the mess. So I added validation that enforces the 80-type vocabulary at extraction time. New runs must use an existing canonical relation type instead of inventing a new label. The cleanup becomes a one-time cost, not a recurring tax.</p>
+
+                <h2>Running the whole pipeline on local hardware</h2>
+                <p>All of this ran on local hardware: an RTX 4090 and an AMD W6800, with Gemma and Qwen models handling the language work. There was no cloud bill for the extraction, the normalization, or the validation. For a one-person operation, owning the inference cost structure is what makes a daily Graph RAG pipeline affordable to run at all.</p>
+
+                <h2>The lesson: plan for cleanup before extraction</h2>
+                <p>If you are building Graph RAG, plan for the cleanup phase before you start the extraction phase. The language model will produce plausible output. The graph will look dense. The counts will feel satisfying. None of that means the graph is usable.</p>
+                <p>A knowledge graph becomes useful only when the entity and relation layers are consistent enough to walk. In my case, extraction took days and normalization took weeks. The seed graph for 2asy.ai now runs causal-chain queries against 80 canonical relation types, with every edge linked back to its source sentence.</p>
+
+            </article>
+
+            <div class="rd-cta">
+                <h2>Need a Graph RAG system that is actually navigable?</h2>
+                <a href="../index.html#contact" class="btn btn-primary">Get in touch →</a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; <span id="footer-year">2026</span> Hannune. All rights reserved. Seoul, Republic of Korea.</p>
+        </div>
+    </footer>
+
+    <script>
+      var fy = document.getElementById('footer-year');
+      if (fy) fy.textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

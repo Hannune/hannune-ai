@@ -296,6 +296,27 @@
   margin-top: 0.25rem;
 }
 
+/* ── Nav CTA button ────────────────────────── */
+.nav-cta-item { display: flex; align-items: center; }
+.nav-cta {
+  display: inline-block;
+  background: var(--color-light);
+  color: var(--color-dark) !important;
+  padding: 0.45rem 1.15rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+.nav-cta:hover { opacity: 0.85; transform: translateY(-1px); }
+.nav-cta::after { display: none !important; }
+@media (max-width: 768px) {
+  .nav-cta-item { justify-content: center; }
+  .nav-cta { display: block; text-align: center; margin: 0.5rem 0; }
+}
+
 </style>
 <script type="application/ld+json">
 {
@@ -412,10 +433,20 @@
     </a>
     <ul class="nav-menu" id="nav-menu">
 
-      <!-- Flat: products -->
-      <li><a href="#consulting" class="nav-link">Graph RAG</a></li>
-      <li><a href="https://app.hannune.ai" class="nav-link" target="_blank" rel="noopener noreferrer">App</a></li>
-      <li><a href="https://2asy.ai" class="nav-link" target="_blank" rel="noopener noreferrer">2asy</a></li>
+      <!-- Services dropdown -->
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+          Services <span class="nav-chevron">▾</span>
+        </button>
+        <ul class="nav-dropdown-menu" role="menu">
+          <li role="none"><a href="#consulting" role="menuitem">Graph RAG Consulting</a></li>
+          <li role="none"><a href="https://app.hannune.ai" role="menuitem" target="_blank" rel="noopener noreferrer">ER API (App)</a></li>
+          <li role="none"><a href="https://2asy.ai" role="menuitem" target="_blank" rel="noopener noreferrer">2asy.ai</a></li>
+        </ul>
+      </li>
+
+      <!-- Flat: blog -->
+      <li><a href="blog/" class="nav-link">Blog</a></li>
 
       <!-- Work dropdown -->
       <li class="nav-dropdown">
@@ -442,6 +473,9 @@
 
       <!-- Contact: scroll to section -->
       <li><a href="#contact" class="nav-link">Contact</a></li>
+
+      <!-- Primary CTA: book a call -->
+      <li class="nav-cta-item"><a href="mailto:contact@hannune.ai?subject=Graph%20RAG%20consulting%20inquiry" class="nav-cta">Book a call</a></li>
 
     </ul>
     <div class="hamburger" aria-label="Toggle menu">

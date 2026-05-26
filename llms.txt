@@ -38,6 +38,32 @@ LangGraph, Neo4j, vLLM, FastAPI, Crawl4AI, EXAONE, ElasticSearch,
 LiteLLM, Docker. Korean-language NLP and bilingual (Korean/English)
 document processing as core specialties.
 
+## Writing
+
+Build-in-public essays on Claude Code, Graph RAG, entity resolution,
+and operating autonomous AI agents. Index at https://hannune.ai/blog/
+
+- How I Turned Claude Code Into the Operator of a One-Person AI Company
+  (2026-05-26): Moving Claude Code from autocomplete to a production
+  operator using a layered CLAUDE.md, seven sub-agents, persistent
+  memory, and hard guardrails enforced by hooks. Core thesis: the hard
+  part of production AI agents is operational discipline, not prompting.
+  https://hannune.ai/blog/claude-code-production-operator.html
+
+- The Real Work in Graph RAG Is Not Extraction (2026-05-26): Building
+  the seed knowledge graph for 2asy.ai. Extraction is the easy part.
+  The real work is normalization: collapsing 360 relation types into
+  80 canonical forms, merging duplicate entities, and fixing evidence
+  so the causal graph is walkable. Runs on local GPU hardware.
+  https://hannune.ai/blog/graph-rag-normalization.html
+
+- Entity Resolution as an API: How I Built It, Over-Fit It, and Fixed
+  It (2026-05-26): Turning entity resolution into a single API call by
+  wrapping Splink (open-source, UK Ministry of Justice) with a registry
+  that learns aliases over time. Includes an honest account of over-
+  fitting a self-built evaluation set and fixing it with a held-out set.
+  https://hannune.ai/blog/entity-resolution-api.html
+
 ## Contact
 
 - Website: https://hannune.ai
@@ -54,7 +80,8 @@ document processing as core specialties.
 - ER API privacy: https://app.hannune.ai/privacy
 - Selected work: https://hannune.ai/#work
 - Live demos: https://hannune.ai/#demos
+- Writing / blog: https://hannune.ai/blog/
 
 ## Last updated
 
-2026-04-26
+2026-05-26

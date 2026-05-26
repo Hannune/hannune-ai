@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How I Turned Claude Code Into the Operator of a One-Person AI Company — Hannune</title>
+    <meta name="description" content="A practical account of moving Claude Code from smart autocomplete to running the daily operations of a one-person AI company: a layered CLAUDE.md, seven sub-agents, persistent memory, and hard guardrails. The hard part of production AI agents is operational discipline, not prompting.">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <link rel="canonical" href="https://hannune.ai/blog/claude-code-production-operator.html">
+    <meta property="og:title" content="How I Turned Claude Code Into the Operator of a One-Person AI Company">
+    <meta property="og:description" content="Moving Claude Code from autocomplete to a production operator: a layered CLAUDE.md, seven sub-agents, persistent memory, and hard guardrails. The hard part is operational discipline, not prompting.">
+    <meta property="og:url" content="https://hannune.ai/blog/claude-code-production-operator.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Hannune">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="How I Turned Claude Code Into the Operator of a One-Person AI Company">
+    <meta name="twitter:description" content="Moving Claude Code from autocomplete to a production operator. The hard part is operational discipline, not prompting.">
+    <meta property="og:image" content="https://hannune.ai/blog/images/claude-code.jpg">
+    <meta name="twitter:image" content="https://hannune.ai/blog/images/claude-code.jpg">
+    <link rel="stylesheet" href="../styles.css">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "How I Turned Claude Code Into the Operator of a One-Person AI Company",
+      "description": "Moving Claude Code from smart autocomplete to running the daily operations of a one-person AI company: a layered CLAUDE.md, seven sub-agents, persistent memory, and hard guardrails.",
+      "datePublished": "2026-05-26",
+      "dateModified": "2026-05-26",
+      "inLanguage": "en",
+      "author": {
+        "@type": "Person",
+        "name": "TaeHo Kim",
+        "alternateName": "김태호",
+        "url": "https://hannune.ai/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Hannune",
+        "logo": { "@type": "ImageObject", "url": "https://hannune.ai/logo.png" }
+      },
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://hannune.ai/blog/claude-code-production-operator.html" },
+      "keywords": ["Claude Code", "AI agents", "production AI", "CLAUDE.md", "sub-agents", "agent guardrails", "Graph RAG", "operational discipline"],
+      "about": ["Claude Code", "AI agent operations", "production AI agents"]
+    }
+    </script>
+    <style>
+      .post-body { max-width: 760px; margin: 0 auto; }
+      .post-body h2 { font-size: 1.6rem; margin-top: 2.5rem; margin-bottom: 0.9rem; color: var(--color-dark); }
+      .post-body p { font-size: 1.02rem; line-height: 1.8; color: var(--color-dark); margin-bottom: 1.1rem; }
+      .post-body ul, .post-body ol { margin: 0 0 1.3rem 1.3rem; }
+      .post-body li { font-size: 1.02rem; line-height: 1.75; margin-bottom: 0.6rem; }
+      .post-body .lede { font-size: 1.18rem; line-height: 1.7; color: var(--color-accent); margin-bottom: 1.8rem; }
+      .post-body blockquote { border-left: 3px solid var(--color-dark); margin: 1.5rem 0; padding: 0.4rem 0 0.4rem 1.2rem; font-style: italic; color: var(--color-accent); }
+      .post-hero { display: block; width: 100%; max-width: 900px; margin: 1.5rem auto 0.5rem; aspect-ratio: 1200 / 630; object-fit: cover; border-radius: 12px; }
+      .photo-credit { max-width: 900px; margin: 0 auto 2rem; font-size: 0.78rem; color: var(--color-accent); opacity: 0.75; text-align: right; }
+      .photo-credit a { color: inherit; }
+    </style>
+</head>
+<body>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-logo">
+                <img src="../logo.png" alt="Hannune" class="logo-img">
+            </a>
+        </div>
+    </nav>
+
+    <main class="rd-page">
+        <div class="container">
+
+            <a href="index.html" class="report-back-link">← Back to writing</a>
+
+            <div class="rd-header">
+                <h1 class="rd-title">How I Turned Claude Code Into the Operator of a One-Person AI Company</h1>
+                <p class="rd-meta">By TaeHo Kim (Hannune) &nbsp;·&nbsp; Published May 26, 2026</p>
+            </div>
+
+            <img class="post-hero" src="images/claude-code.jpg" alt="A control room with monitors, illustrating Claude Code running daily operations" width="1200" height="630" loading="eager">
+            <p class="photo-credit">Photo by <a href="https://unsplash.com/@miha_meglic" target="_blank" rel="noopener noreferrer">Miha Meglic</a> on <a href="https://unsplash.com/photos/a-control-room-with-a-desk-and-two-chairs-p7Bfwn_VKRQ" target="_blank" rel="noopener noreferrer">Unsplash</a></p>
+
+            <article class="post-body">
+
+                <p class="lede">Three months ago I used Claude Code as smart autocomplete. Today Claude Code runs the daily operations of my one-person AI company. The change had almost nothing to do with better prompting. It came from treating Claude Code as a junior operator that executes, not a genie that answers.</p>
+
+                <h2>From a genie that answers to a junior operator that executes</h2>
+                <p>At first I treated Claude Code like a genie. I asked a question, pasted code, and copied the answer back. It was useful, but I was still the bottleneck for every single step.</p>
+                <p>The shift was deciding to treat Claude Code as a junior operator. A junior operator does not need cleverer questions. It needs the same three things you give any new hire: written rules, a clear scope, and persistent memory. Once Claude Code had those three things, it could run recurring work on its own and stop to ask me only when something was irreversible.</p>
+
+                <h2>What does a written constitution for an AI agent look like?</h2>
+                <p>The foundation is a layered CLAUDE.md file. CLAUDE.md is the instruction file Claude Code reads before it acts. I structure it in layers: global tone and hard rules at the top, then one file per business area below.</p>
+                <p>The hard rules sit at the top because they must never be overridden by a local instruction. Examples: every command runs inside Docker, never write to a production database, never delete published work. Each business area (marketing, the 2asy.ai pipeline, the Entity Resolution API) then gets its own CLAUDE.md with the details that only apply there. Claude Code reads its boundaries before it touches anything.</p>
+
+                <h2>Why seven specialized sub-agents instead of one</h2>
+                <p>I run seven specialized sub-agents, and each one owns a single recurring job. One drafts marketing posts. One analyzes job-fit. One triages email. One extracts knowledge-graph seeds for 2asy.ai.</p>
+                <p>The reason is context hygiene. If one agent does everything, its context fills with unrelated work and its judgment degrades. With specialized sub-agents, the main Claude Code agent routes a task to the right specialist instead of doing everything inside one bloated context. The main agent stays a router and reviewer. The specialists stay focused.</p>
+
+                <h2>How does an agent remember decisions across sessions?</h2>
+                <p>Claude Code writes and recalls a set of small memory files, nearly thirty of them, across sessions. Each file holds one fact: a user preference, a past decision, a project constraint, or a piece of feedback.</p>
+                <p>This matters because context windows are finite. Without persistent memory, every decision I made with Claude Code would evaporate when the session ended. With it, a rule I set once survives context limits and applies the next time the situation comes up.</p>
+
+                <h2>What guardrails does an autonomous coding agent actually need?</h2>
+                <p>The guardrails are the unglamorous part, and they are the part that makes autonomy safe. These are the hard rules I enforce on Claude Code:</p>
+                <ol>
+                    <li>Every command runs inside Docker, never on the host machine.</li>
+                    <li>No writes to production databases. Neo4j and Elasticsearch are read-only for autonomous work.</li>
+                    <li>Never delete published work, database records, or user files.</li>
+                    <li>Read, analyze, and draft freely. Then stop and ask before anything irreversible.</li>
+                </ol>
+                <p>I enforce these with hooks, not good intentions. A hook intercepts a command before it runs and blocks it if it violates a rule. Discipline that depends on the agent remembering to behave is not discipline. Discipline that is enforced by code is.</p>
+
+                <h2>Why do most of these rules exist?</h2>
+                <p>Here is the honest part. Most of these rules exist because something broke first.</p>
+                <p>I defined sub-agents mid-session that silently never loaded. I made batching mistakes that corrupted outputs. Permission prompts stalled autonomous runs because I had not pre-approved the safe commands. Each failure turned into a written rule, and the written rule turned into a hook. The system got safer not because I planned it perfectly, but because I wrote down what broke.</p>
+
+                <h2>The real lesson: operational discipline, not prompting</h2>
+                <p>The hard part of production AI agents is not prompting. It is operational discipline.</p>
+                <p>You are not summoning a genie that grants wishes. You are onboarding a fast, tireless junior who will do exactly what you allow, including the damage. The work is the same work you would do for a human hire: write the rules down, scope the job, give it memory, and put hard limits where mistakes are expensive.</p>
+                <p>I went quiet for a month building this, and the products Claude Code now helps run. This is the first of a series where I document what worked and what did not. If you are putting coding agents into real production, the question worth asking is not which model is smartest. It is which guardrail saved you.</p>
+
+            </article>
+
+            <div class="rd-cta">
+                <h2>Building production AI systems and want one accountable owner?</h2>
+                <a href="../index.html#contact" class="btn btn-primary">Get in touch →</a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; <span id="footer-year">2026</span> Hannune. All rights reserved. Seoul, Republic of Korea.</p>
+        </div>
+    </footer>
+
+    <script>
+      var fy = document.getElementById('footer-year');
+      if (fy) fy.textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
