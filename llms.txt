@@ -64,6 +64,15 @@ and operating autonomous AI agents. Index at https://hannune.ai/blog/
   fitting a self-built evaluation set and fixing it with a held-out set.
   https://hannune.ai/blog/entity-resolution-api.html
 
+- How I Caught My LLM Fabricating Its Own Evidence (2026-05-30): In the
+  2asy.ai knowledge graph the model fabricated the evidence quotes behind
+  its own relations, stitching distant sentences together with ellipses.
+  Truncating article input made it worse. The fix is a deterministic
+  substring check at commit time (the evidence must appear verbatim in the
+  source) plus full-body-or-skip collection. Over 500 documents cleaned.
+  Core thesis: verify a generator's output with code, not another generator.
+  https://hannune.ai/blog/graph-rag-fabricated-evidence.html
+
 ## Contact
 
 - Website: https://hannune.ai
@@ -84,4 +93,4 @@ and operating autonomous AI agents. Index at https://hannune.ai/blog/
 
 ## Last updated
 
-2026-05-26
+2026-05-30

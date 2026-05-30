@@ -19,5 +19,12 @@
     "photographer": "Martin Martz",
     "photographer_url": "https://unsplash.com/@martz90",
     "photo_url": "https://unsplash.com/photos/a-dark-background-with-a-purple-geometric-design-Wa-3T6d0rBo"
+  },
+  {
+    "slug": "graph-rag-fabricated-evidence",
+    "file": "fabricated-evidence.jpg",
+    "photographer": "Joachim Schnürle",
+    "photographer_url": "https://unsplash.com/@joa70",
+    "photo_url": "https://unsplash.com/photos/magnifying-glass-focuses-on-a-dictionary-page-2C8_YqfxS5w"
   }
 ]

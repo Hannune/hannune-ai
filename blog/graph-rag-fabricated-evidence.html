@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How I Caught My LLM Fabricating Its Own Evidence — Hannune</title>
+    <meta name="description" content="Building the 2asy.ai knowledge graph, the language model did not just get facts wrong. It fabricated the evidence quotes that were supposed to justify each relation, stitching distant sentences together with ellipses. A substring check at commit time caught it, and full-body-or-skip stopped the cause.">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <link rel="canonical" href="https://hannune.ai/blog/graph-rag-fabricated-evidence.html">
+    <meta property="og:title" content="How I Caught My LLM Fabricating Its Own Evidence">
+    <meta property="og:description" content="In a Graph RAG pipeline the model fabricated the evidence quotes behind its own relations. A deterministic substring check caught it, and full-body-or-skip removed the cause.">
+    <meta property="og:url" content="https://hannune.ai/blog/graph-rag-fabricated-evidence.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Hannune">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="How I Caught My LLM Fabricating Its Own Evidence">
+    <meta name="twitter:description" content="In a Graph RAG pipeline the model fabricated the evidence quotes behind its own relations. A substring check caught it.">
+    <meta property="og:image" content="https://hannune.ai/blog/images/fabricated-evidence.jpg">
+    <meta name="twitter:image" content="https://hannune.ai/blog/images/fabricated-evidence.jpg">
+    <link rel="stylesheet" href="../styles.css">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "How I Caught My LLM Fabricating Its Own Evidence",
+      "description": "Building the 2asy.ai knowledge graph, the language model fabricated the evidence quotes that were supposed to justify each extracted relation, stitching distant sentences together with ellipses. A deterministic substring check at commit time caught it, and full-body-or-skip collection removed the cause.",
+      "datePublished": "2026-05-30",
+      "dateModified": "2026-05-30",
+      "inLanguage": "en",
+      "author": {
+        "@type": "Person",
+        "name": "TaeHo Kim",
+        "alternateName": "김태호",
+        "url": "https://hannune.ai/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Hannune",
+        "logo": { "@type": "ImageObject", "url": "https://hannune.ai/logo.png" }
+      },
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://hannune.ai/blog/graph-rag-fabricated-evidence.html" },
+      "keywords": ["Graph RAG", "LLM hallucination", "fabricated evidence", "knowledge graph", "entity extraction", "evidence verification", "Neo4j", "2asy.ai", "local LLM"],
+      "about": ["LLM hallucination", "Graph RAG extraction", "evidence verification"]
+    }
+    </script>
+    <style>
+      .post-body { max-width: 760px; margin: 0 auto; }
+      .post-body h2 { font-size: 1.6rem; margin-top: 2.5rem; margin-bottom: 0.9rem; color: var(--color-dark); }
+      .post-body p { font-size: 1.02rem; line-height: 1.8; color: var(--color-dark); margin-bottom: 1.1rem; }
+      .post-body ul, .post-body ol { margin: 0 0 1.3rem 1.3rem; }
+      .post-body li { font-size: 1.02rem; line-height: 1.75; margin-bottom: 0.6rem; }
+      .post-body .lede { font-size: 1.18rem; line-height: 1.7; color: var(--color-accent); margin-bottom: 1.8rem; }
+      .post-body code { background: rgba(51,58,47,0.08); padding: 0.1rem 0.35rem; border-radius: 4px; font-size: 0.92em; }
+      .post-hero { display: block; width: 100%; max-width: 900px; margin: 1.5rem auto 0.5rem; aspect-ratio: 1200 / 630; object-fit: cover; border-radius: 12px; }
+      .photo-credit { max-width: 900px; margin: 0 auto 2rem; font-size: 0.78rem; color: var(--color-accent); opacity: 0.75; text-align: right; }
+      .photo-credit a { color: inherit; }
+    </style>
+</head>
+<body>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-logo">
+                <img src="../logo.png" alt="Hannune" class="logo-img">
+            </a>
+        </div>
+    </nav>
+
+    <main class="rd-page">
+        <div class="container">
+
+            <a href="index.html" class="report-back-link">← Back to writing</a>
+
+            <div class="rd-header">
+                <h1 class="rd-title">How I Caught My LLM Fabricating Its Own Evidence</h1>
+                <p class="rd-meta">By TaeHo Kim (Hannune) &nbsp;·&nbsp; Published May 30, 2026</p>
+            </div>
+
+            <img class="post-hero" src="images/fabricated-evidence.jpg" alt="A magnifying glass over printed text, suggesting close inspection of a quotation" width="1200" height="630" loading="eager">
+            <p class="photo-credit">Photo by <a href="https://unsplash.com/@joa70" target="_blank" rel="noopener noreferrer">Joachim Schnürle</a> on <a href="https://unsplash.com/photos/magnifying-glass-focuses-on-a-dictionary-page-2C8_YqfxS5w" target="_blank" rel="noopener noreferrer">Unsplash</a></p>
+
+            <article class="post-body">
+
+                <p class="lede">The language model behind my Graph RAG pipeline did something worse than getting a fact wrong. It fabricated the evidence. Each relation it extracted carried a quote that was supposed to come straight from the source article, and many of those quotes had never been written. They read perfectly. They did not exist.</p>
+
+                <h2>What does fabricated evidence mean in a knowledge graph?</h2>
+                <p>I am building the seed knowledge graph for 2asy.ai, a causal-chain intelligence system over trade and tariff news. Every relation and event in the graph carries an evidence field: the exact sentence from the source document that justifies it. That evidence is the whole point. It is what lets me, or a reader, trace a claim back to where it came from instead of trusting the model on faith.</p>
+                <p>The problem is that I was asking a language model to produce that evidence by quoting the source. And a language model is a text generator, not a copier. When I checked the evidence against the original articles, a large share of the quotes were not verbatim. They were fluent, on-topic, and invented.</p>
+
+                <h2>The ellipsis was the tell</h2>
+                <p>The clearest pattern was the ellipsis. The model would take two sentences from completely different parts of an article, drop a <code>...</code> between them, and present the result as one continuous quotation. The seam looked like a normal editorial cut. It was not. It was two unrelated fragments fused to manufacture support for a relation the model had already decided to extract.</p>
+                <p>This is the dangerous kind of hallucination, because it is shaped exactly like real evidence. A wrong fact stands out. A fabricated quote that paraphrases something true reads as completely credible until you go back to the source and search for it character by character.</p>
+
+                <h2>Why truncating the input made it worse</h2>
+                <p>I had been doing something that looked harmless: truncating each article body to a few thousand characters before extraction, to stay inside a comfortable context window. That truncation was quietly licensing the fabrication. When the sentence that actually supported a relation sat past the cutoff, the model did not refuse. It filled the gap with a confident reconstruction of what the missing text probably said.</p>
+                <p>So I removed the truncation entirely and switched the collectors to full-body-or-skip: either the pipeline has the complete article text, or it does not process that document at all. A partial document is more dangerous than a missing one, because a partial document still produces output, and the output looks finished.</p>
+
+                <h2>The fix: check the quote, do not grade it</h2>
+                <p>The fix is almost embarrassingly simple, and that is the point. At commit time, before any relation is written to the graph, I check that its evidence string appears as an exact substring of the source document. If the quote is not literally in the text, the relation is rejected. No fuzzy matching, no second model asked to judge whether the evidence is good enough.</p>
+                <p>The instinct in this situation is to reach for another language model to verify the first one. I think that instinct is usually wrong. If you can check an output with a deterministic string operation, do that instead of grading one generator with another generator. A substring test cannot be talked into a plausible answer. It is cheap, it is exact, and it cannot hallucinate.</p>
+
+                <h2>Cleaning up what had already shipped</h2>
+                <p>The guard stops new fabrication, but it does not undo the relations already sitting in the graph. So I ran the same substring check backward over everything that had already been committed. I reverted 122 documents whose evidence had been stitched together from separate sentences, then cleaned out hundreds more whose quotes simply did not match their source, more than 500 documents in total across the cleanup passes.</p>
+                <p>That number is the real cost of having trusted generated evidence in the first place. Every one of those documents had passed through a pipeline that ran cleanly and produced output that looked correct. The volume of the cleanup is a measure of how convincing fabricated evidence is when nobody checks it against the source.</p>
+
+                <h2>The lesson: store pointers, verify with code</h2>
+                <p>If you are extracting structured claims from text with a language model, treat any quote it gives you as a hypothesis, not a fact, until a string operation confirms it. Store evidence as something you can verify, a span or an exact substring, not as free text the model is trusted to have copied faithfully.</p>
+                <p>All of this runs on local hardware, an RTX 4090 and an AMD W6800, with open models doing the extraction. The substring guard adds no model calls and no cloud cost. It is a few lines of code standing between a graph you can trust and a graph that quietly lies to you in complete sentences.</p>
+
+            </article>
+
+            <div class="rd-cta">
+                <h2>Building a Graph RAG system you can actually trust?</h2>
+                <a href="../index.html#contact" class="btn btn-primary">Get in touch →</a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; <span id="footer-year">2026</span> Hannune. All rights reserved. Seoul, Republic of Korea.</p>
+        </div>
+    </footer>
+
+    <script>
+      var fy = document.getElementById('footer-year');
+      if (fy) fy.textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
