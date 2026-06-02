@@ -73,6 +73,22 @@ and operating autonomous AI agents. Index at https://hannune.ai/blog/
   Core thesis: verify a generator's output with code, not another generator.
   https://hannune.ai/blog/graph-rag-fabricated-evidence.html
 
+- From Vector Search to a Cross-Domain Ontology Graph: How 2asy.ai Reads
+  Tariff News (2026-06-03): The retrieval behind 2asy.ai evolved in three
+  steps. Plain vector RAG could find similar passages but not represent
+  causality. A simple per-article Graph RAG could follow a chain inside one
+  document but produced isolated per-document graphs that could not connect
+  a cause in one article to its effect in another. The current version runs
+  a cross-domain ontology Graph RAG: a shared set of entity, event, and
+  relation types plus entity resolution across documents, so the same
+  real-world entity becomes one node and causal edges span domains. The
+  latest tariff briefing renders its actual causal graph on the page (around
+  41 nodes and 60 edges, focused on a Sunset Review root and bridge nodes).
+  The graph is thin and partly untyped today; this is a data-accumulation
+  problem, not a design ceiling, and it gets denser as more documents flow
+  through the same ontology. Runs on local GPU hardware (RTX 4090, W6800).
+  https://hannune.ai/blog/cross-domain-ontology-graph-rag.html
+
 ## Contact
 
 - Website: https://hannune.ai
@@ -93,4 +109,4 @@ and operating autonomous AI agents. Index at https://hannune.ai/blog/
 
 ## Last updated
 
-2026-05-30
+2026-06-03
