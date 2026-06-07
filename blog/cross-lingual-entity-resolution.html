@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cross-Lingual Entity Resolution in a Trade Knowledge Graph: Adding 39,534 Aliases to 6,883 Nodes — Hannune</title>
+    <meta name="description" content="2asy.ai reads English trade news, but entities appear in Korean, Japanese, and Chinese. I added 39,534 cross-lingual aliases across 6,883 canonical entities so foreign-language mentions resolve to the same node, validated on the local ER registry.">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <link rel="canonical" href="https://hannune.ai/blog/cross-lingual-entity-resolution.html">
+    <meta property="og:title" content="Cross-Lingual Entity Resolution in a Trade Knowledge Graph: Adding 39,534 Aliases to 6,883 Nodes">
+    <meta property="og:description" content="2asy.ai reads English trade news, but entities appear in Korean, Japanese, and Chinese. 39,534 cross-lingual aliases across 6,883 entities so foreign-language mentions resolve to one canonical node.">
+    <meta property="og:url" content="https://hannune.ai/blog/cross-lingual-entity-resolution.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Hannune">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Cross-Lingual Entity Resolution in a Trade Knowledge Graph">
+    <meta name="twitter:description" content="39,534 Korean, Japanese, and Chinese aliases across 6,883 entities so foreign-language mentions resolve to one canonical node in a Graph RAG pipeline.">
+    <meta property="og:image" content="https://hannune.ai/blog/images/cross-lingual-entity-resolution.png">
+    <meta name="twitter:image" content="https://hannune.ai/blog/images/cross-lingual-entity-resolution.png">
+    <link rel="stylesheet" href="../styles.css">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Cross-Lingual Entity Resolution in a Trade Knowledge Graph: Adding 39,534 Aliases to 6,883 Nodes",
+      "description": "2asy.ai reads English trade news, but entities appear in Korean, Japanese, and Chinese. I added 39,534 cross-lingual aliases across 6,883 canonical entities so foreign-language mentions resolve to the same node, validated on the local ER registry, with rollout to the live graph pending.",
+      "datePublished": "2026-06-07",
+      "dateModified": "2026-06-07",
+      "inLanguage": "en",
+      "author": {
+        "@type": "Person",
+        "name": "TaeHo Kim",
+        "alternateName": "김태호",
+        "url": "https://hannune.ai/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Hannune",
+        "logo": { "@type": "ImageObject", "url": "https://hannune.ai/logo.png" }
+      },
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://hannune.ai/blog/cross-lingual-entity-resolution.html" },
+      "keywords": ["cross-lingual entity resolution", "multilingual", "alias table", "knowledge graph", "Graph RAG", "entity resolution", "canonical entity", "Neo4j", "2asy.ai", "Korean Japanese Chinese", "trade intelligence"],
+      "about": ["cross-lingual entity resolution", "knowledge graph", "Graph RAG"]
+    }
+    </script>
+    <style>
+      .post-body { max-width: 760px; margin: 0 auto; }
+      .post-body h2 { font-size: 1.6rem; margin-top: 2.5rem; margin-bottom: 0.9rem; color: var(--color-dark); }
+      .post-body p { font-size: 1.02rem; line-height: 1.8; color: var(--color-dark); margin-bottom: 1.1rem; }
+      .post-body ul, .post-body ol { margin: 0 0 1.3rem 1.3rem; }
+      .post-body li { font-size: 1.02rem; line-height: 1.75; margin-bottom: 0.6rem; }
+      .post-body .lede { font-size: 1.18rem; line-height: 1.7; color: var(--color-accent); margin-bottom: 1.8rem; }
+      .post-body code { background: rgba(51,58,47,0.08); padding: 0.1rem 0.35rem; border-radius: 4px; font-size: 0.92em; }
+      .cover-hero { display: block; width: 100%; max-width: 760px; margin: 1.5rem auto 0.5rem; border-radius: 12px; border: 1px solid rgba(51,58,47,0.12); box-shadow: 0 6px 24px rgba(0,0,0,0.08); }
+      .photo-credit { max-width: 760px; margin: 0 auto 2rem; font-size: 0.78rem; color: var(--color-accent); opacity: 0.75; text-align: center; }
+      .photo-credit a { color: inherit; }
+    </style>
+</head>
+<body>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-logo">
+                <img src="../logo.png" alt="Hannune" class="logo-img">
+            </a>
+        </div>
+    </nav>
+
+    <main class="rd-page">
+        <div class="container">
+
+            <a href="index.html" class="report-back-link">← Back to writing</a>
+
+            <div class="rd-header">
+                <h1 class="rd-title">Cross-Lingual Entity Resolution in a Trade Knowledge Graph: Adding 39,534 Aliases to 6,883 Nodes</h1>
+                <p class="rd-meta">By TaeHo Kim (Hannune) &nbsp;·&nbsp; Published June 7, 2026</p>
+            </div>
+
+            <img class="cover-hero" src="images/cross-lingual-entity-resolution.png" alt="Korean, Japanese, and Chinese surface forms collapsing onto single canonical entities: 한국은행 and 韩国银行 to Bank of Korea, 三星电子 and 삼성전자 주식회사 to Samsung Electronics, 米国商務省 and 美国商务部 to U.S. Department of Commerce" width="1200" height="630" loading="eager">
+            <p class="photo-credit">Korean, Japanese, and Chinese aliases resolving onto canonical entities in the 2asy.ai registry</p>
+
+            <article class="post-body">
+
+                <p class="lede">In the previous post, I described how 2asy.ai moved from plain vector search to a cross-domain ontology Graph RAG that resolves entities across documents and traverses causal chains. That post ended with an honest note: the graph is sparse, and it will get denser. This post is about one specific dimension of that density problem, and how I addressed it this week.</p>
+
+                <p>The problem is not just that the graph needs more documents. The problem is that the same real-world entity arrives in multiple languages.</p>
+
+                <h2>Why Cross-Lingual Mentions Break a Knowledge Graph</h2>
+                <p>2asy.ai reads Asian trade and tariff news published in English, but the underlying entities, companies, regulators, ministries, and policymakers, are often referenced in their local-language forms inside those articles. A Korean article about trade policy mentions 한국은행. A Chinese article about semiconductors mentions 三星电子. A Japanese article on auto tariffs mentions トヨタ自動車. And a wire story covering the same events writes Bank of Korea, Samsung Electronics, and Toyota Motor Corporation.</p>
+                <p>If entity resolution only handles English strings, each foreign-language mention becomes a separate node. The graph now has 한국은행 and Bank of Korea as two distinct entities. Any causal path that crosses the language boundary breaks. A tariff chain that starts with a Korean regulator's decision and ends at a multinational company's earnings call will never close.</p>
+                <p>This is the specific failure mode: the graph looks connected per language and disconnected across languages. Cross-domain ontology gets you over the per-document barrier. Cross-lingual resolution gets you over the per-language barrier. They are separate problems.</p>
+
+                <h2>The Fix: Filling the Registry with Alias Tables, Not Rewriting Code</h2>
+                <p>The entity registry at the center of 2asy.ai already had the mechanism. When a new mention arrives during extraction, the registry resolves it against every known surface form for each canonical entity. If the mention matches any alias, it maps to that entity's canonical ID. The registry was already doing this for English variants (partial names, abbreviations, alternate spellings). It just had no non-English entries.</p>
+                <p>So the change was to fill the alias tables, not to redesign the resolution layer.</p>
+                <p>The registry holds 13,371 canonical entities. Of those, 6,883 had at least one non-English surface form worth resolving, so I added ko, ja, and zh alias lists for them. The total additions:</p>
+                <ul>
+                    <li>ko (Korean): 13,757 aliases</li>
+                    <li>ja (Japanese): 12,615 aliases</li>
+                    <li>zh (Chinese): 13,162 aliases</li>
+                    <li>Total: 39,534 aliases across 6,883 entities</li>
+                </ul>
+                <p>Almost all of them made it in. The pipeline flagged two small categories for exclusion before writing to the registry:</p>
+                <ol>
+                    <li><strong>Collision:</strong> 3 alias candidates already resolved to a different canonical entity. All three were the abbreviation <code>CENTCOM</code>, generated as a Korean, Japanese, and Chinese alias for United States Central Command, which was already mapped to an existing US Central Command node. Writing them would have made one string resolve to two IDs, so they were skipped automatically.</li>
+                    <li><strong>Low confidence:</strong> 5 candidates were held in a staging area rather than written, because the source could not confirm a verified local-language form. For example, LG Electronics has confirmed Korean forms (LG전자, 엘지전자) but no verified official Japanese or Simplified Chinese legal name was found, so its non-Korean entries scored zero and were held instead of guessed.</li>
+                </ol>
+                <p>The excluded set is tiny next to the 39,534 accepted, but it is the part that matters: the collision check and confidence gate exist specifically to keep a wrong alias from silently corrupting every mention it touches.</p>
+                <p>After writing the accepted aliases, my local ER registry resolves these on exact lookup:</p>
+                <ul>
+                    <li>한국은행 (and the Japanese 韓国銀行, Chinese 韩国银行) resolves to the canonical Bank of Korea entity.</li>
+                    <li>三星电子 (and the Korean 삼성전자 주식회사) resolves to Samsung Electronics.</li>
+                    <li>미국 상무부 (and the Japanese 米国商務省, Chinese 美国商务部) resolves to United States Department of Commerce.</li>
+                </ul>
+                <p>Before this change, each foreign-language form would have produced no match and been written to the graph as a new, orphaned node.</p>
+
+                <h2>What This Means for the Causal Graph in 2asy.ai</h2>
+                <p>The effect, once this alias layer is rolled into the live graph, is that Korean, Japanese, and Chinese entity mentions in trade news resolve to the same canonical nodes as their English counterparts. When a Korean regulator, a Chinese manufacturer, and an American import duty appear in the same causal chain, the chain can close across all three languages instead of fragmenting at each language boundary.</p>
+                <p>This matters most for the cross-document chains. The whole point of moving from per-article graphs to a shared ontology was to let causality span the full corpus. A cause in one article connects to an effect in another. That connection only works if both articles are writing about the same canonical entity. Without cross-lingual resolution, the connection breaks the moment the two articles use different language forms for the same entity.</p>
+                <p>Cross-lingual entity resolution is not a cosmetic feature. In a multilingual news corpus, it is a prerequisite for the graph to be coherent.</p>
+
+                <h2>The Harder Lesson About Entity Resolution in Graph RAG</h2>
+                <p>Running 2asy.ai has made the priority order clear to me.</p>
+                <p>Extraction is the part that looks impressive. You throw a document at a language model, it returns entities and relations, and the graph grows. It is satisfying to watch. But extraction quality has a ceiling set by what comes after it: resolution. If two mentions that should be the same node stay as two nodes, extraction accuracy does not matter. The chain is broken regardless.</p>
+                <p>Entity resolution in Graph RAG is harder than most write-ups acknowledge. The English-only case is already non-trivial: abbreviations, partial names, acquired companies that change their names, subsidiaries that share names with parent entities. Add cross-lingual surface forms and the problem surface expands significantly.</p>
+                <p>The registry-with-aliases approach I use in 2asy.ai is a deterministic layer on top of the probabilistic extraction. Extraction guesses what is in the text. The registry decides what that thing resolves to. Keeping those two responsibilities separate makes the system easier to debug and correct: if a mention is resolving wrong, I fix the registry, not the extraction model.</p>
+                <p>39,534 aliases is a lot of entries. It is also a manageable data problem. The hard part is the collision detection and confidence gating, because a bad alias silently corrupts every mention it touches. Only 8 candidates were excluded this pass, 3 collisions and 5 held, but those were the gate doing exactly its job: an abbreviation that already belonged to another entity, and entities with no verifiable local-language name. As the corpus grows, that excluded set will grow with it, and it is the set that needs the most care.</p>
+
+                <h2>What Is Still Missing</h2>
+                <p>Cross-lingual resolution is one layer. There are still open problems.</p>
+                <p>The 5 held candidates need review, and more low-confidence cases will surface as the corpus grows. Some held entries are genuine cases that should stay held, and some are probably correct but scored cautiously because the source did not have enough context. Working through that set as it grows will expand coverage further.</p>
+                <p>The 3 collision candidates need manual triage. A collision means two canonical entities share a surface form, which is either a real-world ambiguity (two companies with similar names, a ministry that was renamed) or a registry error (two canonical entries that should be merged). The CENTCOM case is the first example: it points to a likely duplicate canonical entry that should be reconciled.</p>
+                <p>And the registry has no coverage for Arabic, Russian, or Southeast Asian language forms yet. Those are smaller portions of the current corpus but not zero.</p>
+                <p>The alias-filling step this week was the first pass. It is enough to close the most common cross-lingual gaps. The rest follows as the pipeline keeps running.</p>
+
+                <p>This alias layer is validated on my local ER instance. Rolling it into the live 2asy.ai graph is the next step, once the held and collision cases are triaged. The public graph is at <a href="https://www.2asy.ai/" target="_blank" rel="noopener noreferrer">https://www.2asy.ai/</a></p>
+                <p>If cross-lingual entity resolution or Graph RAG pipelines are something you are working on, the entity resolution service is at <a href="https://api.hannune.ai/entity-resolution/v1" target="_blank" rel="noopener noreferrer">https://api.hannune.ai/entity-resolution/v1</a>. That public endpoint serves the core resolver; the multilingual alias layer described here is validated locally and not yet loaded into it.</p>
+                <p>The previous post in this series: <a href="https://hannune.ai/blog/cross-domain-ontology-graph-rag.html">From Vector Search to a Cross-Domain Ontology Graph</a></p>
+
+            </article>
+
+            <div class="rd-cta">
+                <h2>Building cross-lingual or cross-domain retrieval that has to stay coherent?</h2>
+                <a href="../index.html#contact" class="btn btn-primary">Get in touch →</a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; <span id="footer-year">2026</span> Hannune. All rights reserved. Seoul, Republic of Korea.</p>
+        </div>
+    </footer>
+
+    <script>
+      var fy = document.getElementById('footer-year');
+      if (fy) fy.textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

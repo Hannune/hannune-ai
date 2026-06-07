@@ -89,6 +89,22 @@ and operating autonomous AI agents. Index at https://hannune.ai/blog/
   through the same ontology. Runs on local GPU hardware (RTX 4090, W6800).
   https://hannune.ai/blog/cross-domain-ontology-graph-rag.html
 
+- Cross-Lingual Entity Resolution in a Trade Knowledge Graph: Adding 39,534
+  Aliases to 6,883 Nodes (2026-06-07): 2asy.ai reads English trade news, but
+  entities appear in their local-language forms (for example the Korean,
+  Japanese, and Chinese names for Bank of Korea or Samsung Electronics).
+  Without cross-lingual resolution each foreign-language mention becomes a
+  separate node and causal chains break at the language boundary. The fix was
+  to fill the registry alias tables, not rewrite the resolver: 39,534 ko/ja/zh
+  aliases added across 6,883 of the 13,371 canonical entities. A collision
+  check and a confidence gate excluded only 8 candidates (3 CENTCOM collisions
+  already mapped elsewhere, 5 held because no verified local-language name was
+  found). The aliases are validated on the local ER registry; rollout to the
+  live 2asy.ai graph is pending. Lesson: in Graph RAG, resolution caps
+  extraction quality, and cross-lingual resolution is a prerequisite for a
+  coherent multilingual graph.
+  https://hannune.ai/blog/cross-lingual-entity-resolution.html
+
 ## Contact
 
 - Website: https://hannune.ai
@@ -109,4 +125,4 @@ and operating autonomous AI agents. Index at https://hannune.ai/blog/
 
 ## Last updated
 
-2026-06-03
+2026-06-07
