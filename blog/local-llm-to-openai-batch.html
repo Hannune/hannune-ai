@@ -85,52 +85,42 @@
 
             <article class="post-body">
 
-                <p class="lede">I spent a year telling people I left the cloud LLM bill behind. Last week I started paying OpenAI again. Not all of it. One specific lane, on purpose.</p>
+                <p class="lede">I run a one-person AI shop. For the 2asy.ai filing pipeline that needs thousands of single-document extractions per cycle, the local rig lost the batch lane and OpenAI Batch won. Not the whole company. One lane.</p>
 
-                <h2>What workload pulled me back</h2>
-                <p>The lane is the one inside 2asy.ai that reads thousands of corporate filings from OpenDART (Korea), EDINET (Japan), HKEX (Hong Kong), and CNINFO (China), and turns them into entities and relations for a Neo4j knowledge graph. There is one rule I will not bend on. Each filing gets its own isolated LLM call. The model never sees more than one document at a time. That rule exists because I have already paid the price for breaking it.</p>
-                <p>So the question for a solo operator was never which model is smartest. It was which provider can actually run thousands of strictly isolated single-document calls in parallel, cheaply, with strict JSON schemas, without melting and without leaking content between docs.</p>
+                <h2>The rule that decided it</h2>
+                <p>No cross-document attention. Each filing gets its own prompt window. No string concatenation. The model never sees two documents at once. That rule comes from a Neo4j rollback I already paid for. When one document's facts leak into another's prompt, the model fabricates relations between unrelated entities and the graph carries it as truth. The rule is not negotiable.</p>
+                <p>So the question was never which model is smartest. It was which provider can actually run thousands of strictly isolated single-document calls, cheaply, with strict JSON schemas.</p>
 
-                <h2>Option 1: stay fully local on the RTX 4090 and the W6800</h2>
-                <p>My local rig runs Gemma 4 26B as a multimodal MoE on port 31002, served by llama.cpp from a Q4 GGUF. It is great for live chat. It is fine for the demos at demo.hannune.ai. It is not good enough for unattended thousands-of-docs extraction with a strict schema and a deadline.</p>
-                <p>I tried to put the same model on vLLM for throughput and hit two walls back to back. The 4-bit MoE has no expert-mapping path implemented in vLLM, so the cheap quantized weights cannot actually be loaded. On top of that, the vLLM container demanded CUDA 12.9 while my host driver is on 12.8, and this is the production GPU server. I was not pushing a driver upgrade just to test a batch lane. Even on llama.cpp, the server has crashed once on a CUDA graph optimization, and I now keep <code>GGML_CUDA_DISABLE_GRAPHS=1</code> in my back pocket as a recovery flag.</p>
-                <p>Local stays in the stack. It is just not where the batch lane runs.</p>
+                <h2>What I tested</h2>
 
-                <h2>Option 2: OpenRouter</h2>
-                <p>The pitch is fine. Dozens of models behind one key, easy to switch providers, useful for testing.</p>
-                <p>The problem for this workload is simple. OpenRouter has no real batch API. Every request runs at live inference pricing, so the cost story does not improve over a normal API call. On top of that, in my own runs on a flash-class model with concurrency 32 I saw per-call latency swing between two seconds and seventeen seconds, with occasional 121-second timeouts and 429 rate-limit responses. A router adds a hop and a variable upstream provider, and that variability lives in the tail of your latency distribution. For interactive UI calls, fine. For unattended jobs that run overnight, the tail is the cost.</p>
+                <p><strong>Local Gemma 4 26B on llama.cpp, RTX 4090 plus W6800.</strong> Live chat fine. Demos at demo.hannune.ai fine. Batch lane blocked. vLLM has no expert-mapping path for the 4-bit MoE weights I need, and the vLLM container wants CUDA 12.9 while the host driver is on 12.8. I am not upgrading a production GPU server to test a batch lane. Even llama.cpp segfaulted once on a CUDA graph optimization. <code>GGML_CUDA_DISABLE_GRAPHS=1</code> stays in my back pocket.</p>
 
-                <h2>Option 3: Gemini batch (the painful one)</h2>
-                <p>This is the option I would rather not have learned the hard way.</p>
-                <p>Gemini publishes a batch API. On paper, exactly the cheap and isolated lane I needed. In practice, the SDK path I used ran my "batch" by stitching multiple requests into a single context window and asking the model to produce one combined response. That is not a batch in the sense I needed. That is multi-document attention by another name, which is exactly what my isolation rule was written to prevent.</p>
-                <p>The failure showed up downstream, not in the SDK logs. Extracted entities and relations started carrying content from neighboring documents in the same batch line. By the time I noticed, the Neo4j graph and the entity registry had absorbed a meaningful share of fabricated entries. I rolled both back to a clean pre-batch snapshot, then spent a day reconciling what had to be re-extracted.</p>
-                <p>The underlying behavior is tracked publicly in the Google SDK issue queue as known and marked "not planned" upstream. The operator-level takeaway is short. A "batch" endpoint is not automatically isolated. The marketing copy says batch. The semantics may be inline concatenation. Verify which one you actually have before you point it at a production graph.</p>
+                <p><strong>OpenRouter.</strong> No real batch API. Every request runs at live pricing. On a flash-class model at concurrency 32 I saw per-call latency between 2 and 17 seconds, occasional 121-second timeouts, and 429s. A router adds a hop and a variable upstream provider. The tail of the latency distribution is where the bill actually sits.</p>
 
-                <h2>Option 4: OpenAI Batch API, which finally fit</h2>
-                <p>The OpenAI Batch API works the way I needed a batch API to work. You upload a JSONL file. Each line is a fully independent request with its own messages and its own response schema. The service runs them as separate calls, with no shared context, returns the results in another JSONL, and discounts the whole job by 50 percent against live pricing. The published completion window is up to 24 hours. My own jobs have come back much faster.</p>
-                <p>For the binary signal gate I run before extraction, a recent 100-document <code>gpt-5.4-nano</code> batch came back in about 2.7 minutes. Zero 429s. Zero failed lines. For the heavier extraction step I use <code>gpt-5.4-mini</code> with a strict JSON schema for entities, events, and relations. Per-document cost on my runs lands close to a cent.</p>
-                <p>The win was not raw price per token. The win was that batch isolation and strict JSON schemas and reasonable tail latency all landed in the same product, on the same request, with no router in between.</p>
+                <p><strong>Gemini batch (the painful one).</strong> The SDK path I used ran my "batch" by stitching multiple requests into one context window and producing one combined response. That is inline concatenation, not isolation. The failure showed up downstream. Extracted entities and relations started carrying content from neighboring documents in the same batch line. By the time I caught it, Neo4j and the entity registry had absorbed fabricated entries. I rolled both back. The Google SDK issue queue tracks this as known and marks the fix as not planned.</p>
 
-                <h2>Side by side, with the failure modes</h2>
+                <p><strong>OpenAI Batch API.</strong> JSONL in, JSONL out. Each line is fully independent. No shared context. 50 percent off live pricing. A recent 100-document <code>gpt-5.4-nano</code> binary gate came back in about 2.7 minutes with zero 429s. The extraction step on <code>gpt-5.4-mini</code> with strict JSON schemas lands close to one cent per document. The win was not raw price. It was that batch isolation, strict schemas, and reasonable tail latency arrived in the same product.</p>
+
+                <h2>Side by side</h2>
                 <table>
                   <thead>
-                    <tr><th>Option</th><th>Real batch?</th><th>Cross-doc isolation</th><th>Strict JSON schema</th><th>Why it failed or fit</th></tr>
+                    <tr><th>Option</th><th>Real batch</th><th>Cross-doc isolation</th><th>What broke or fit</th></tr>
                   </thead>
                   <tbody>
-                    <tr><td>Local llama.cpp on 4090</td><td>n/a (single stream)</td><td>Yes, per call</td><td>Prompt-shaped JSON</td><td>vLLM blocked by 4-bit MoE path and CUDA 12.9 requirement. llama.cpp single-stream throughput too low for the batch lane.</td></tr>
-                    <tr><td>OpenRouter</td><td>No</td><td>Yes</td><td>Provider dependent</td><td>Live pricing, variable upstream, long-tail latency, observed 429s and 121-second timeouts.</td></tr>
-                    <tr><td>Gemini batch (SDK path tried)</td><td>Marketed yes</td><td>Broken in my test</td><td>Yes</td><td>SDK stitched multiple docs into one context. Cross-document leakage into the knowledge graph. Required a rollback.</td></tr>
-                    <tr><td>OpenAI Batch API</td><td>Yes</td><td>Yes, per JSONL line</td><td>Yes</td><td>Independent lines, 50 percent discount, strict schemas, fast turnaround on small batches, zero 429s in my runs.</td></tr>
+                    <tr><td>Local llama.cpp</td><td>n/a</td><td>Yes, per call</td><td>Single-stream throughput too low. vLLM blocked.</td></tr>
+                    <tr><td>OpenRouter</td><td>No</td><td>Yes</td><td>Live pricing, long-tail latency, 429s.</td></tr>
+                    <tr><td>Gemini batch</td><td>Marketed</td><td>Broken in test</td><td>SDK inline-concatenated. Required Neo4j rollback.</td></tr>
+                    <tr><td>OpenAI Batch</td><td>Yes</td><td>Yes, per JSONL line</td><td>50 percent off, strict schemas, fast turnaround.</td></tr>
                   </tbody>
                 </table>
 
-                <h2>This is not an anti-local post</h2>
-                <p>I have to be straight about the tension with what I have written before. My consulting page still talks about cutting cloud LLM bills with local infrastructure, and I still believe that for steady single-stream serving on my own hardware, for the multimodal work, for the live demos at demo.hannune.ai, and for anything I do not want to send out. The 4090 and the W6800 are not going anywhere.</p>
-                <p>What changed is that I stopped treating "local first" as a single rule for the whole business and started treating it as one option per pipeline. The batch extraction lane left the house. The rest of the stack stayed.</p>
+                <h2>Per-pipeline, not per-company</h2>
+                <p>The local rig is not leaving. It still wins on live serving for 2asy briefings, the ER API LLM gate, multimodal pipelines for filings with embedded charts, and quick ablations during graph normalization. The batch extraction lane is one lane out of many. "I left the cloud" is a sentence about a lane, not about a company.</p>
+                <p>My consulting page still says local infrastructure cuts cloud LLM bills. I still believe that, for the lanes where it actually does. What changed is that I stopped treating local first as one rule for the whole business and started treating it as one option per pipeline.</p>
 
-                <h2>If you are picking infrastructure for a one-person AI shop</h2>
-                <p>The question is not local versus cloud. The questions that actually matter are more specific than that. How spiky is the workload over a real week. Where exactly does the isolation boundary need to sit, per request or per document or per session. Does the provider's batch endpoint truly run the requests independently, or does it concatenate them under the hood. What does the tail of your latency distribution look like under your real concurrency, not the marketing concurrency. And when the model gets something wrong in a way that looks correct, what happens to your graph or your output store before you notice.</p>
-                <p>Answer those per pipeline. For me, this month, the answer is a hybrid. Local for serving and multimodal. OpenAI Batch for the extraction lane that has to be isolated and cheap at scale. The mix will shift the next time a workload shifts.</p>
+                <h2>If you are picking infrastructure for a one-person shop</h2>
+                <p>Stop asking local versus cloud. Ask, per pipeline. Where does the isolation boundary sit, per request or per document. Does the provider's batch endpoint actually run requests independently, or does it concatenate. What does your tail latency look like at your real concurrency. And when the model gets something wrong in a way that looks correct, what touches your graph before you notice.</p>
+                <p>For me, this month, the answer is a hybrid. Local for serving and multimodal. OpenAI Batch for the extraction lane that has to be isolated and cheap at scale. The mix will shift the next time a workload shifts. The pipeline asks the question. I answer.</p>
 
             </article>
 
