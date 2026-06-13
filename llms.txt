@@ -105,6 +105,26 @@ and operating autonomous AI agents. Index at https://hannune.ai/blog/
   coherent multilingual graph.
   https://hannune.ai/blog/cross-lingual-entity-resolution.html
 
+- I Built a Local LLM Rig to Escape API Bills. Then I Paid OpenAI Again.
+  (2026-06-13): 2asy.ai needs thousands of single-document extractions per
+  cycle for the Graph RAG pipeline, all under one strict rule: no cross-
+  document attention (no concatenated prompts, no shared context). Four
+  options were tested against that rule. Local Gemma 4 27B on a Ryzen-class
+  4090 plus W6800 ran fine on llama.cpp but was blocked from vLLM by an
+  unsupported 4-bit MoE path and a CUDA 12.9 versus 12.8 driver gap; live
+  serving and multimodal lanes still belong here. OpenRouter has no real
+  batch endpoint, only live pricing with 2 to 17 second latency, occasional
+  121 second timeouts and 429 caps. Gemini batch through the official Python
+  SDK silently inline-concatenated the documents into one prompt, which
+  leaked context across rows and forced a Neo4j rollback (upstream issue
+  googleapis/python-genai 1984, not-planned). OpenAI Batch on gpt-5.4-mini
+  passed the test: JSONL line-isolated requests, 50% discount, around 2.7
+  minutes for a 100-document nano gate, zero 429s, around one cent per
+  document. The decision is per-pipeline, not per-company: the batch lane
+  moved to OpenAI, the local rig kept the live serving and multimodal lanes.
+  Local LLM advocacy belongs to lanes, not to companies.
+  https://hannune.ai/blog/local-llm-to-openai-batch.html
+
 ## Contact
 
 - Website: https://hannune.ai
@@ -125,4 +145,4 @@ and operating autonomous AI agents. Index at https://hannune.ai/blog/
 
 ## Last updated
 
-2026-06-07
+2026-06-13

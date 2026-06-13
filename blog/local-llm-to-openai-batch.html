@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Built a Local LLM Rig to Escape API Bills. Then I Paid OpenAI Again. Hannune</title>
+    <meta name="description" content="A one-person AI shop runs thousands of single-document extractions for 2asy.ai. Local llama.cpp, OpenRouter, Gemini batch, and OpenAI Batch were tested under one strict rule: no cross-document attention. Here is what broke, what worked, and why the answer is per-pipeline, not all-local or all-cloud.">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <link rel="canonical" href="https://hannune.ai/blog/local-llm-to-openai-batch.html">
+    <meta property="og:title" content="I Built a Local LLM Rig to Escape API Bills. Then I Paid OpenAI Again.">
+    <meta property="og:description" content="A solo AI shop tested local llama.cpp, OpenRouter, Gemini batch, and OpenAI Batch for thousands of single-document extractions. Cross-document isolation was the hard rule that broke most options.">
+    <meta property="og:url" content="https://hannune.ai/blog/local-llm-to-openai-batch.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Hannune">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="I Built a Local LLM Rig to Escape API Bills. Then I Paid OpenAI Again.">
+    <meta name="twitter:description" content="A solo AI shop tested local llama.cpp, OpenRouter, Gemini batch, and OpenAI Batch under one strict rule: no cross-document attention.">
+    <meta property="og:image" content="https://hannune.ai/blog/images/local-llm-to-openai-batch.png">
+    <meta name="twitter:image" content="https://hannune.ai/blog/images/local-llm-to-openai-batch.png">
+    <link rel="stylesheet" href="../styles.css">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "I Built a Local LLM Rig to Escape API Bills. Then I Paid OpenAI Again.",
+      "description": "A one-person AI shop tested local llama.cpp, OpenRouter, Gemini batch, and OpenAI Batch under a strict no-cross-document-attention rule for the 2asy.ai filing extraction pipeline.",
+      "datePublished": "2026-06-13",
+      "dateModified": "2026-06-13",
+      "inLanguage": "en",
+      "author": {
+        "@type": "Person",
+        "name": "TaeHo Kim",
+        "alternateName": "김태호",
+        "url": "https://hannune.ai/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Hannune",
+        "logo": { "@type": "ImageObject", "url": "https://hannune.ai/logo.png" }
+      },
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://hannune.ai/blog/local-llm-to-openai-batch.html" },
+      "keywords": ["local LLM", "OpenAI Batch API", "Gemini batch", "OpenRouter", "vLLM", "llama.cpp", "Graph RAG", "2asy.ai", "one-person AI company", "knowledge graph extraction"],
+      "about": ["LLM infrastructure tradeoffs", "batch inference", "single-document extraction", "Graph RAG pipelines"]
+    }
+    </script>
+    <style>
+      .post-body { max-width: 760px; margin: 0 auto; }
+      .post-body h2 { font-size: 1.6rem; margin-top: 2.5rem; margin-bottom: 0.9rem; color: var(--color-dark); }
+      .post-body p { font-size: 1.02rem; line-height: 1.8; color: var(--color-dark); margin-bottom: 1.1rem; }
+      .post-body ul, .post-body ol { margin: 0 0 1.3rem 1.3rem; }
+      .post-body li { font-size: 1.02rem; line-height: 1.75; margin-bottom: 0.6rem; }
+      .post-body .lede { font-size: 1.18rem; line-height: 1.7; color: var(--color-accent); margin-bottom: 1.8rem; }
+      .post-body code { background: rgba(51,58,47,0.08); padding: 0.1rem 0.35rem; border-radius: 4px; font-size: 0.92em; }
+      .post-body table { width: 100%; border-collapse: collapse; margin: 1.4rem 0 1.8rem; font-size: 0.95rem; }
+      .post-body th, .post-body td { border-bottom: 1px solid rgba(51,58,47,0.18); padding: 0.55rem 0.7rem; text-align: left; vertical-align: top; }
+      .post-body th { font-weight: 700; background: rgba(51,58,47,0.05); }
+      .post-hero { display: block; width: 100%; max-width: 900px; margin: 1.5rem auto 0.5rem; aspect-ratio: 1200 / 630; object-fit: cover; border-radius: 12px; }
+      .photo-credit { max-width: 900px; margin: 0 auto 2rem; font-size: 0.78rem; color: var(--color-accent); opacity: 0.75; text-align: right; }
+      .photo-credit a { color: inherit; }
+    </style>
+</head>
+<body>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-logo">
+                <img src="../logo.png" alt="Hannune" class="logo-img">
+            </a>
+        </div>
+    </nav>
+
+    <main class="rd-page">
+        <div class="container">
+
+            <a href="index.html" class="report-back-link">← Back to writing</a>
+
+            <div class="rd-header">
+                <h1 class="rd-title">I Built a Local LLM Rig to Escape API Bills. Then I Paid OpenAI Again.</h1>
+                <p class="rd-meta">By TaeHo Kim (Hannune) &nbsp;·&nbsp; Published June 13, 2026</p>
+            </div>
+
+            <img class="post-hero" src="images/local-llm-to-openai-batch.png" alt="A small workshop bench split between a humming GPU tower and a single laptop dialing out to a cloud API" width="1200" height="630" loading="eager">
+
+            <article class="post-body">
+
+                <p class="lede">I spent a year telling people I left the cloud LLM bill behind. Last week I started paying OpenAI again. Not all of it. One specific lane, on purpose.</p>
+
+                <h2>What workload pulled me back</h2>
+                <p>The lane is the one inside 2asy.ai that reads thousands of corporate filings from OpenDART (Korea), EDINET (Japan), HKEX (Hong Kong), and CNINFO (China), and turns them into entities and relations for a Neo4j knowledge graph. There is one rule I will not bend on. Each filing gets its own isolated LLM call. The model never sees more than one document at a time. That rule exists because I have already paid the price for breaking it.</p>
+                <p>So the question for a solo operator was never which model is smartest. It was which provider can actually run thousands of strictly isolated single-document calls in parallel, cheaply, with strict JSON schemas, without melting and without leaking content between docs.</p>
+
+                <h2>Option 1: stay fully local on the RTX 4090 and the W6800</h2>
+                <p>My local rig runs Gemma 4 26B as a multimodal MoE on port 31002, served by llama.cpp from a Q4 GGUF. It is great for live chat. It is fine for the demos at demo.hannune.ai. It is not good enough for unattended thousands-of-docs extraction with a strict schema and a deadline.</p>
+                <p>I tried to put the same model on vLLM for throughput and hit two walls back to back. The 4-bit MoE has no expert-mapping path implemented in vLLM, so the cheap quantized weights cannot actually be loaded. On top of that, the vLLM container demanded CUDA 12.9 while my host driver is on 12.8, and this is the production GPU server. I was not pushing a driver upgrade just to test a batch lane. Even on llama.cpp, the server has crashed once on a CUDA graph optimization, and I now keep <code>GGML_CUDA_DISABLE_GRAPHS=1</code> in my back pocket as a recovery flag.</p>
+                <p>Local stays in the stack. It is just not where the batch lane runs.</p>
+
+                <h2>Option 2: OpenRouter</h2>
+                <p>The pitch is fine. Dozens of models behind one key, easy to switch providers, useful for testing.</p>
+                <p>The problem for this workload is simple. OpenRouter has no real batch API. Every request runs at live inference pricing, so the cost story does not improve over a normal API call. On top of that, in my own runs on a flash-class model with concurrency 32 I saw per-call latency swing between two seconds and seventeen seconds, with occasional 121-second timeouts and 429 rate-limit responses. A router adds a hop and a variable upstream provider, and that variability lives in the tail of your latency distribution. For interactive UI calls, fine. For unattended jobs that run overnight, the tail is the cost.</p>
+
+                <h2>Option 3: Gemini batch (the painful one)</h2>
+                <p>This is the option I would rather not have learned the hard way.</p>
+                <p>Gemini publishes a batch API. On paper, exactly the cheap and isolated lane I needed. In practice, the SDK path I used ran my "batch" by stitching multiple requests into a single context window and asking the model to produce one combined response. That is not a batch in the sense I needed. That is multi-document attention by another name, which is exactly what my isolation rule was written to prevent.</p>
+                <p>The failure showed up downstream, not in the SDK logs. Extracted entities and relations started carrying content from neighboring documents in the same batch line. By the time I noticed, the Neo4j graph and the entity registry had absorbed a meaningful share of fabricated entries. I rolled both back to a clean pre-batch snapshot, then spent a day reconciling what had to be re-extracted.</p>
+                <p>The underlying behavior is tracked publicly in the Google SDK issue queue as known and marked "not planned" upstream. The operator-level takeaway is short. A "batch" endpoint is not automatically isolated. The marketing copy says batch. The semantics may be inline concatenation. Verify which one you actually have before you point it at a production graph.</p>
+
+                <h2>Option 4: OpenAI Batch API, which finally fit</h2>
+                <p>The OpenAI Batch API works the way I needed a batch API to work. You upload a JSONL file. Each line is a fully independent request with its own messages and its own response schema. The service runs them as separate calls, with no shared context, returns the results in another JSONL, and discounts the whole job by 50 percent against live pricing. The published completion window is up to 24 hours. My own jobs have come back much faster.</p>
+                <p>For the binary signal gate I run before extraction, a recent 100-document <code>gpt-5.4-nano</code> batch came back in about 2.7 minutes. Zero 429s. Zero failed lines. For the heavier extraction step I use <code>gpt-5.4-mini</code> with a strict JSON schema for entities, events, and relations. Per-document cost on my runs lands close to a cent.</p>
+                <p>The win was not raw price per token. The win was that batch isolation and strict JSON schemas and reasonable tail latency all landed in the same product, on the same request, with no router in between.</p>
+
+                <h2>Side by side, with the failure modes</h2>
+                <table>
+                  <thead>
+                    <tr><th>Option</th><th>Real batch?</th><th>Cross-doc isolation</th><th>Strict JSON schema</th><th>Why it failed or fit</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>Local llama.cpp on 4090</td><td>n/a (single stream)</td><td>Yes, per call</td><td>Prompt-shaped JSON</td><td>vLLM blocked by 4-bit MoE path and CUDA 12.9 requirement. llama.cpp single-stream throughput too low for the batch lane.</td></tr>
+                    <tr><td>OpenRouter</td><td>No</td><td>Yes</td><td>Provider dependent</td><td>Live pricing, variable upstream, long-tail latency, observed 429s and 121-second timeouts.</td></tr>
+                    <tr><td>Gemini batch (SDK path tried)</td><td>Marketed yes</td><td>Broken in my test</td><td>Yes</td><td>SDK stitched multiple docs into one context. Cross-document leakage into the knowledge graph. Required a rollback.</td></tr>
+                    <tr><td>OpenAI Batch API</td><td>Yes</td><td>Yes, per JSONL line</td><td>Yes</td><td>Independent lines, 50 percent discount, strict schemas, fast turnaround on small batches, zero 429s in my runs.</td></tr>
+                  </tbody>
+                </table>
+
+                <h2>This is not an anti-local post</h2>
+                <p>I have to be straight about the tension with what I have written before. My consulting page still talks about cutting cloud LLM bills with local infrastructure, and I still believe that for steady single-stream serving on my own hardware, for the multimodal work, for the live demos at demo.hannune.ai, and for anything I do not want to send out. The 4090 and the W6800 are not going anywhere.</p>
+                <p>What changed is that I stopped treating "local first" as a single rule for the whole business and started treating it as one option per pipeline. The batch extraction lane left the house. The rest of the stack stayed.</p>
+
+                <h2>If you are picking infrastructure for a one-person AI shop</h2>
+                <p>The question is not local versus cloud. The questions that actually matter are more specific than that. How spiky is the workload over a real week. Where exactly does the isolation boundary need to sit, per request or per document or per session. Does the provider's batch endpoint truly run the requests independently, or does it concatenate them under the hood. What does the tail of your latency distribution look like under your real concurrency, not the marketing concurrency. And when the model gets something wrong in a way that looks correct, what happens to your graph or your output store before you notice.</p>
+                <p>Answer those per pipeline. For me, this month, the answer is a hybrid. Local for serving and multimodal. OpenAI Batch for the extraction lane that has to be isolated and cheap at scale. The mix will shift the next time a workload shifts.</p>
+
+            </article>
+
+            <div class="rd-cta">
+                <h2>Designing the infrastructure split for your own AI pipeline?</h2>
+                <a href="../index.html#contact" class="btn btn-primary">Get in touch →</a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; <span id="footer-year">2026</span> Hannune. All rights reserved. Seoul, Republic of Korea.</p>
+        </div>
+    </footer>
+
+    <script>
+      var fy = document.getElementById('footer-year');
+      if (fy) fy.textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
