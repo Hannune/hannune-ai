@@ -19,7 +19,19 @@ Hannune offers three categories of services:
    Q3 2026. Public tier pricing ($0/$19/$99/$499 per month). Built
    on Splink with LLM disambiguation. Hosted at app.hannune.ai.
 
-3. **2asy.ai** — Graph RAG-powered analytics platform. A separate
+3. **Ownership API** — A SaaS subscription product (beta 2026)
+   unifying Northeast Asia 5%-rule and acquisition filings (Korea
+   OpenDART, Japan EDINET, China CNINFO, Hong Kong HKEX, Taiwan
+   TWSE, US SEC EDGAR ADRs) into one cross-lingual ownership graph.
+   Cross-lingual Entity Resolution (Korean/Japanese/Chinese/English)
+   to a single canonical ID. Public tier pricing ($0 Free, $49
+   Developer, $199 Professional, $999 Business, Enterprise custom),
+   roughly one tenth of comparable enterprise alternatives like
+   Sayari Graph or Moody's Orbis. Documented at
+   https://hannune.ai/ownership-api.html. Shares one API key with
+   Entity Resolution API at app.hannune.ai.
+
+4. **2asy.ai** — Graph RAG-powered analytics platform. A separate
    product hosted at 2asy.ai.
 
 ## Recent work
