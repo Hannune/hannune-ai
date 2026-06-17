@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ownership API — Northeast Asia 5% disclosures, as one English graph — Hannune</title>
-    <meta name="description" content="Ownership API unifies 5%-rule and acquisition disclosures from Korea (OpenDART), Japan (EDINET), China (CNINFO), Hong Kong (HKEX), Taiwan (TWSE), and US (SEC EDGAR ADRs) into one cross-lingual ownership graph. Built on Hannune's Entity Resolution API. From $49/mo, around one tenth of comparable enterprise alternatives.">
+    <meta name="description" content="Ownership API unifies 5%-rule and acquisition disclosures from Korea (OpenDART), Japan (EDINET), China (CNINFO), Hong Kong (HKEX), Taiwan (TWSE), and US (SEC EDGAR ADRs) into one cross-lingual ownership graph. Built on Hannune's Entity Resolution API. From $29/mo, around one tenth of comparable enterprise alternatives.">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
     <link rel="canonical" href="https://hannune.ai/ownership-api.html">
     <meta property="og:title" content="Ownership API — Northeast Asia 5% disclosures, as one English graph">
-    <meta property="og:description" content="Korea, Japan, China, Hong Kong, Taiwan, and US ADR 5%-rule disclosures unified into one cross-lingual ownership graph. From $49/mo.">
+    <meta property="og:description" content="Korea, Japan, China, Hong Kong, Taiwan, and US ADR 5%-rule disclosures unified into one cross-lingual ownership graph. From $29/mo.">
     <meta property="og:url" content="https://hannune.ai/ownership-api.html">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Hannune">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Ownership API — Northeast Asia 5% disclosures, as one graph">
-    <meta name="twitter:description" content="Korea, Japan, China, Hong Kong, Taiwan, and US ADR 5%-rule filings, one cross-lingual graph, from $49/mo.">
+    <meta name="twitter:description" content="Korea, Japan, China, Hong Kong, Taiwan, and US ADR 5%-rule filings, one cross-lingual graph, from $29/mo.">
     <meta property="og:image" content="https://hannune.ai/images/ownership-api-hero.jpg">
     <meta name="twitter:image" content="https://hannune.ai/images/ownership-api-hero.jpg">
     <link rel="stylesheet" href="styles.css">
@@ -28,9 +28,9 @@
       "category": "Financial Data API",
       "offers": [
         { "@type": "Offer", "name": "Free",         "price": "0",   "priceCurrency": "USD" },
-        { "@type": "Offer", "name": "Developer",    "price": "49",  "priceCurrency": "USD" },
-        { "@type": "Offer", "name": "Professional", "price": "199", "priceCurrency": "USD" },
-        { "@type": "Offer", "name": "Business",     "price": "999", "priceCurrency": "USD" }
+        { "@type": "Offer", "name": "Developer",    "price": "29",  "priceCurrency": "USD" },
+        { "@type": "Offer", "name": "Professional", "price": "149", "priceCurrency": "USD" },
+        { "@type": "Offer", "name": "Business",     "price": "699", "priceCurrency": "USD" }
       ]
     }
     </script>
@@ -152,14 +152,14 @@
     <section class="oa-section" id="example">
       <h2>A single call</h2>
       <p>Ownership trees are one HTTP GET. Depth 1-4. Direction <code>owners</code>, <code>owns</code>, or <code>both</code>.</p>
-      <pre>curl "https://api.hannune.ai/ownership/v1/companies/company_xxx/ownership-tree?depth=3&amp;direction=owners" \
+      <pre>curl "https://api.hannune.ai/ownership-api/v1/companies/company_xxx/ownership-tree?depth=3&amp;direction=owners" \
      -H "Authorization: Bearer YOUR_KEY"</pre>
       <p>The response is a node plus a list of edges. Every edge carries the percentage, the effective date, the originating filing, and the evidence sentence. Identifiers across countries are the same canonical IDs you already use from the Hannune Entity Resolution API.</p>
     </section>
 
     <section class="oa-section" id="pricing">
       <h2>Pricing</h2>
-      <p>Four self-service tiers plus Enterprise. The Developer tier is roughly one tenth of comparable enterprise alternatives. Payments via Polar, sales tax handled.</p>
+      <p>Four self-service tiers plus Enterprise. The Developer tier starts at $29/mo, roughly one tenth of comparable enterprise alternatives. Payments via Polar, sales tax handled.</p>
       <div class="oa-tiers">
         <div class="oa-tier">
           <h3>Free</h3>
@@ -173,7 +173,7 @@
         </div>
         <div class="oa-tier featured">
           <h3>Developer</h3>
-          <div class="oa-price">$49<small>/mo</small></div>
+          <div class="oa-price">$29<small>/mo</small></div>
           <ul>
             <li>5,000 calls / month</li>
             <li>Depth 3</li>
@@ -183,7 +183,7 @@
         </div>
         <div class="oa-tier">
           <h3>Professional</h3>
-          <div class="oa-price">$199<small>/mo</small></div>
+          <div class="oa-price">$149<small>/mo</small></div>
           <ul>
             <li>50,000 calls / month</li>
             <li>Depth 4</li>
@@ -194,7 +194,7 @@
         </div>
         <div class="oa-tier">
           <h3>Business</h3>
-          <div class="oa-price">$999<small>/mo</small></div>
+          <div class="oa-price">$699<small>/mo</small></div>
           <ul>
             <li>500,000 calls / month</li>
             <li>Depth 4</li>
