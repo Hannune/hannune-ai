@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code hallucinations: three cases, one fix. Hannune</title>
+    <meta name="description" content="I run Claude Code daily for development and research. In two weeks it hallucinated three times. I caught every one. Not because I got lucky. Because I built an external gate around it.">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <link rel="canonical" href="https://hannune.ai/blog/claude-code-hallucination-discipline.html">
+    <meta property="og:title" content="Claude Code hallucinations: three cases, one fix">
+    <meta property="og:description" content="A solo AI builder's operational discipline for catching LLM agent hallucinations: an external premise-resistance gate, a session-start context diet, memory status fields, and a trigger-aware prompt hook.">
+    <meta property="og:url" content="https://hannune.ai/blog/claude-code-hallucination-discipline.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Hannune">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Claude Code hallucinations: three cases, one fix">
+    <meta name="twitter:description" content="Self-verification is unreliable. External gates work. Three real hallucinations and the architecture that catches them.">
+    <meta property="og:image" content="https://hannune.ai/blog/images/fabricated-evidence.jpg">
+    <meta name="twitter:image" content="https://hannune.ai/blog/images/fabricated-evidence.jpg">
+    <link rel="stylesheet" href="../styles.css">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Claude Code hallucinations: three cases, one fix",
+      "description": "A solo AI builder documents three Claude Code hallucinations caught in two weeks, and the external-gate architecture that catches them.",
+      "datePublished": "2026-06-24",
+      "dateModified": "2026-06-24",
+      "inLanguage": "en",
+      "author": {
+        "@type": "Person",
+        "name": "TaeHo Kim",
+        "alternateName": "김태호",
+        "url": "https://hannune.ai/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Hannune",
+        "logo": { "@type": "ImageObject", "url": "https://hannune.ai/logo.png" }
+      },
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://hannune.ai/blog/claude-code-hallucination-discipline.html" },
+      "keywords": ["Claude Code", "LLM hallucination", "agent verification", "premise resistance gate", "context diet", "memory frontmatter", "prompt hook", "operational discipline", "Hannune"],
+      "about": ["LLM agent operations", "AI hallucination defense", "production AI agents"]
+    }
+    </script>
+    <style>
+      .post-body { max-width: 760px; margin: 0 auto; }
+      .post-body h2 { font-size: 1.6rem; margin-top: 2.5rem; margin-bottom: 0.9rem; color: var(--color-dark); }
+      .post-body p { font-size: 1.02rem; line-height: 1.8; color: var(--color-dark); margin-bottom: 1.1rem; }
+      .post-body ul, .post-body ol { margin: 0 0 1.3rem 1.3rem; }
+      .post-body li { font-size: 1.02rem; line-height: 1.75; margin-bottom: 0.6rem; }
+      .post-body .lede { font-size: 1.18rem; line-height: 1.7; color: var(--color-accent); margin-bottom: 1.8rem; }
+      .post-body code { background: rgba(51,58,47,0.08); padding: 0.1rem 0.35rem; border-radius: 4px; font-size: 0.92em; }
+      .post-body strong { font-weight: 700; }
+      .post-hero { display: block; width: 100%; max-width: 900px; margin: 1.5rem auto 0.5rem; aspect-ratio: 1200 / 630; object-fit: cover; border-radius: 12px; }
+      .photo-credit { max-width: 900px; margin: 0 auto 2rem; font-size: 0.78rem; color: var(--color-accent); opacity: 0.75; text-align: right; }
+      .photo-credit a { color: inherit; }
+    </style>
+</head>
+<body>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-logo">
+                <img src="../logo.png" alt="Hannune" class="logo-img">
+            </a>
+        </div>
+    </nav>
+
+    <main class="rd-page">
+        <div class="container">
+
+            <a href="index.html" class="report-back-link">← Back to writing</a>
+
+            <div class="rd-header">
+                <h1 class="rd-title">Claude Code hallucinations: three cases, one fix</h1>
+                <p class="rd-meta">By TaeHo Kim (Hannune) &nbsp;·&nbsp; Published June 24, 2026</p>
+            </div>
+
+            <img class="post-hero" src="images/fabricated-evidence.jpg" alt="A magnifying glass over printed text, signaling careful inspection of stated facts" width="1200" height="630" loading="eager">
+
+            <article class="post-body">
+
+                <p class="lede">I run Claude Code daily for development and research. In the last two weeks it hallucinated three times. I caught every one. Not because I got lucky. Because I built an external gate around it.</p>
+
+                <h2>Three failures</h2>
+
+                <p><strong>Dead code stated as live.</strong> I asked whether a feature in my codebase was active. The agent grepped, found the function defined, and answered "yes." I traced the actual call path. The function existed but nothing called it. Defined, not used. The agent had pattern-matched on code presence and stated it as live behavior.</p>
+
+                <p><strong>Fabricated metrics.</strong> A sub-agent generated a draft with three numbers that looked like measurements from my pipeline. I ran the actual count. Two of the three numbers were off by three orders of magnitude. The third was close enough to fool a casual reader. The numbers did not exist anywhere in the workspace. Pure fiction, formatted like data.</p>
+
+                <p><strong>Stale context.</strong> The agent described my project folder structure using rules from a memory file that was weeks out of date. Folder names had changed. The workspace had moved on. The agent had not.</p>
+
+                <p>The pattern in all three was the same. The model pattern-matched on stale or surface-level signals and produced output that looked verified. Self-verification did not catch it. The agent did not know what it did not know.</p>
+
+                <h2>The fix is not a better prompt</h2>
+
+                <p>I tried stronger instructions first. "Verify before stating." "Flag uncertainty." It helped a little. Not enough.</p>
+
+                <p>What worked was an external gate. A separate premise-resistance sub-agent that runs before the main agent answers anything claim-shaped. It receives the user's question, scans for trigger patterns (time references, system claims, memory citations), and decides whether verification is required. If yes, it runs the actual check (trace the call path, run the count, read the live state) and returns the verified facts. The main agent answers from those facts, not from its own memory.</p>
+
+                <p>This catches the failures above:</p>
+                <ul>
+                  <li>Dead-code claim: triggers a runtime-state check before the agent calls anything "live."</li>
+                  <li>Fabricated metrics: triggers an actual count before the agent quotes any number.</li>
+                  <li>Stale context: triggers a live-state read before the agent describes anything that can change.</li>
+                </ul>
+
+                <h2>Three supporting components</h2>
+
+                <p>The gate alone is not enough. It needs structure.</p>
+
+                <p><strong>Session-start context diet.</strong> When a session begins, only memories marked active in their frontmatter are loaded. Superseded and stale memories are skipped. The context the agent starts with is current by construction, not by hope.</p>
+
+                <p><strong>Memory frontmatter with status fields.</strong> Every memory has a status: active, completed, superseded, or stale-suspected. Old decisions are not deleted. They are marked superseded and linked to the decision that replaced them. The agent always knows which decisions are still live.</p>
+
+                <p><strong>Trigger-aware prompt hook.</strong> A hook runs on every user message and scans for the trigger patterns. If a trigger fires, the hook injects a rule into the agent's context: call the gate first, do not answer until the gate returns. The trigger logic lives outside the model, in deterministic code. It is not subject to the model's self-verification failure.</p>
+
+                <h2>What this is</h2>
+
+                <p>This is operational discipline for running Claude Code seriously, daily, for both development and research. The premise is simple. Self-verification is unreliable enough that I cannot bet production decisions on it. External gates are reliable enough that I can.</p>
+
+                <p>If you are running LLM agents for anything where wrong-but-confident output costs you, the architecture matters more than the prompt. Build gates around the model. Treat self-verify as a heuristic, not a guarantee. Mark old decisions explicitly so the agent knows which ones are still live.</p>
+
+                <p>The hard part of running Claude Code in production is not prompting. It is knowing when to trust the output and having a system that catches the cases when you should not.</p>
+
+            </article>
+
+            <div class="rd-cta">
+                <h2>Running Claude Code or similar agents in production?</h2>
+                <a href="../index.html#contact" class="btn btn-primary">Get in touch →</a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; <span id="footer-year">2026</span> Hannune. All rights reserved. Seoul, Republic of Korea.</p>
+        </div>
+    </footer>
+
+    <script>
+      var fy = document.getElementById('footer-year');
+      if (fy) fy.textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
+</content>

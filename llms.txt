@@ -55,6 +55,18 @@ document processing as core specialties.
 Build-in-public essays on Claude Code, Graph RAG, entity resolution,
 and operating autonomous AI agents. Index at https://hannune.ai/blog/
 
+- Claude Code hallucinations: three cases, one fix (2026-06-24):
+  Three real Claude Code hallucinations caught in two weeks while
+  running it daily for development and research: dead code stated
+  as live, a sub-agent fabricating measurements that looked like
+  real data, and stale context held as fact. The fix is not a
+  better prompt. It is an external premise-resistance gate that
+  runs before the main agent answers anything claim-shaped, plus
+  a session-start context diet, memory frontmatter with active /
+  superseded status, and a deterministic prompt hook that triggers
+  the gate. Self-verification is unreliable. External gates work.
+  https://hannune.ai/blog/claude-code-hallucination-discipline.html
+
 - How I Turned Claude Code Into the Operator of a One-Person AI Company
   (2026-05-26): Moving Claude Code from autocomplete to a production
   operator using a layered CLAUDE.md, seven sub-agents, persistent
@@ -157,4 +169,4 @@ and operating autonomous AI agents. Index at https://hannune.ai/blog/
 
 ## Last updated
 
-2026-06-13
+2026-06-24
