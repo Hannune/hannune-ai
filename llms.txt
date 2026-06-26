@@ -55,6 +55,23 @@ document processing as core specialties.
 Build-in-public essays on Claude Code, Graph RAG, entity resolution,
 and operating autonomous AI agents. Index at https://hannune.ai/blog/
 
+- Why I built an AI agent framework comparison directory (2026-06-26):
+  After seven years of production LLM work and four agent projects on
+  four different frameworks (LangGraph, CrewAI, Pydantic AI, OpenAI
+  Agents SDK), launched a side-by-side directory of 15 AI agent
+  frameworks at compare-lab.xyz/ai-agent-frameworks/. Core thesis: in
+  2026 a comparison directory beats another framework as a solo
+  product, because the bottleneck is decision support, not framework
+  supply, and comparison data is the surface that survives horizontal
+  foundation-lab absorption of the agent layer. Running the same
+  one-person narrow-niche play OpenAlternative ran for self-hosted
+  open source. Three 30-day signals: organic traffic on the directory
+  URL pattern, inbound on the directory itself, and consulting leads
+  into the Hannune Graph RAG practice. Two of three lands the
+  expansion to 20+ frameworks with weekly GitHub API refresh; none of
+  three lands a short post-mortem.
+  https://hannune.ai/blog/why-i-built-ai-agent-framework-compare.html
+
 - Claude Code hallucinations: three cases, one fix (2026-06-24):
   Three real Claude Code hallucinations caught in two weeks while
   running it daily for development and research: dead code stated
@@ -169,4 +186,4 @@ and operating autonomous AI agents. Index at https://hannune.ai/blog/
 
 ## Last updated
 
-2026-06-24
+2026-06-26
