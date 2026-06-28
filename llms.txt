@@ -28,7 +28,7 @@ Hannune offers three categories of services:
    Developer, $199 Professional, $999 Business, Enterprise custom),
    roughly one tenth of comparable enterprise alternatives like
    Sayari Graph or Moody's Orbis. Documented at
-   https://hannune.ai/ownership-api.html. Shares one API key with
+   https://hannune.ai/ownership.html. Shares one API key with
    Entity Resolution API at app.hannune.ai.
 
 4. **2asy.ai** — Graph RAG-powered analytics platform. A separate

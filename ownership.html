@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ownership API — Northeast Asia 5% disclosures, as one English graph — Hannune</title>
+    <meta name="description" content="Ownership API unifies 5%-rule and acquisition disclosures from Korea (OpenDART), Japan (EDINET), China (CNINFO), Hong Kong (HKEX), Taiwan (TWSE), and US (SEC EDGAR ADRs) into one cross-lingual ownership graph. Built on Hannune's Entity Resolution API. From $29/mo, around one tenth of comparable enterprise alternatives.">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <link rel="canonical" href="https://hannune.ai/ownership.html">
+    <meta property="og:title" content="Ownership API — Northeast Asia 5% disclosures, as one English graph">
+    <meta property="og:description" content="Korea, Japan, China, Hong Kong, Taiwan, and US ADR 5%-rule disclosures unified into one cross-lingual ownership graph. From $29/mo.">
+    <meta property="og:url" content="https://hannune.ai/ownership.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Hannune">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Ownership API — Northeast Asia 5% disclosures, as one graph">
+    <meta name="twitter:description" content="Korea, Japan, China, Hong Kong, Taiwan, and US ADR 5%-rule filings, one cross-lingual graph, from $29/mo.">
+    <meta property="og:image" content="https://hannune.ai/images/ownership-hero.jpg">
+    <meta name="twitter:image" content="https://hannune.ai/images/ownership-hero.jpg">
+    <link rel="stylesheet" href="styles.css">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Hannune Ownership API",
+      "description": "Northeast Asia 5%-rule and acquisition disclosures unified into one cross-lingual ownership graph, queryable via REST API.",
+      "brand": { "@type": "Brand", "name": "Hannune" },
+      "category": "Financial Data API",
+      "offers": [
+        { "@type": "Offer", "name": "Free",         "price": "0",   "priceCurrency": "USD" },
+        { "@type": "Offer", "name": "Developer",    "price": "29",  "priceCurrency": "USD" },
+        { "@type": "Offer", "name": "Professional", "price": "149", "priceCurrency": "USD" },
+        { "@type": "Offer", "name": "Business",     "price": "699", "priceCurrency": "USD" }
+      ]
+    }
+    </script>
+    <style>
+      .oa-page { padding-top: 6rem; padding-bottom: 4rem; }
+      .oa-hero { max-width: 880px; margin: 0 auto 3rem; text-align: center; }
+      .oa-hero h1 { font-size: 2.4rem; line-height: 1.2; margin-bottom: 1.1rem; color: var(--color-dark); }
+      .oa-hero p.lede { font-size: 1.18rem; line-height: 1.7; color: var(--color-accent); margin-bottom: 1.6rem; }
+      .oa-hero .oa-cta-row { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem; }
+      .oa-section { max-width: 980px; margin: 0 auto 3.5rem; }
+      .oa-section h2 { font-size: 1.55rem; margin-bottom: 1rem; color: var(--color-dark); }
+      .oa-section p { font-size: 1.02rem; line-height: 1.75; color: var(--color-dark); margin-bottom: 1.1rem; }
+      .oa-section ul { margin: 0 0 1.3rem 1.3rem; }
+      .oa-section li { font-size: 1.02rem; line-height: 1.7; margin-bottom: 0.55rem; }
+      .oa-section code { background: rgba(51,58,47,0.08); padding: 0.12rem 0.4rem; border-radius: 4px; font-size: 0.92em; }
+      .oa-section pre { background: rgba(51,58,47,0.06); padding: 1rem 1.1rem; border-radius: 8px; overflow-x: auto; font-size: 0.92rem; line-height: 1.55; margin-bottom: 1.3rem; }
+      .oa-bench { width: 100%; border-collapse: collapse; margin-bottom: 1.6rem; font-size: 0.95rem; }
+      .oa-bench th, .oa-bench td { padding: 0.7rem 0.85rem; border-bottom: 1px solid rgba(51,58,47,0.12); text-align: left; vertical-align: top; }
+      .oa-bench th { background: rgba(51,58,47,0.04); font-weight: 600; }
+      .oa-bench td .muted { color: var(--color-accent); font-size: 0.88em; }
+      .oa-tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.1rem; margin-top: 1.2rem; }
+      .oa-tier { border: 1px solid rgba(51,58,47,0.15); border-radius: 12px; padding: 1.4rem 1.2rem; background: #fff; }
+      .oa-tier h3 { font-size: 1.15rem; margin-bottom: 0.4rem; }
+      .oa-tier .oa-price { font-size: 1.7rem; font-weight: 600; color: var(--color-dark); margin-bottom: 0.3rem; }
+      .oa-tier .oa-price small { font-size: 0.9rem; color: var(--color-accent); font-weight: 400; }
+      .oa-tier ul { list-style: disc; padding-left: 1.05rem; margin: 0.7rem 0 0; }
+      .oa-tier li { font-size: 0.92rem; line-height: 1.55; margin-bottom: 0.35rem; }
+      .oa-tier.featured { border-color: var(--color-dark); box-shadow: 0 8px 24px rgba(51,58,47,0.08); }
+      .oa-callout { background: rgba(51,58,47,0.04); border-left: 3px solid var(--color-dark); padding: 1rem 1.2rem; border-radius: 6px; margin-bottom: 1.4rem; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="/" class="nav-logo">
+      <img src="logo.png" alt="Hannune" class="logo-img">
+    </a>
+  </div>
+</nav>
+
+<main id="main-content" class="oa-page">
+  <div class="container">
+
+    <section class="oa-hero">
+      <h1>Northeast Asia 5% disclosures, as one English graph.</h1>
+      <p class="lede">Ownership API unifies 5%-rule and acquisition filings from Korea, Japan, China, Hong Kong, Taiwan, and US ADRs into one cross-lingual ownership graph. Same entity in 한국어 / 日本語 / 中文 / English collapses to one canonical node, automatically.</p>
+      <div class="oa-cta-row">
+        <a href="#pricing" class="btn btn-primary">See pricing</a>
+        <a href="#example" class="btn btn-secondary">Live API example</a>
+      </div>
+    </section>
+
+    <section class="oa-section">
+      <h2>What it is</h2>
+      <p>Most ownership data vendors are either expensive enterprise platforms with limited Northeast Asia depth, or local databases that only cover one country in one language. Ownership API sits in the gap.</p>
+      <ul>
+        <li>Six primary sources, polled daily: OpenDART (Korea), EDINET (Japan), CNINFO (China), HKEX (Hong Kong), TWSE (Taiwan), SEC EDGAR (US ADRs).</li>
+        <li>Cross-lingual Entity Resolution: "삼성전자" in a Korean 5% filing, "サムスン電子" in a Japanese filing, and "Samsung Electronics" in a US filing resolve to one canonical ID.</li>
+        <li>Every relation cites the original disclosure sentence (<code>evidence_quote</code>). Built for audit, not for vibes.</li>
+        <li>Ownership state plus full history. Same shareholder pair across multiple filings keeps the latest percentage and records every change.</li>
+      </ul>
+    </section>
+
+    <section class="oa-section">
+      <h2>How it compares</h2>
+      <p>The benchmarks below are who we measure against, and where Ownership API differs.</p>
+      <table class="oa-bench">
+        <thead>
+          <tr><th>Provider</th><th>Coverage</th><th>Pricing</th><th>What we do differently</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Sayari Graph</strong><br><span class="muted">Moody's-adjacent peer</span></td>
+            <td>500M+ companies, 250+ jurisdictions, beneficial-ownership chains.</td>
+            <td>API Credits + Pro/Enterprise tiers. Indicative Pro pricing $499-2,000/mo.</td>
+            <td>We are narrower (Northeast Asia first) and an order of magnitude cheaper at the Developer tier.</td>
+          </tr>
+          <tr>
+            <td><strong>Moody's Orbis (BvD)</strong></td>
+            <td>625M companies, 170+ sources, corporate trees.</td>
+            <td>Enterprise contracts, often $10K-200K+ per year.</td>
+            <td>Developer-friendly REST, transparent pricing, no procurement cycle.</td>
+          </tr>
+          <tr>
+            <td><strong>LSEG / Refinitiv</strong></td>
+            <td>PermID-anchored institutional and insider ownership.</td>
+            <td>Enterprise contracts via account managers.</td>
+            <td>Our canonical IDs are public, our endpoints are documented, sign-up is self-service.</td>
+          </tr>
+          <tr>
+            <td><strong>NICE D&amp;B KIS-LINE</strong> (Korea)</td>
+            <td>Korean shareholders, executives, credit.</td>
+            <td>BizAPI metered.</td>
+            <td>We add Japan, China, Hong Kong, Taiwan, and US ADRs in the same graph and same language.</td>
+          </tr>
+          <tr>
+            <td><strong>Teikoku Databank / TSR</strong> (Japan)</td>
+            <td>Japanese credit reports, partial ownership.</td>
+            <td>Per-report ¥3,000-30,000+, Japanese only.</td>
+            <td>Programmatic, English output, cross-lingual joins.</td>
+          </tr>
+          <tr>
+            <td><strong>Tianyancha / Qichacha / Qixin</strong> (China)</td>
+            <td>GSXT-based shareholders, relationships, litigation.</td>
+            <td>Subscription ¥30-300/mo, separate API.</td>
+            <td>Chinese filings join with HKEX listings and Korean / Japanese filings on the same canonical IDs.</td>
+          </tr>
+          <tr>
+            <td><strong>Webb-site</strong> (Hong Kong)</td>
+            <td>HK-listed company directors and stats since 1990s.</td>
+            <td>Free. Primary server shut down 2025-10; mirrors remain.</td>
+            <td>We keep a live HK feed inside the same graph as the rest of Northeast Asia.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="oa-section" id="example">
+      <h2>A single call</h2>
+      <p>Ownership trees are one HTTP GET. Depth 1-4. Direction <code>owners</code>, <code>owns</code>, or <code>both</code>.</p>
+      <pre>curl "https://api.hannune.ai/ownership/v1/companies/company_xxx/ownership-tree?depth=3&amp;direction=owners" \
+     -H "Authorization: Bearer YOUR_KEY"</pre>
+      <p>The response is a node plus a list of edges. Every edge carries the percentage, the effective date, the originating filing, and the evidence sentence. Identifiers across countries are the same canonical IDs you already use from the Hannune Entity Resolution API.</p>
+    </section>
+
+    <section class="oa-section" id="pricing">
+      <h2>Pricing</h2>
+      <p>Four self-service tiers plus Enterprise. The Developer tier starts at $29/mo, roughly one tenth of comparable enterprise alternatives. Payments via Polar, sales tax handled.</p>
+      <div class="oa-tiers">
+        <div class="oa-tier">
+          <h3>Free</h3>
+          <div class="oa-price">$0<small>/mo</small></div>
+          <ul>
+            <li>100 calls / month</li>
+            <li>Depth 2</li>
+            <li>Tree response with nodes and edges</li>
+          </ul>
+        </div>
+        <div class="oa-tier featured">
+          <h3>Developer</h3>
+          <div class="oa-price">$29<small>/mo</small></div>
+          <ul>
+            <li>5,000 calls / month</li>
+            <li>Depth 3</li>
+            <li>History 200 events / call</li>
+            <li>Full evidence quotes</li>
+          </ul>
+        </div>
+        <div class="oa-tier">
+          <h3>Professional</h3>
+          <div class="oa-price">$149<small>/mo</small></div>
+          <ul>
+            <li>50,000 calls / month</li>
+            <li>Depth 4</li>
+            <li>History 2,000 events / call</li>
+            <li>Full evidence quotes</li>
+          </ul>
+        </div>
+        <div class="oa-tier">
+          <h3>Business</h3>
+          <div class="oa-price">$699<small>/mo</small></div>
+          <ul>
+            <li>500,000 calls / month</li>
+            <li>Depth 4</li>
+            <li>History 2,000 events / call</li>
+            <li>Priority email support</li>
+          </ul>
+        </div>
+        <div class="oa-tier">
+          <h3>Enterprise</h3>
+          <div class="oa-price">Talk to us</div>
+          <ul>
+            <li>Unlimited calls</li>
+            <li>SLA, on-premise option</li>
+            <li>Custom polling cadence</li>
+            <li>Priority custom sources</li>
+          </ul>
+        </div>
+      </div>
+      <p class="oa-callout">Ownership API and Entity Resolution API share one Hannune account and one API key. If you already use ER API, your canonical IDs work here on day one.</p>
+    </section>
+
+    <section class="oa-section">
+      <h2>How it is built</h2>
+      <ul>
+        <li><strong>Daily polling</strong>: every business day at 03:30 UTC the pipeline pulls new filings, extracts ownership relations with structured output, runs them through Entity Resolution, and commits to a dedicated graph database.</li>
+        <li><strong>Evidence guard</strong>: every relation must carry a verbatim quote from the source filing. Percentages must appear in that quote. If they don't, the relation is dropped, not fabricated.</li>
+        <li><strong>Effective-date replace policy</strong>: when a later filing arrives, the percentage and date are updated only if the new filing's effective date is at least as recent. Out-of-order arrivals stay correct.</li>
+        <li><strong>Cross-lingual ER</strong>: the same registry that powers the Hannune Entity Resolution API resolves Korean / Japanese / Chinese / English filer names to one canonical ID.</li>
+      </ul>
+    </section>
+
+    <section class="oa-section">
+      <h2>What is next</h2>
+      <ul>
+        <li>Risk and sanctions overlays on top of the ownership graph (modeled on Sayari's 4-hour sanctions refresh).</li>
+        <li>Webhook push notifications on ownership-percentage changes for Business tier.</li>
+        <li>JSONL bulk export endpoints for Professional and Business tiers.</li>
+        <li>On-demand new-entity ingest for Professional tier.</li>
+        <li>On-premise deployment package for Enterprise.</li>
+      </ul>
+    </section>
+
+    <div class="rd-cta">
+      <h2>Ready to try?</h2>
+      <a href="https://app.hannune.ai" class="btn btn-primary">Start free on app.hannune.ai →</a>
+    </div>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p>&copy; <span id="footer-year">2026</span> Hannune. All rights reserved. Seoul, Republic of Korea.</p>
+  </div>
+</footer>
+
+<script>
+  var fy = document.getElementById('footer-year');
+  if (fy) fy.textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
