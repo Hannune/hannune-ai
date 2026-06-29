@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>When the Same Incident Becomes Five Separate Events in Your Graph: Cross-Document Event Coreference — Hannune</title>
+    <meta name="description" content="One East Asian merger gets filed in Korean, Japanese, Chinese, and English, and a one-doc-per-LLM graph builder turns it into four Event nodes. How I built a two-stage cross-document event coreference resolver on the 2asy.ai knowledge graph, and why it is not the same problem as entity resolution.">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <link rel="canonical" href="https://hannune.ai/blog/cross-document-event-coreference.html">
+    <meta property="og:title" content="When the Same Incident Becomes Five Separate Events in Your Graph">
+    <meta property="og:description" content="One East Asian merger, filed in four languages, becomes four Event nodes. A two-stage cross-document event coreference resolver on the 2asy.ai knowledge graph, and why it differs from entity resolution.">
+    <meta property="og:url" content="https://hannune.ai/blog/cross-document-event-coreference.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Hannune">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="When the Same Incident Becomes Five Separate Events in Your Graph">
+    <meta name="twitter:description" content="Cross-document event coreference on a multilingual knowledge graph: a rule filter plus a three-way LLM judgment plus union-find clustering.">
+    <meta property="og:image" content="https://hannune.ai/blog/images/cross-document-event-coreference.jpg">
+    <meta name="twitter:image" content="https://hannune.ai/blog/images/cross-document-event-coreference.jpg">
+    <link rel="stylesheet" href="../styles.css">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "When the Same Incident Becomes Five Separate Events in Your Graph: Cross-Document Event Coreference",
+      "description": "One East Asian merger gets filed in Korean, Japanese, Chinese, and English, and a one-doc-per-LLM graph builder turns it into four Event nodes. A two-stage cross-document event coreference resolver on the 2asy.ai knowledge graph, and why it is not the same problem as entity resolution.",
+      "datePublished": "2026-06-30",
+      "dateModified": "2026-06-30",
+      "inLanguage": "en",
+      "author": {
+        "@type": "Person",
+        "name": "TaeHo Kim",
+        "alternateName": "김태호",
+        "url": "https://hannune.ai/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Hannune",
+        "logo": { "@type": "ImageObject", "url": "https://hannune.ai/logo.png" }
+      },
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://hannune.ai/blog/cross-document-event-coreference.html" },
+      "keywords": ["cross-document event coreference", "event coreference", "entity resolution", "knowledge graph", "Graph RAG", "Neo4j", "union-find", "2asy.ai", "multilingual", "Korean Japanese Chinese", "disclosure filings"],
+      "about": ["cross-document event coreference", "knowledge graph", "Graph RAG"]
+    }
+    </script>
+    <style>
+      .post-body { max-width: 760px; margin: 0 auto; }
+      .post-body h2 { font-size: 1.6rem; margin-top: 2.5rem; margin-bottom: 0.9rem; color: var(--color-dark); }
+      .post-body p { font-size: 1.02rem; line-height: 1.8; color: var(--color-dark); margin-bottom: 1.1rem; }
+      .post-body ul, .post-body ol { margin: 0 0 1.3rem 1.3rem; }
+      .post-body li { font-size: 1.02rem; line-height: 1.75; margin-bottom: 0.6rem; }
+      .post-body .lede { font-size: 1.18rem; line-height: 1.7; color: var(--color-accent); margin-bottom: 1.8rem; }
+      .post-body code { background: rgba(51,58,47,0.08); padding: 0.1rem 0.35rem; border-radius: 4px; font-size: 0.92em; }
+      .cover-hero { display: block; width: 100%; max-width: 760px; height: auto; aspect-ratio: 1200 / 630; margin: 1.5rem auto 0.5rem; border-radius: 12px; border: 1px solid rgba(51,58,47,0.12); box-shadow: 0 6px 24px rgba(0,0,0,0.08); }
+      .photo-credit { max-width: 760px; margin: 0 auto 2rem; font-size: 0.78rem; color: var(--color-accent); opacity: 0.75; text-align: center; }
+      .photo-credit a { color: inherit; }
+    </style>
+</head>
+<body>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-logo">
+                <img src="../logo.png" alt="Hannune" class="logo-img">
+            </a>
+        </div>
+    </nav>
+
+    <main class="rd-page">
+        <div class="container">
+
+            <a href="index.html" class="report-back-link">← Back to writing</a>
+
+            <div class="rd-header">
+                <h1 class="rd-title">When the same incident becomes five separate events in your graph</h1>
+                <p class="rd-meta">By TaeHo Kim (Hannune) &nbsp;·&nbsp; Published June 30, 2026</p>
+            </div>
+
+            <img class="cover-hero" src="images/cross-document-event-coreference.jpg" alt="A stack of thick document folders, standing in for the same corporate incident filed once each in Korean, Japanese, Chinese, and English" width="1200" height="630" loading="eager">
+            <p class="photo-credit">Photo by <a href="https://unsplash.com/@beatriz_perez" target="_blank" rel="noopener noreferrer">Beatriz Pérez Moya</a> on Unsplash</p>
+
+            <article class="post-body">
+
+                <p class="lede">A single corporate event in East Asia rarely shows up once. A merger gets filed at OpenDART in Korean, reported by EDINET in Japanese a day later, picked up by a Hong Kong exchange notice in traditional Chinese, and summarized in an English wire story. Four documents, one real-world incident. If your pipeline extracts events document by document, you end up with four Event nodes in the graph that are really the same thing.</p>
+
+                <p>That is the situation I hit in the knowledge graph behind 2asy.ai, and the fix turned out to be a different problem than I first assumed.</p>
+
+                <h2>Event coreference is not entity resolution</h2>
+                <p>It is easy to conflate the two. Entity resolution answers "is this Samsung the same as that Samsung," matching company or person names across languages and spellings. I already solve that upstream with a cross-lingual entity resolution pass, so by the time events land in the graph, 삼성전자 and Samsung Electronics point to one canonical entity ID.</p>
+                <p>Event coreference is the next layer. Even with entities unified, the events themselves stay split. Two documents can both reference the same canonical Samsung entity and still describe what looks like two separate filings, because each was extracted in isolation. Coreference asks a harder question: are these two event records describing the same incident, or two genuinely different things that happen to share an actor?</p>
+
+                <h2>Why the graph splits events in the first place</h2>
+                <p>The graph builder follows a one-document, one-LLM-call rule. Each article or disclosure is read once, in its own language, and the model emits the events it finds in that document alone. That is deliberate. Extraction stays auditable, cost per document stays bounded, and I never hand one giant prompt a whole day of news and watch it hallucinate links between stories that were never connected.</p>
+                <p>The cost is duplication. The builder has no memory of what another document said, so the same merger becomes a Korean Event node, a Japanese one, and an English one. To a reader traversing the graph that looks like three mergers. There was one.</p>
+
+                <h2>The naive fix breaks on East Asian data</h2>
+                <p>The obvious shortcut is to dedup events by string similarity on their summaries. It fails here for two reasons. First, the summaries are in different languages, so token overlap between a Korean summary and an English one is close to zero even when they describe the identical event. Second, even within one language, two genuinely distinct events involving the same companies, say a supply contract and a separate lawsuit filed the same week, can share most of their vocabulary. String matching cannot tell coincidental overlap from real coreference.</p>
+
+                <h2>The two-stage approach I settled on</h2>
+                <p>I built a small standalone resolver that runs read-only against the graph and emits clusters as JSON. It never writes back to Neo4j. The design has two stages on purpose: a cheap rule-based filter, then a targeted LLM judgment.</p>
+                <p>Stage one pulls recent Event nodes inside a time window and forms candidate pairs without calling any model. A pair survives only if it clears three gates: the events share at least one canonical entity, their date buckets fall within seventy-two hours, and they either carry the same event type or their summaries clear a Jaccard token-overlap threshold. Each surviving pair gets a similarity score and the list is sorted so the strongest candidates come first. This stage exists to keep the LLM bill bounded. With a per-run cap on calls, you judge the top candidates by score and skip the long tail of weak pairs.</p>
+                <p>Stage two hands each candidate pair to a small model with both summaries, both entity lists, and both date buckets, and asks for one of three labels: same, related, or distinct. I keep the three-way distinction on purpose. Collapsing related into same would merge a contract and a lawsuit between the same two firms; collapsing it into distinct would scatter genuine follow-on coverage. Only a "same" verdict counts as a merge edge.</p>
+                <p>Stage three is plain union-find. Every "same" verdict unions the two event IDs, and the connected components become clusters. Any component with a single member gets dropped, since a cluster of one says nothing about cross-document coverage. Each surviving cluster record carries its member event IDs, the union of their entities, the source documents, the time range, and the model's one-line reason for every merge it made. I kept that reason log so I can read back why two events got joined when a cluster looks wrong.</p>
+
+                <h2>Design decisions that mattered</h2>
+                <p>The one-LLM-call-per-pair rule mirrors the one-document rule in the builder. It is slower than batching a cluster into a single prompt, but it keeps each judgment independent and easy to inspect, and it stops the model from inventing transitive links it was never asked about. Transitivity comes from union-find on discrete yes-or-no verdicts, not from the model reasoning over a whole group at once.</p>
+                <p>The seventy-two-hour window is a blunt instrument, and it is the part I trust least. Cross-border coverage of the same incident usually lands inside three days, but slow regulatory follow-ups can arrive a week later and get missed. Widening the window quadratically inflates the candidate-pair count, which is exactly what the rule filter is there to contain. That tension between recall and cost is unresolved, and for now I chose the cheaper side.</p>
+                <p>The whole thing runs against a read-only Neo4j connection and outputs a file. Nothing touches the operational graph. Promoting a cluster ID back onto the Event nodes is a separate, deliberate step, not something a nightly job does on its own.</p>
+
+                <h2>Where this sits</h2>
+                <p>Right now the resolver is an offline pass that produces clusters for review. It is not yet a wired-in stage of the daily pipeline. The next move is letting the content layer read cluster IDs, so a brief can say "covered across four filings in three jurisdictions" instead of treating each filing as its own event. The point was never a tidier graph. It was a reader who sees that one incident got reported four times, in four languages, and can trust that the graph already worked that out.</p>
+
+                <p>The public graph is at <a href="https://www.2asy.ai/" target="_blank" rel="noopener noreferrer">https://www.2asy.ai/</a>. The entity resolution layer underneath it is at <a href="https://api.hannune.ai/entity-resolution/v1" target="_blank" rel="noopener noreferrer">https://api.hannune.ai/entity-resolution/v1</a>.</p>
+                <p>The related post on the layer below this one: <a href="https://hannune.ai/blog/cross-lingual-entity-resolution.html">Cross-Lingual Entity Resolution in a Trade Knowledge Graph</a></p>
+
+            </article>
+
+            <div class="rd-cta">
+                <h2>Building retrieval over a multilingual corpus that has to stay coherent?</h2>
+                <a href="../index.html#contact" class="btn btn-primary">Get in touch →</a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; <span id="footer-year">2026</span> Hannune. All rights reserved. Seoul, Republic of Korea.</p>
+        </div>
+    </footer>
+
+    <script>
+      var fy = document.getElementById('footer-year');
+      if (fy) fy.textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

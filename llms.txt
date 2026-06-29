@@ -55,6 +55,21 @@ document processing as core specialties.
 Build-in-public essays on Claude Code, Graph RAG, entity resolution,
 and operating autonomous AI agents. Index at https://hannune.ai/blog/
 
+- When the same incident becomes five separate events in your graph
+  (2026-06-30): A single East Asian merger is filed at OpenDART in
+  Korean, EDINET in Japanese, and a Hong Kong exchange in Chinese,
+  plus an English wire story. A one-document-per-LLM graph builder
+  extracts each in isolation, so one incident becomes four Event
+  nodes. Cross-document event coreference is a different problem
+  from entity resolution: even with entities unified, the events
+  stay split. Deduping by summary text fails because cross-language
+  token overlap is near zero and same-language overlap is noisy.
+  The fix is a two-stage resolver: a rule filter (shared entity,
+  72-hour window, Jaccard or event-type match) to bound LLM cost,
+  a three-way same / related / distinct judgment, and union-find
+  clustering on the "same" verdicts. Read-only against Neo4j.
+  https://hannune.ai/blog/cross-document-event-coreference.html
+
 - Claude Code hallucinations: three cases, one fix (2026-06-24):
   Three real Claude Code hallucinations caught in two weeks while
   running it daily for development and research: dead code stated

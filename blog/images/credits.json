@@ -1,5 +1,12 @@
 [
   {
+    "slug": "cross-document-event-coreference",
+    "file": "cross-document-event-coreference.jpg",
+    "photographer": "Beatriz Pérez Moya",
+    "photographer_url": "https://unsplash.com/@beatriz_perez",
+    "photo_url": "https://unsplash.com/photos/a-stack-of-thick-folders-on-a-white-surface-XN4T2PVUUgk"
+  },
+  {
     "slug": "claude-code-production-operator",
     "file": "claude-code.jpg",
     "photographer": "Miha Meglic",
