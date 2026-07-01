@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why I Built AI Agent Framework Compare: A Directory, Not a Benchmark — Hannune</title>
+    <meta name="description" content="Four production agent projects, four different frameworks, and two weeks of doc-reading and toy demos each time. Why the reference I kept wishing existed was a directory of framework rows, not a benchmark, and what belongs in a row that actually helps you pick.">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <link rel="canonical" href="https://hannune.ai/blog/why-i-built-ai-agent-framework-compare.html">
+    <meta property="og:title" content="Why I Built AI Agent Framework Compare: A Directory, Not a Benchmark">
+    <meta property="og:description" content="Framework selection eats the first two weeks of every AI agent project. A benchmark cannot fix that. A directory row with control style, state model, and license can.">
+    <meta property="og:url" content="https://hannune.ai/blog/why-i-built-ai-agent-framework-compare.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Hannune">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Why I Built AI Agent Framework Compare: A Directory, Not a Benchmark">
+    <meta name="twitter:description" content="Framework selection eats the first two weeks of every AI agent project. What a good comparison row actually contains.">
+    <meta property="og:image" content="https://hannune.ai/blog/images/why-i-built-ai-agent-framework-compare.jpg">
+    <meta name="twitter:image" content="https://hannune.ai/blog/images/why-i-built-ai-agent-framework-compare.jpg">
+    <link rel="stylesheet" href="../styles.css">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Why I Built AI Agent Framework Compare: A Directory, Not a Benchmark",
+      "description": "Framework selection eats the first two weeks of every AI agent project. Why the reference I kept wishing existed was a directory of rows, not a benchmark, and what belongs in a row that actually helps a decision.",
+      "datePublished": "2026-07-02",
+      "dateModified": "2026-07-02",
+      "inLanguage": "en",
+      "author": {
+        "@type": "Person",
+        "name": "TaeHo Kim",
+        "alternateName": "김태호",
+        "url": "https://hannune.ai/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Hannune",
+        "logo": { "@type": "ImageObject", "url": "https://hannune.ai/logo.png" }
+      },
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://hannune.ai/blog/why-i-built-ai-agent-framework-compare.html" },
+      "keywords": ["ai agent frameworks", "framework comparison", "LangGraph", "CrewAI", "Pydantic AI", "OpenAI Agents SDK", "AutoGen", "framework selection", "production agents", "agent directory"],
+      "about": ["AI agent frameworks", "framework selection", "production AI agents"]
+    }
+    </script>
+    <style>
+      .post-body { max-width: 760px; margin: 0 auto; }
+      .post-body h2 { font-size: 1.6rem; margin-top: 2.5rem; margin-bottom: 0.9rem; color: var(--color-dark); }
+      .post-body p { font-size: 1.02rem; line-height: 1.8; color: var(--color-dark); margin-bottom: 1.1rem; }
+      .post-body ul, .post-body ol { margin: 0 0 1.3rem 1.3rem; }
+      .post-body li { font-size: 1.02rem; line-height: 1.75; margin-bottom: 0.6rem; }
+      .post-body .lede { font-size: 1.18rem; line-height: 1.7; color: var(--color-accent); margin-bottom: 1.8rem; }
+      .post-body code { background: rgba(51,58,47,0.08); padding: 0.1rem 0.35rem; border-radius: 4px; font-size: 0.92em; }
+      .cover-hero { display: block; width: 100%; max-width: 760px; height: auto; aspect-ratio: 1200 / 630; margin: 1.5rem auto 0.5rem; border-radius: 12px; border: 1px solid rgba(51,58,47,0.12); box-shadow: 0 6px 24px rgba(0,0,0,0.08); }
+      .photo-credit { max-width: 760px; margin: 0 auto 2rem; font-size: 0.78rem; color: var(--color-accent); opacity: 0.75; text-align: center; }
+      .photo-credit a { color: inherit; }
+    </style>
+</head>
+<body>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-logo">
+                <img src="../logo.png" alt="Hannune" class="logo-img">
+            </a>
+        </div>
+    </nav>
+
+    <main class="rd-page">
+        <div class="container">
+
+            <a href="index.html" class="report-back-link">← Back to writing</a>
+
+            <div class="rd-header">
+                <h1 class="rd-title">Why I built AI Agent Framework Compare: a directory, not a benchmark</h1>
+                <p class="rd-meta">By TaeHo Kim (Hannune) &nbsp;·&nbsp; Published July 2, 2026</p>
+            </div>
+
+            <img class="cover-hero" src="images/why-i-built-ai-agent-framework-compare.jpg" alt="A developer screen showing files and framework configuration, standing in for the two-week framework-selection phase that opens every AI agent project" width="1200" height="630" loading="eager">
+            <p class="photo-credit">Photo by <a href="https://unsplash.com/@flowforfrank" target="_blank" rel="noopener noreferrer">Ferenc Almasi</a> on Unsplash</p>
+
+            <article class="post-body">
+
+                <p class="lede">Four production agent projects in the last two years. Four different frameworks. LangGraph for a stateful pipeline with human review gates at critical decisions. CrewAI for a research workflow that broke down naturally into role-based delegation. Pydantic AI for typed tool calls behind a thin API. OpenAI Agents SDK for one that was going to live inside the OpenAI runtime anyway. Every single project opened the same way: two weeks of reading docs and building toy demos before I could commit.</p>
+
+                <p>The reference I kept wishing existed on every one of those decisions was a single side-by-side table that stated control style, state model, what the framework is actually shaped for, license, and a rough liveness signal. I never found a good one. So I built it, at <a href="https://compare-lab.xyz/ai-agent-frameworks/" target="_blank" rel="noopener noreferrer">compare-lab.xyz/ai-agent-frameworks</a>. Fifteen frameworks at launch, one row each, taglines written the way I would describe the tool to a friend making the selection.</p>
+
+                <h2>Framework selection is a decision, not a leaderboard</h2>
+                <p>The obvious first instinct when comparing agent frameworks is to look for a benchmark. There are several, and they measure real things. Tool-call success on synthetic tasks. Success rate on multi-turn planning problems. Cost per completed task. If picking a framework were like picking a database engine on TPC-C numbers, a leaderboard would be the right answer.</p>
+                <p>It is not the same shape of decision. When I picked LangGraph for a stateful pipeline, the deciding factor was not throughput, it was whether the framework's state model matched the shape of the problem. When I picked CrewAI for the research workflow, the deciding factor was whether decomposing the task into named roles produced something I could reason about. When I picked Pydantic AI for the typed-tool API, the deciding factor was that the abstraction was thin enough to disappear behind my own interface. None of these decisions has a benchmark number that answers them.</p>
+
+                <h2>Three things a benchmark cannot see</h2>
+                <p>The public agent benchmarks measure tool-call success on small canned tasks and miss the three things that actually decide a real project.</p>
+                <p>The first is state-model fit. If your task requires explicit state that survives across steps and branches conditionally on intermediate results, you need a framework whose primitives are nodes and edges, like LangGraph or Semantic Kernel. If your task is naturally decomposable into independent roles that collaborate, CrewAI or multi-agent AutoGen patterns fit better. If your task is a typed function loop with strict schemas, Pydantic AI is closer than either. Picking the wrong state model means fighting the framework on every commit rather than building with it.</p>
+                <p>The second is abstraction escape. Every framework has an abstraction layer designed for the common case. Production agents hit edge cases constantly. What matters is whether you can break out of the abstraction cleanly when you need to, without rewriting the whole pipeline. Some frameworks let you drop down to a raw model call and hand the result back up. Some make that painful. The difference is invisible on a benchmark and dominates the third month of a real project.</p>
+                <p>The third is failure recovery. What does the framework actually do when a tool call fails halfway through a long-running run? Can you retry from the last successful checkpoint, or do you replay the whole thing. Can you log the partial state and restart at step three, or is the run gone. These questions are invisible in toy demos and critical the first time production wakes you at 3 AM.</p>
+
+                <h2>What a good directory row promises</h2>
+                <p>A directory row does something different from a leaderboard. It does not try to declare a winner. It tries to compress the framework into the smallest set of facts that lets a reader eliminate wrong choices fast.</p>
+                <p>The row I settled on has five columns worth reading side by side. Control style, which is one of graph, role crew, typed tool, or conversational. State model, which describes how the framework holds and passes state between steps. License, which decides whether the framework is even eligible for a given project. What the framework is shaped for, which is one sentence written the way I would describe the tool to a friend, not the way the project page describes it. And a rough liveness signal, which right now is a GitHub star count. Star counts are a bad proxy for quality and a decent proxy for whether the project is still maintained at all.</p>
+                <p>Fifteen frameworks at launch: LangGraph, CrewAI, AutoGen, Pydantic AI, OpenAI Agents SDK, Mastra, LangChain Agents, LlamaIndex Agents, Semantic Kernel, Haystack Agents, Smolagents, Atomic Agents, Phidata, DSPy, AG2. Each row has a tagline I would actually write to a friend making the selection decision, not the one from the marketing site.</p>
+
+                <h2>What the directory is not</h2>
+                <p>It is not a benchmark. It is not a ranking. Every framework on the list has a use case where it is the right pick. The directory is meant to shave the two weeks of doc-reading down to an afternoon of comparing rows, not to tell anyone which framework to use.</p>
+                <p>It is also not the last word on any row. The data file is open. If you have shipped on one of these in production and a row gets a detail wrong, a correction lands in a one-line PR. If you have shipped on a framework not yet listed, the row template is documented and adding one is small.</p>
+
+                <h2>Where this sits</h2>
+                <p>Right now the directory is a static site with fifteen rows, generated from a YAML data file. The next moves are wiring in a machine-readable feed so the rows can be pulled into other comparison tools, and letting each row link out to a longer note when I have hands-on experience worth writing up. The point was never a definitive framework leaderboard. It was a working reference for the two weeks that open every agent project, so those two weeks can be an afternoon.</p>
+
+                <p>The directory is at <a href="https://compare-lab.xyz/ai-agent-frameworks/" target="_blank" rel="noopener noreferrer">compare-lab.xyz/ai-agent-frameworks</a>. The related post on how I keep production agents honest against the model itself: <a href="https://hannune.ai/blog/claude-code-hallucination-discipline.html">Claude Code Hallucination Discipline</a>.</p>
+
+            </article>
+
+            <div class="rd-cta">
+                <h2>Picking or replacing an agent framework for a production system?</h2>
+                <a href="../index.html#contact" class="btn btn-primary">Get in touch →</a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; <span id="footer-year">2026</span> Hannune. All rights reserved. Seoul, Republic of Korea.</p>
+        </div>
+    </footer>
+
+    <script>
+      var fy = document.getElementById('footer-year');
+      if (fy) fy.textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

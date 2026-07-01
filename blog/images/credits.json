@@ -33,5 +33,15 @@
     "photographer": "Joachim Schnürle",
     "photographer_url": "https://unsplash.com/@joa70",
     "photo_url": "https://unsplash.com/photos/magnifying-glass-focuses-on-a-dictionary-page-2C8_YqfxS5w"
+  },
+  {
+    "slug": "why-i-built-ai-agent-framework-compare",
+    "query": "abstract framework comparison developer tools",
+    "fname": "why-i-built-ai-agent-framework-compare.jpg",
+    "unsplash_id": "fhAfLtHToCs",
+    "unsplash_url": "https://unsplash.com/photos/computer-screen-displaying-files-fhAfLtHToCs",
+    "photographer": "Ferenc Almasi",
+    "photographer_url": "https://unsplash.com/@flowforfrank",
+    "license": "Unsplash License (Free to use)"
   }
 ]

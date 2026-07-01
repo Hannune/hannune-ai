@@ -55,6 +55,20 @@ document processing as core specialties.
 Build-in-public essays on Claude Code, Graph RAG, entity resolution,
 and operating autonomous AI agents. Index at https://hannune.ai/blog/
 
+- Why I built AI Agent Framework Compare: a directory, not a benchmark
+  (2026-07-02): Four production agent projects in two years, four
+  different frameworks (LangGraph, CrewAI, Pydantic AI, OpenAI Agents
+  SDK), and two weeks of doc-reading plus toy demos every single time.
+  Public agent benchmarks measure canned tool-call success and miss
+  the three things that actually decide a real project: state-model
+  fit, abstraction escape, and failure recovery. So the reference
+  I kept wishing existed was a directory of framework rows, not a
+  benchmark. Fifteen frameworks at launch, one row each, with
+  control style, state model, license, one-line shape-of tagline,
+  and GitHub stars as a rough liveness signal. Data file is open
+  for one-line PR corrections. Live at compare-lab.xyz.
+  https://hannune.ai/blog/why-i-built-ai-agent-framework-compare.html
+
 - When the same incident becomes five separate events in your graph
   (2026-06-30): A single East Asian merger is filed at OpenDART in
   Korean, EDINET in Japanese, and a Hong Kong exchange in Chinese,
@@ -184,4 +198,4 @@ and operating autonomous AI agents. Index at https://hannune.ai/blog/
 
 ## Last updated
 
-2026-06-26
+2026-07-02
