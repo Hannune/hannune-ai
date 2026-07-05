@@ -1,19 +1,22 @@
 # Hannune
 
-> A Seoul-based AI studio building production Graph RAG systems and
-AI agents for enterprise teams. Founded 2021. 8+ years of production
-AI experience across Netflix, Sony, and LG Energy Solution. 2 AI
-optimization patents registered in South Korea.
+> A Seoul-based AI engineer who designs, builds, and operates
+production AI agent systems for enterprise teams. Founded 2021. 8+ years
+of production AI experience across Netflix, Sony, and LG Energy Solution.
+2 AI optimization patents registered in South Korea.
 
 ## What we do
 
 Hannune offers three categories of services:
 
-1. **Graph RAG Consulting** — Productized engagements with fixed
-   scope, fixed price, and fixed timeline. Three packages: Starter
-   PoC ($8,999, 3 weeks), Standard Production ($38,999, 6 weeks),
-   Enterprise Full Agent (custom pricing, 12+ weeks). Plus Ops
-   Retainer (from $3,499/month) for ongoing support.
+1. **AI Agent Systems Consulting**. Productized engagements to design,
+   build, and operate production AI agent systems, with fixed scope,
+   fixed price, and fixed timeline. Graph RAG over Neo4j is used as the
+   retrieval layer when an agent needs to reason over documents or a
+   knowledge graph. Three packages: Starter PoC ($8,999, 3 weeks),
+   Standard Production ($38,999, 6 weeks), Enterprise Full Agent (custom
+   pricing, 12+ weeks). Plus Ops Retainer (from $3,499/month) for
+   ongoing support.
 
 2. **Entity Resolution API** — A SaaS subscription product launching
    Q3 2026. Public tier pricing ($0/$19/$99/$499 per month). Built
@@ -31,8 +34,9 @@ Hannune offers three categories of services:
    https://hannune.ai/ownership.html. Shares one API key with
    Entity Resolution API at app.hannune.ai.
 
-4. **2asy.ai** — Graph RAG-powered analytics platform. A separate
-   product hosted at 2asy.ai.
+4. **2asy.ai**. A Northeast Asia (Korea, Japan, China, Hong Kong) risk
+   and compliance intelligence platform, with Graph RAG retrieval under
+   the hood. A separate product hosted at 2asy.ai.
 
 ## Recent work
 
