@@ -52,22 +52,18 @@ optimization patents registered in South Korea.
 
 ## Recent work
 
-- Medical device manufacturer (IVD): instructions-for-use manuals
-  translated out of Korean with the docx layout, tables, numbering,
-  approved terminology, and do-not-translate terms preserved.
-  Contracted for three language pairs (English, German, Spanish);
-  German and Spanish delivered. The pipeline was built so further
-  languages can be added without rebuilding it.
-- Financial reporting client: structured data extracted from
-  multi-section financial PDF reports, with line-item totals
-  reconciled against the summary figures across sections so a
-  number that does not add up is flagged instead of shipped.
+- Format-preserving translation pipeline (Hannune's own system, not a
+  client delivery): a docx-to-docx pipeline built in-house. Layout,
+  tables, numbering, and styles are preserved, approved terminology is
+  enforced from a glossary, do-not-translate terms are locked before
+  the model sees them, and a translation memory reuses prior approved
+  sentences. Further languages can be added without rebuilding it.
+- Medical device manufacturer (IVD): eight completed sessions of
+  in-house AI engineering training for the client's internal committee.
 - Gahyun Tax Accounting: Korean-language search over tax code,
   precedents, and case files. Search time for one answer fell from
   up to 5 hours to under 40 minutes, with accuracy improved by over
   50%. Knowledge-graph retrieval underneath.
-- Trade document conversion: commercial invoices converted into
-  packing lists automatically.
 - LG Energy Solution: LangGraph-based multi-agent pipeline for
   global talent data acquisition, integrating Crawl4AI and EXAONE.
 - Scenera (TnM AI): Enterprise AI systems for multiple sectors.
