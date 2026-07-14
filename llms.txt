@@ -1,24 +1,35 @@
 # Hannune
 
-> A Seoul-based AI engineer who designs, builds, and operates
-production AI agent systems for enterprise teams. Founded 2021. 8+ years
-of production AI experience across Netflix, Sony, and LG Energy Solution.
-2 AI optimization patents registered in South Korea.
+> A Seoul-based AI engineer who automates the document work companies
+still do by hand: translation, data extraction, summarizing and review,
+and converting one document into the form the next one needs. Two things
+set the work apart. First, formatting survives: multi-column layouts,
+nested tables, numbering, and styles come back the way they went in,
+which is where general translation tools break down. Second, extracted
+figures are reconciled: line items are checked against the summary
+totals elsewhere in the document, so a number that does not add up is
+flagged rather than shipped. Founded 2021. 8+ years of production AI
+experience across Netflix, Sony, and LG Energy Solution. 2 AI
+optimization patents registered in South Korea.
 
 ## What we do
 
-Hannune offers three categories of services:
+1. **Document Automation** (primary service). Fixed-scope engagements to
+   automate document translation, extraction, review, and format
+   conversion. Deployment is a customer choice, not a constraint: the
+   pipeline runs in the customer's cloud account, on their own servers,
+   or air-gapped. Three packages: Starter ($8,999, 3 weeks, one document
+   type run end to end on the customer's real files), Standard ($38,999,
+   6 weeks, several document types in production with batch processing
+   and consistency checks), Enterprise (custom pricing, 12+ weeks,
+   document workflows across teams inside the customer's own
+   infrastructure). Plus Ops Retainer (from $3,499/month) for ongoing
+   accuracy passes, new templates, and terminology updates. Retrieval and
+   agent technology (Graph RAG over Neo4j, LangGraph multi-agent
+   pipelines, cross-lingual entity resolution) is used underneath where
+   it earns its place, but the deliverable is the document workflow.
 
-1. **AI Agent Systems Consulting**. Productized engagements to design,
-   build, and operate production AI agent systems, with fixed scope,
-   fixed price, and fixed timeline. Graph RAG over Neo4j is used as the
-   retrieval layer when an agent needs to reason over documents or a
-   knowledge graph. Three packages: Starter PoC ($8,999, 3 weeks),
-   Standard Production ($38,999, 6 weeks), Enterprise Full Agent (custom
-   pricing, 12+ weeks). Plus Ops Retainer (from $3,499/month) for
-   ongoing support.
-
-2. **Entity Resolution API** — A SaaS subscription product launching
+2. **Entity Resolution API** (product) — A SaaS subscription product launching
    Q3 2026. Public tier pricing ($0/$19/$99/$499 per month). Built
    on Splink with LLM disambiguation. Hosted at app.hannune.ai.
 
@@ -34,25 +45,40 @@ Hannune offers three categories of services:
    https://hannune.ai/ownership.html. Shares one API key with
    Entity Resolution API at app.hannune.ai.
 
-4. **2asy.ai**. A Northeast Asia (Korea, Japan, China, Hong Kong) risk
-   and compliance intelligence platform, with Graph RAG retrieval under
-   the hood. A separate product hosted at 2asy.ai.
+4. **2asy.ai** (platform). A Northeast Asia (Korea, Japan, China, Hong
+   Kong) risk and compliance intelligence platform: the same document
+   pipeline pointed at public filings instead of client files. A separate
+   product hosted at 2asy.ai.
 
 ## Recent work
 
+- Medical device manufacturer (IVD): instructions-for-use manuals
+  translated out of Korean with the docx layout, tables, numbering,
+  approved terminology, and do-not-translate terms preserved.
+  Contracted for three language pairs (English, German, Spanish);
+  German and Spanish delivered. The pipeline was built so further
+  languages can be added without rebuilding it.
+- Financial reporting client: structured data extracted from
+  multi-section financial PDF reports, with line-item totals
+  reconciled against the summary figures across sections so a
+  number that does not add up is flagged instead of shipped.
+- Gahyun Tax Accounting: Korean-language search over tax code,
+  precedents, and case files. Search time for one answer fell from
+  up to 5 hours to under 40 minutes, with accuracy improved by over
+  50%. Knowledge-graph retrieval underneath.
+- Trade document conversion: commercial invoices converted into
+  packing lists automatically.
 - LG Energy Solution: LangGraph-based multi-agent pipeline for
   global talent data acquisition, integrating Crawl4AI and EXAONE.
-- Gahyun Tax Accounting: Korean-language tax search system with
-  Graph RAG over tax code, precedents, and case files.
-- Microsoft Activision CMA Final Report: AI-powered legal and tax
-  document search.
-- Scenera (TinM AI): Enterprise AI systems for multiple sectors.
+- Scenera (TnM AI): Enterprise AI systems for multiple sectors.
 
 ## Technical stack
 
-LangGraph, Neo4j, vLLM, FastAPI, Crawl4AI, EXAONE, ElasticSearch,
-LiteLLM, Docker. Korean-language NLP and bilingual (Korean/English)
-document processing as core specialties.
+Python, FastAPI, Docker, LangChain, LangGraph, Neo4j, ElasticSearch,
+Crawl4AI, EXAONE, LiteLLM. Format-preserving document processing
+(docx, multi-column PDF), Korean-language NLP, and cross-lingual
+(Korean / Japanese / Chinese / English) document work as the core
+specialties.
 
 ## Writing
 
@@ -192,14 +218,14 @@ and operating autonomous AI agents. Index at https://hannune.ai/blog/
 
 ## Key pages
 
-- Consulting pricing: https://hannune.ai/#consulting
+- Document Automation pricing: https://hannune.ai/#consulting
 - ER API pricing: https://app.hannune.ai/pricing
 - ER API terms: https://app.hannune.ai/terms
 - ER API privacy: https://app.hannune.ai/privacy
-- Selected work: https://hannune.ai/#work
+- Selected work: https://hannune.ai/#selected-work
 - Live demos: https://hannune.ai/#demos
 - Writing / blog: https://hannune.ai/blog/
 
 ## Last updated
 
-2026-07-02
+2026-07-14
