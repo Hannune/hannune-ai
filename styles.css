@@ -1813,6 +1813,7 @@ section,
     display: flex;
     flex-wrap: wrap;
     gap: 0.4rem;
+    margin: 0.75rem 0 1rem;
 }
 .work-tag {
     font-size: 0.72rem;
