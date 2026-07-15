@@ -393,34 +393,44 @@ section,
     text-align: center;
 }
 
-/* Section backgrounds */
-/* Section backgrounds — alternating light / white */
-.section-selected-work,
-.section-identity,
-.section-contact {
-    background-color: var(--color-light);
-}
-
-.section-demos,
-.section-what-i-build,
-.section-fit {
+/* Section backgrounds — regular two-tone alternation, starting right below the trust band.
+   .trust-band is a <div>, so section:nth-of-type counts only the 10 content sections.
+   odd = white, even = light tint, repeating down the page. */
+#main-content > section:nth-of-type(odd) {
     background-color: #fff;
 }
+#main-content > section:nth-of-type(even) {
+    background-color: var(--color-light);
+}
 
-/* Card colors contrast with their section background */
-.section-selected-work .decision-card,
-.section-identity .highlights-list li,
-.section-identity .structure-block,
-.section-reports .report-card {
+/* Card colors contrast with their section background.
+   On white (odd) sections the card face is the light tint; on light (even) sections it is white.
+   Each card keeps its own border / top-accent / shadow, so the flipped face reads as a raised panel. */
+#main-content > section:nth-of-type(odd) .work-card,
+#main-content > section:nth-of-type(odd) .offering-card,
+#main-content > section:nth-of-type(odd) .consulting-card,
+#main-content > section:nth-of-type(odd) .decision-card,
+#main-content > section:nth-of-type(odd) .report-card,
+#main-content > section:nth-of-type(odd) .pattern-card,
+#main-content > section:nth-of-type(odd) .boundary-card,
+#main-content > section:nth-of-type(odd) .retainer-band,
+#main-content > section:nth-of-type(odd) .custom-band,
+#main-content > section:nth-of-type(odd) .highlights-list li,
+#main-content > section:nth-of-type(odd) .structure-block {
+    background-color: var(--color-light);
+}
+#main-content > section:nth-of-type(even) .work-card,
+#main-content > section:nth-of-type(even) .offering-card,
+#main-content > section:nth-of-type(even) .consulting-card,
+#main-content > section:nth-of-type(even) .decision-card,
+#main-content > section:nth-of-type(even) .report-card,
+#main-content > section:nth-of-type(even) .pattern-card,
+#main-content > section:nth-of-type(even) .boundary-card,
+#main-content > section:nth-of-type(even) .retainer-band,
+#main-content > section:nth-of-type(even) .custom-band,
+#main-content > section:nth-of-type(even) .highlights-list li,
+#main-content > section:nth-of-type(even) .structure-block {
     background-color: #fff;
-}
-
-.section-what-i-build .pattern-card {
-    background-color: var(--color-light);
-}
-
-.section-fit .boundary-card {
-    background-color: var(--color-light);
 }
 
 /* Approach Section with Subsections */
@@ -536,11 +546,12 @@ section,
 }
 
 .pattern-tag {
-    background-color: #fff;
+    background-color: var(--color-light);
     color: var(--color-dark);
     padding: 0.5rem 1rem;
     border-radius: 20px;
     font-size: 0.85rem;
+    border: 1px solid rgba(51, 58, 47, 0.12);
     transition: all var(--transition-fast);
 }
 
