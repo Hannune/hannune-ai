@@ -8,7 +8,10 @@ nested tables, numbering, and styles come back the way they went in,
 which is where general translation tools break down. Second, extracted
 figures are reconciled: line items are checked against the summary
 totals elsewhere in the document, so a number that does not add up is
-flagged rather than shipped. Founded 2021. 8+ years of production AI
+flagged rather than shipped. That second part runs as a public demo at
+https://demo.hannune.ai/validation/, where an uploaded spreadsheet or
+text-layer PDF comes back with the cell location, expected value and
+actual value of every mismatch. Founded 2021. 8+ years of production AI
 experience across Netflix, Sony, and LG Energy Solution. 2 AI
 optimization patents registered in South Korea.
 
@@ -220,8 +223,12 @@ and operating autonomous AI agents. Index at https://hannune.ai/blog/
 - ER API privacy: https://app.hannune.ai/privacy
 - Selected work: https://hannune.ai/#selected-work
 - Live demos: https://hannune.ai/#demos
+- Document Validation demo: https://demo.hannune.ai/validation/
+- Document Q&A demo: https://demo.hannune.ai/rag/
+- Document Extraction demo: https://demo.hannune.ai/extraction/
+- Ask Hannune demo: https://demo.hannune.ai/ask-about-hannune/
 - Writing / blog: https://hannune.ai/blog/
 
 ## Last updated
 
-2026-07-14
+2026-08-16
