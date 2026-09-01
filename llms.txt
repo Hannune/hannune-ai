@@ -63,7 +63,7 @@ optimization patents registered in South Korea.
   sentences. Further languages can be added without rebuilding it.
 - Medical device manufacturer (IVD): eight completed sessions of
   in-house AI engineering training for the client's internal committee.
-- Gahyun Tax Accounting: Korean-language search over tax code,
+- Gahyun Tax Accounting (2024): Korean-language search over tax code,
   precedents, and case files. Search time for one answer fell from
   up to 5 hours to under 40 minutes, with accuracy improved by over
   50%. Knowledge-graph retrieval underneath.
