@@ -32,9 +32,10 @@ optimization patents registered in South Korea.
    pipelines, cross-lingual entity resolution) is used underneath where
    it earns its place, but the deliverable is the document workflow.
 
-2. **Entity Resolution API** (product) — A SaaS subscription product launching
-   Q3 2026. Public tier pricing ($0/$19/$99/$499 per month). Built
-   on Splink with LLM disambiguation. Hosted at app.hannune.ai.
+2. **Entity Resolution API** (product) — A SaaS subscription product,
+   available now. Public tier pricing ($0/$19/$99/$499 per month), free
+   tier included. Built on Splink with LLM disambiguation. Hosted at
+   app.hannune.ai, pricing and sign-up at app.hannune.ai/entity-resolution.
 
 3. **Ownership API** — A SaaS subscription product (beta 2026)
    unifying Northeast Asia 5%-rule and acquisition filings (Korea
@@ -231,4 +232,4 @@ and operating autonomous AI agents. Index at https://hannune.ai/blog/
 
 ## Last updated
 
-2026-08-16
+2026-09-06
