@@ -1,9 +1,12 @@
 # Hannune
 
-> A Seoul-based AI engineer who automates the document work companies
-still do by hand: translation, data extraction, summarizing and review,
-and converting one document into the form the next one needs. Two things
-set the work apart. First, formatting survives: multi-column layouts,
+> A Seoul-based AI engineer who builds AI agents that take over a
+company's repetitive workflow, especially workflows built around mixed
+Korean, Japanese, Chinese, and English documents and vendor data.
+Document translation, data extraction, summarizing and review, and
+converting one document into the form the next one needs are one
+workflow the agent handles, not the whole product. Two things set the
+document work apart. First, formatting survives: multi-column layouts,
 nested tables, numbering, and styles come back the way they went in,
 which is where general translation tools break down. Second, extracted
 figures are reconciled: line items are checked against the summary
@@ -17,42 +20,34 @@ optimization patents registered in South Korea.
 
 ## What we do
 
-1. **Document Automation** (primary service). Fixed-scope engagements to
-   automate document translation, extraction, review, and format
-   conversion. Deployment is a customer choice, not a constraint: the
-   pipeline runs in the customer's cloud account, on their own servers,
-   or air-gapped. Three packages: Starter ($8,999, 3 weeks, one document
-   type run end to end on the customer's real files), Standard ($38,999,
-   6 weeks, several document types in production with batch processing
-   and consistency checks), Enterprise (custom pricing, 12+ weeks,
-   document workflows across teams inside the customer's own
-   infrastructure). Plus Ops Retainer (from $3,499/month) for ongoing
-   accuracy passes, new templates, and terminology updates. Retrieval and
-   agent technology (Graph RAG over Neo4j, LangGraph multi-agent
-   pipelines, cross-lingual entity resolution) is used underneath where
-   it earns its place, but the deliverable is the document workflow.
+1. **AI Agent Automation** (primary service). Fixed-scope engagements to
+   build an AI agent that takes over a company's repetitive workflow,
+   including document translation, extraction, review, and format
+   conversion, especially across mixed Korean, Japanese, Chinese, and
+   English documents and vendor data. Deployment is a customer choice,
+   not a constraint: the agent runs in the customer's cloud account, on
+   their own servers, or air-gapped. Three packages: Pilot ($490, one
+   workflow run end to end on the customer's real data, measured before
+   and after), Setup (from $1,500, the agent connected to the customer's
+   mailbox, CRM, or document store and kept running), Enterprise (custom
+   pricing, multiple workflows automated across teams inside the
+   customer's own infrastructure). Plus a Retainer (from $500/month) for
+   ongoing accuracy checks, small adjustments, and one new document type
+   or language added per month. Retrieval and agent technology (Graph RAG
+   over Neo4j, LangGraph multi-agent pipelines, cross-lingual entity
+   resolution) is used underneath where it earns its place, but the
+   deliverable is the workflow, not the technology.
 
 2. **Entity Resolution API** (product) — A SaaS subscription product,
    available now. Public tier pricing ($0/$19/$99/$499 per month), free
    tier included. Built on Splink with LLM disambiguation. Hosted at
    app.hannune.ai, pricing and sign-up at app.hannune.ai/entity-resolution.
 
-3. **Ownership API** — A SaaS subscription product (beta 2026)
-   unifying Northeast Asia 5%-rule and acquisition filings (Korea
-   OpenDART, Japan EDINET, China CNINFO, Hong Kong HKEX, Taiwan
-   TWSE, US SEC EDGAR ADRs) into one cross-lingual ownership graph.
-   Cross-lingual Entity Resolution (Korean/Japanese/Chinese/English)
-   to a single canonical ID. Public tier pricing ($0 Free, $49
-   Developer, $199 Professional, $999 Business, Enterprise custom),
-   roughly one tenth of comparable enterprise alternatives like
-   Sayari Graph or Moody's Orbis. Documented at
-   https://hannune.ai/ownership.html. Shares one API key with
-   Entity Resolution API at app.hannune.ai.
-
-4. **2asy.ai** (platform). A Northeast Asia (Korea, Japan, China, Hong
-   Kong) risk and compliance intelligence platform: the same document
-   pipeline pointed at public filings instead of client files. A separate
-   product hosted at 2asy.ai.
+3. **2asy.ai** (technology showcase, not a product for sale). A
+   Northeast Asia (Korea, Japan, China, Hong Kong) risk and compliance
+   intelligence site: the same agent technology pointed at public
+   filings instead of client files, reading disclosures daily and
+   publishing structured analyses on its own. Hosted at 2asy.ai.
 
 ## Recent work
 
@@ -70,6 +65,7 @@ optimization patents registered in South Korea.
   50%. Knowledge-graph retrieval underneath.
 - LG Energy Solution: LangGraph-based multi-agent pipeline for
   global talent data acquisition, integrating Crawl4AI and EXAONE.
+  97% extraction accuracy on the fields it collects.
 - Scenera (TnM AI): Enterprise AI systems for multiple sectors.
 
 ## Technical stack
@@ -218,7 +214,7 @@ and operating autonomous AI agents. Index at https://hannune.ai/blog/
 
 ## Key pages
 
-- Document Automation pricing: https://hannune.ai/#consulting
+- AI Agent Automation pricing: https://hannune.ai/#consulting
 - ER API pricing: https://app.hannune.ai/pricing
 - ER API terms: https://app.hannune.ai/terms
 - ER API privacy: https://app.hannune.ai/privacy
@@ -232,4 +228,4 @@ and operating autonomous AI agents. Index at https://hannune.ai/blog/
 
 ## Last updated
 
-2026-09-06
+2026-09-19
