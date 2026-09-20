@@ -26,9 +26,11 @@ optimization patents registered in South Korea.
    conversion, especially across mixed Korean, Japanese, Chinese, and
    English documents and vendor data. Deployment is a customer choice,
    not a constraint: the agent runs in the customer's cloud account, on
-   their own servers, or air-gapped. Three packages: Pilot ($490, one
+   their own servers, or air-gapped. Three packages: Pilot ($990, one
    workflow run end to end on the customer's real data, measured before
-   and after), Setup (from $1,500, the agent connected to the customer's
+   and after; the fee is credited to Setup if the customer continues,
+   and refunded within 30 days if the agreed metric is missed), Setup
+   (from $1,500, the agent connected to the customer's
    mailbox, CRM, or document store and kept running), Enterprise (custom
    pricing, multiple workflows automated across teams inside the
    customer's own infrastructure). Plus a Retainer (from $500/month) for
