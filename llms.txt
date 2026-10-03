@@ -206,6 +206,18 @@ and operating autonomous AI agents. Index at https://hannune.ai/blog/
   Local LLM advocacy belongs to lanes, not to companies.
   https://hannune.ai/blog/local-llm-to-openai-batch.html
 
+- Temporal Graph Edges Corporate Events (2026-07-14): Standard knowledge graph edges are timeless by default. When you insert "Company X → CEO → Person A," there is no expiration date on that relationship. The graph becomes stale the moment the CEO changes, but it does not know it is stale.
+  https://hannune.ai/blog/temporal-graph-edges-corporate-events.html
+
+- Tool Schema Drift Agentic (2026-07-21): The most common agentic system failure I encounter is not a bad prompt. It is not a context overflow. It is a tool that changed without its registration changing.
+  https://hannune.ai/blog/tool-schema-drift-agentic.html
+
+- Query Entity Disambiguation Multilingual (2026-07-25): In 2asy.ai, the hardest retrieval problem is not missing data. It is the query that arrives with an ambiguous entity name.
+  https://hannune.ai/blog/query-entity-disambiguation-multilingual.html
+
+- Context Budget Agentic Steps (2026-07-30): Context window management is the invisible cost in every multi-step agent pipeline.
+  https://hannune.ai/blog/context-budget-agentic-steps.html
+
 ## Contact
 
 - Website: https://hannune.ai
@@ -230,4 +242,4 @@ and operating autonomous AI agents. Index at https://hannune.ai/blog/
 
 ## Last updated
 
-2026-09-19
+2026-10-03

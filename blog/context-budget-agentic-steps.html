@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Context Budget Agentic Steps — Hannune</title>
+    <meta name="description" content="Context window management is the invisible cost in every multi-step agent pipeline.">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <link rel="canonical" href="https://hannune.ai/blog/context-budget-agentic-steps.html">
+    <meta property="og:title" content="Context Budget Agentic Steps">
+    <meta property="og:description" content="Context window management is the invisible cost in every multi-step agent pipeline.">
+    <meta property="og:url" content="https://hannune.ai/blog/context-budget-agentic-steps.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Hannune">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Context Budget Agentic Steps">
+    <meta name="twitter:description" content="Context window management is the invisible cost in every multi-step agent pipeline.">
+    <meta property="og:image" content="https://hannune.ai/blog/images/context-budget-agentic-steps.jpg">
+    <meta name="twitter:image" content="https://hannune.ai/blog/images/context-budget-agentic-steps.jpg">
+    <link rel="stylesheet" href="../styles.css">
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Context Budget Agentic Steps",
+  "description": "Context window management is the invisible cost in every multi-step agent pipeline.",
+  "datePublished": "2026-07-30",
+  "dateModified": "2026-07-30",
+  "inLanguage": "en",
+  "author": {
+    "@type": "Person",
+    "name": "TaeHo Kim",
+    "alternateName": "김태호",
+    "url": "https://hannune.ai/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Hannune",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://hannune.ai/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://hannune.ai/blog/context-budget-agentic-steps.html"
+  }
+}
+    </script>
+    <style>
+      .post-body { max-width: 760px; margin: 0 auto; }
+      .post-body p { font-size: 1.02rem; line-height: 1.8; color: var(--color-dark); margin-bottom: 1.1rem; }
+      .photo-credit { max-width: 760px; margin: 0 auto 1.2rem; font-size: 0.78rem; color: var(--color-accent); opacity: 0.75; text-align: center; }
+      .photo-credit a { color: inherit; }
+    </style>
+</head>
+<body>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-logo">
+                <img src="../logo.png" alt="Hannune" class="logo-img">
+            </a>
+        </div>
+    </nav>
+
+    <main class="rd-page">
+        <div class="container">
+
+            <a href="index.html" class="report-back-link">← Back to writing</a>
+
+            <div class="rd-header">
+                <h1 class="rd-title">Context Budget Agentic Steps</h1>
+                <p class="rd-meta">By TaeHo Kim (Hannune) &nbsp;·&nbsp; Published July 30, 2026</p>
+            </div>
+
+            <img class="graph-hero" src="images/context-budget-agentic-steps.jpg" alt="Context Budget Agentic Steps" width="1200" height="630" loading="eager" style="display:block;width:100%;max-width:760px;margin:1.5rem auto 0.5rem;border-radius:12px;">
+
+            <article class="post-body">
+
+                <p>Context window management is the invisible cost in every multi-step agent pipeline.</p>
+                <p>I see this pattern repeatedly in production consulting work. An agent that works cleanly in testing — ten steps, coherent reasoning, correct output — starts degrading six weeks after ship. No errors. No crashes. Just drift.</p>
+                <p>The root cause is almost always the same. Context grows with every step and nobody measured it.</p>
+                <p>A multi-step agent accumulates its full conversation history by default. Every tool call result gets appended. Every intermediate reasoning step gets stored. By step 8 or 9, the model is receiving 90% of the context window on each call — technically within limits, but attention spread thin across thousands of tokens of earlier reasoning that no longer affects the current step.</p>
+                <p>This is not a prompt quality problem. The prompt was fine in testing. Context management was never treated as a first-class engineering concern.</p>
+                <p>Three things that work in production:</p>
+                <p>Allocate a fixed token budget per step, not per conversation. If step 3 needs the output of step 1, pass the structured result only — not step 1's full chain-of-thought.</p>
+                <p>Summarize and compact before handoff between pipeline stages. The detailed reasoning from a retrieval step does not need to be present when the synthesis step runs. A structured summary does.</p>
+                <p>Set a hard context limit per step and fail loudly when exceeded. Silent context overflow produces subtly wrong outputs that reach users. A visible error at least surfaces the problem before it propagates downstream.</p>
+                <p>The agent's behavior in single-query testing is not the agent's behavior under production load. Context growth under real query volume looks nothing like the test environment. The two will not converge on their own.</p>
+
+            </article>
+
+
+            <div class="rd-cta">
+                <h2>Building something similar?</h2>
+                <a href="../index.html#contact" class="btn btn-primary">Get in touch →</a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; <span id="footer-year">2026</span> Hannune. All rights reserved. Seoul, Republic of Korea.</p>
+        </div>
+    </footer>
+
+    <script>
+      var fy = document.getElementById('footer-year');
+      if (fy) fy.textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

@@ -43,5 +43,12 @@
     "photographer": "Ferenc Almasi",
     "photographer_url": "https://unsplash.com/@flowforfrank",
     "license": "Unsplash License (Free to use)"
+  },
+  {
+    "slug": "temporal-graph-edges-corporate-events",
+    "file": "temporal-graph-edges-corporate-events.jpg",
+    "photographer": "Conny Schneider",
+    "photographer_url": "https://unsplash.com/@choys_",
+    "photo_url": "https://unsplash.com/photos/a-blue-background-with-lines-and-dots-xuTJZ7uD7PI"
   }
 ]

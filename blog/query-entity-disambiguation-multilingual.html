@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Query Entity Disambiguation Multilingual — Hannune</title>
+    <meta name="description" content="In 2asy.ai, the hardest retrieval problem is not missing data. It is the query that arrives with an ambiguous entity name.">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <link rel="canonical" href="https://hannune.ai/blog/query-entity-disambiguation-multilingual.html">
+    <meta property="og:title" content="Query Entity Disambiguation Multilingual">
+    <meta property="og:description" content="In 2asy.ai, the hardest retrieval problem is not missing data. It is the query that arrives with an ambiguous entity name.">
+    <meta property="og:url" content="https://hannune.ai/blog/query-entity-disambiguation-multilingual.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Hannune">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Query Entity Disambiguation Multilingual">
+    <meta name="twitter:description" content="In 2asy.ai, the hardest retrieval problem is not missing data. It is the query that arrives with an ambiguous entity name.">
+    <meta property="og:image" content="https://hannune.ai/blog/images/query-entity-disambiguation-multilingual.jpg">
+    <meta name="twitter:image" content="https://hannune.ai/blog/images/query-entity-disambiguation-multilingual.jpg">
+    <link rel="stylesheet" href="../styles.css">
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Query Entity Disambiguation Multilingual",
+  "description": "In 2asy.ai, the hardest retrieval problem is not missing data. It is the query that arrives with an ambiguous entity name.",
+  "datePublished": "2026-07-25",
+  "dateModified": "2026-07-25",
+  "inLanguage": "en",
+  "author": {
+    "@type": "Person",
+    "name": "TaeHo Kim",
+    "alternateName": "김태호",
+    "url": "https://hannune.ai/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Hannune",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://hannune.ai/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://hannune.ai/blog/query-entity-disambiguation-multilingual.html"
+  }
+}
+    </script>
+    <style>
+      .post-body { max-width: 760px; margin: 0 auto; }
+      .post-body p { font-size: 1.02rem; line-height: 1.8; color: var(--color-dark); margin-bottom: 1.1rem; }
+      .photo-credit { max-width: 760px; margin: 0 auto 1.2rem; font-size: 0.78rem; color: var(--color-accent); opacity: 0.75; text-align: center; }
+      .photo-credit a { color: inherit; }
+    </style>
+</head>
+<body>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-logo">
+                <img src="../logo.png" alt="Hannune" class="logo-img">
+            </a>
+        </div>
+    </nav>
+
+    <main class="rd-page">
+        <div class="container">
+
+            <a href="index.html" class="report-back-link">← Back to writing</a>
+
+            <div class="rd-header">
+                <h1 class="rd-title">Query Entity Disambiguation Multilingual</h1>
+                <p class="rd-meta">By TaeHo Kim (Hannune) &nbsp;·&nbsp; Published July 25, 2026</p>
+            </div>
+
+            <img class="graph-hero" src="images/query-entity-disambiguation-multilingual.jpg" alt="Query Entity Disambiguation Multilingual" width="1200" height="630" loading="eager" style="display:block;width:100%;max-width:760px;margin:1.5rem auto 0.5rem;border-radius:12px;">
+
+            <article class="post-body">
+
+                <p>In 2asy.ai, the hardest retrieval problem is not missing data. It is the query that arrives with an ambiguous entity name.</p>
+                <p>"Hyundai" matches seventeen separate nodes in the knowledge graph. A vector search returns all of them ranked by embedding similarity. A graph traversal needs one starting node.</p>
+                <p>The disambiguation step runs between query parsing and graph traversal. It ranks candidate nodes using three signals:</p>
+                <p>Corpus frequency prior. Hyundai Motor appears in roughly two-thirds of news documents where "Hyundai" appears without additional context. In the absence of other signals, the frequency-weighted candidate is right more often than any alternative default.</p>
+                <p>Query context coherence. If the same query mentions battery technology or manufacturing capacity, co-occurrence statistics across entity descriptions shift probability mass toward Hyundai Motor. If the query mentions construction permits, Hyundai Engineering moves up the ranking. The entity mention does not arrive in isolation; the surrounding query terms provide signal that the disambiguation layer can use.</p>
+                <p>Temporal suppression. A historical subsidiary with a closed valid-to date should rank below currently-active entities for queries that do not specify a historical time window. The graph has the structure to express this, but the query layer has to use it.</p>
+                <p>The failure mode is silent. When disambiguation selects the wrong entity, the graph traversal returns a coherent subgraph, the generation step produces a confident-sounding answer, and nothing in the output signals that the retrieval started from the wrong node. The user does not know they asked about Hyundai Steel when they meant Hyundai Motor.</p>
+                <p>The fix is one line before the answer: surface the disambiguated entity explicitly. Showing "retrieving for: Hyundai Motor Company" before the answer converts a silent failure into something the user can catch and correct. The graph traversal machinery is already doing the work. The only change is making the disambiguation decision visible before the answer is rendered.</p>
+
+            </article>
+
+
+            <div class="rd-cta">
+                <h2>Building something similar?</h2>
+                <a href="../index.html#contact" class="btn btn-primary">Get in touch →</a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; <span id="footer-year">2026</span> Hannune. All rights reserved. Seoul, Republic of Korea.</p>
+        </div>
+    </footer>
+
+    <script>
+      var fy = document.getElementById('footer-year');
+      if (fy) fy.textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

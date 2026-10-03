@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tool Schema Drift Agentic — Hannune</title>
+    <meta name="description" content="The most common agentic system failure I encounter is not a bad prompt. It is not a context overflow. It is a tool that changed without its registration changing.">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <link rel="canonical" href="https://hannune.ai/blog/tool-schema-drift-agentic.html">
+    <meta property="og:title" content="Tool Schema Drift Agentic">
+    <meta property="og:description" content="The most common agentic system failure I encounter is not a bad prompt. It is not a context overflow. It is a tool that changed without its registration changing.">
+    <meta property="og:url" content="https://hannune.ai/blog/tool-schema-drift-agentic.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Hannune">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Tool Schema Drift Agentic">
+    <meta name="twitter:description" content="The most common agentic system failure I encounter is not a bad prompt. It is not a context overflow. It is a tool that changed without its registration changing.">
+    <meta property="og:image" content="https://hannune.ai/blog/images/tool-schema-drift-agentic.jpg">
+    <meta name="twitter:image" content="https://hannune.ai/blog/images/tool-schema-drift-agentic.jpg">
+    <link rel="stylesheet" href="../styles.css">
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Tool Schema Drift Agentic",
+  "description": "The most common agentic system failure I encounter is not a bad prompt. It is not a context overflow. It is a tool that changed without its registration changing.",
+  "datePublished": "2026-07-21",
+  "dateModified": "2026-07-21",
+  "inLanguage": "en",
+  "author": {
+    "@type": "Person",
+    "name": "TaeHo Kim",
+    "alternateName": "김태호",
+    "url": "https://hannune.ai/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Hannune",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://hannune.ai/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://hannune.ai/blog/tool-schema-drift-agentic.html"
+  }
+}
+    </script>
+    <style>
+      .post-body { max-width: 760px; margin: 0 auto; }
+      .post-body p { font-size: 1.02rem; line-height: 1.8; color: var(--color-dark); margin-bottom: 1.1rem; }
+      .photo-credit { max-width: 760px; margin: 0 auto 1.2rem; font-size: 0.78rem; color: var(--color-accent); opacity: 0.75; text-align: center; }
+      .photo-credit a { color: inherit; }
+    </style>
+</head>
+<body>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-logo">
+                <img src="../logo.png" alt="Hannune" class="logo-img">
+            </a>
+        </div>
+    </nav>
+
+    <main class="rd-page">
+        <div class="container">
+
+            <a href="index.html" class="report-back-link">← Back to writing</a>
+
+            <div class="rd-header">
+                <h1 class="rd-title">Tool Schema Drift Agentic</h1>
+                <p class="rd-meta">By TaeHo Kim (Hannune) &nbsp;·&nbsp; Published July 21, 2026</p>
+            </div>
+
+            <img class="graph-hero" src="images/tool-schema-drift-agentic.jpg" alt="Tool Schema Drift Agentic" width="1200" height="630" loading="eager" style="display:block;width:100%;max-width:760px;margin:1.5rem auto 0.5rem;border-radius:12px;">
+
+            <article class="post-body">
+
+                <p>The most common agentic system failure I encounter is not a bad prompt. It is not a context overflow. It is a tool that changed without its registration changing.</p>
+                <p>Most teams maintain tool schemas in a registry separate from the implementation. The `search_entities` function gets its description written once at setup and rarely revisited. Six months later, the function has a new required parameter and returns a different response shape, but the registry still describes the old interface. The model calls the tool with the old parameter pattern and gets back a response it was not told to expect.</p>
+                <p>This fails silently. The agent sees a response, generates text from it, and moves on. There is no exception. The output just drifts.</p>
+                <p>Three checks that catch this before it reaches production:</p>
+                <p>Response-side schema validation, not just call-side. Most frameworks validate that the model produced a valid tool call format. Fewer validate that the tool returned a response matching what the model was told to expect. Both directions matter.</p>
+                <p>Version the tool description alongside the implementation. If a tool changes its interface, the old description version stays in the registry for agents that depended on it. Breaking changes get a new tool name, not a silent update to the existing one.</p>
+                <p>Canary evals that cover the full call-response cycle, not just output quality. A single eval prompt that triggers the tool is enough. If the tool response shape changes, the eval breaks before production does.</p>
+                <p>The agent is not wrong when it mishandles an unexpected tool response. It was not told the tool changed. The registration is the contract. Treating it as one means versioning it like one.</p>
+
+            </article>
+
+
+            <div class="rd-cta">
+                <h2>Building something similar?</h2>
+                <a href="../index.html#contact" class="btn btn-primary">Get in touch →</a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; <span id="footer-year">2026</span> Hannune. All rights reserved. Seoul, Republic of Korea.</p>
+        </div>
+    </footer>
+
+    <script>
+      var fy = document.getElementById('footer-year');
+      if (fy) fy.textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
