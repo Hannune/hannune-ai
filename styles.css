@@ -2097,3 +2097,29 @@ section,
     .legal-hero { padding-top: calc(70px + 2.5rem); }
     .legal-content { padding: 2rem 1rem 4rem; }
 }
+
+/* ── Free Tools promo block (tools.hannune.ai) ───────────────── */
+
+.tools-promo-block {
+    margin-top: var(--spacing-lg);
+    padding: 2rem;
+    border: 1px solid rgba(51, 58, 47, 0.15);
+    border-radius: 8px;
+    text-align: center;
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tools-promo-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--color-dark);
+    margin-bottom: 0.5rem;
+}
+
+.tools-promo-desc {
+    color: var(--color-dark);
+    opacity: 0.8;
+    margin-bottom: 1.25rem;
+}
