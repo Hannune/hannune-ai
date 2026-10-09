@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- 제품 이름 미정. "야드 재배치 최적화 솔버"는 가칭이다 (2026-10-09, dev/pre-marshalling 작업 기준). -->
+<title>야드 재배치 최적화 솔버 (가칭) — 주식회사 한누네</title>
+<meta name="description" content="컨테이너 터미널과 철강 적치장의 재배치(pre-marshalling) 순서를 강화학습으로 계산하는 솔버. 특허 2건 기반, 주식회사 한누네.">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta name="googlebot" content="index, follow">
+<meta name="last-modified" content="2026-10-09">
+<link rel="canonical" href="https://hannune.ai/ko/pre-marshalling/">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/favicon.png">
+<meta property="og:title" content="야드 재배치 최적화 솔버 (가칭) — 주식회사 한누네">
+<meta property="og:description" content="컨테이너 터미널과 철강 적치장의 재배치(pre-marshalling) 순서를 강화학습으로 계산하는 솔버. 특허 2건 기반.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hannune.ai/ko/pre-marshalling/">
+<meta property="og:site_name" content="Hannune">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://hannune.ai/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="야드 재배치 최적화 솔버 (가칭) — 주식회사 한누네">
+<meta name="twitter:description" content="컨테이너 터미널과 철강 적치장의 재배치(pre-marshalling) 순서를 강화학습으로 계산하는 솔버.">
+<meta name="twitter:image" content="https://hannune.ai/logo.png">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  .pm-page { padding-top: 6rem; padding-bottom: 4rem; }
+  .pm-hero { max-width: 880px; margin: 0 auto 3rem; text-align: center; }
+  .pm-hero h1 { font-size: 2.2rem; line-height: 1.3; margin-bottom: 1.1rem; color: var(--color-dark); }
+  .pm-hero p.lede { font-size: 1.1rem; line-height: 1.75; color: var(--color-accent); margin-bottom: 1rem; }
+  .pm-hero .pm-note { font-size: 0.85rem; color: var(--color-accent); opacity: 0.85; }
+  .pm-section { max-width: 980px; margin: 0 auto 3.5rem; }
+  .pm-section h2 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--color-dark); }
+  .pm-section p { font-size: 1.02rem; line-height: 1.75; color: var(--color-dark); margin-bottom: 1.1rem; }
+  .pm-section ul { margin: 0 0 1.3rem 1.3rem; }
+  .pm-section li { font-size: 1.02rem; line-height: 1.7; margin-bottom: 0.55rem; }
+  .pm-bench { width: 100%; border-collapse: collapse; margin-bottom: 1rem; font-size: 0.95rem; }
+  .pm-bench th, .pm-bench td { padding: 0.7rem 0.85rem; border-bottom: 1px solid rgba(51,58,47,0.12); text-align: left; vertical-align: top; }
+  .pm-bench th { background: rgba(51,58,47,0.04); font-weight: 600; }
+  .pm-caption { font-size: 0.85rem; color: var(--color-accent); margin-top: -0.3rem; margin-bottom: 1.3rem; }
+  .pm-callout { background: rgba(51,58,47,0.04); border-left: 3px solid var(--color-dark); padding: 1rem 1.2rem; border-radius: 6px; margin-bottom: 1.4rem; }
+  .pm-demo-frame-wrap { border: 1px solid rgba(51,58,47,0.15); border-radius: 12px; overflow: hidden; margin-bottom: 1rem; background: #fff; }
+  .pm-demo-frame-wrap iframe { width: 100%; height: 760px; border: 0; display: block; }
+  .pm-patents { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.1rem; margin-top: 1rem; }
+  .pm-patent { border: 1px solid rgba(51,58,47,0.15); border-radius: 12px; padding: 1.3rem 1.2rem; background: #fff; }
+  .pm-patent .pm-pnum { font-weight: 600; color: var(--color-dark); margin-bottom: 0.3rem; }
+  .pm-patent .pm-pdate { font-size: 0.85rem; color: var(--color-accent); margin-bottom: 0.6rem; }
+  .pm-offer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.1rem; margin-top: 1rem; }
+  .pm-offer { border: 1px solid rgba(51,58,47,0.15); border-radius: 12px; padding: 1.3rem 1.2rem; background: #fff; }
+  .pm-offer h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--color-dark); }
+</style>
+<script defer src="https://tools.hannune.ai/t.js"></script>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="/" class="nav-logo">
+      <img src="../../logo.png" alt="Hannune" class="logo-img">
+    </a>
+  </div>
+</nav>
+
+<main id="main-content" class="pm-page">
+  <div class="container">
+
+    <section class="pm-hero">
+      <h1>야드 재배치 최적화 솔버 (가칭)</h1>
+      <p class="lede">컨테이너 터미널과 철강 적치장에서 꺼낼 물건이 아래 쌓여 있을 때, 미리 어떤 순서로 옮겨 놓으면 나중에 꺼내는 작업(재취급)이 가장 적은지를 강화학습으로 계산하는 솔버입니다.</p>
+      <p class="pm-note">제품명은 아직 정해지지 않아 가칭으로 표기합니다.</p>
+    </section>
+
+    <section class="pm-section">
+      <h2>무엇을 푸는 문제인가</h2>
+      <p>컨테이너 터미널이나 철강 적치장은 물건을 여러 칸(스택)에 여러 층으로 쌓아 둡니다. 그런데 나중에 꺼내야 하는 순서와 지금 쌓여 있는 순서가 다르면, 먼저 꺼낼 물건 위에 나중에 꺼낼 물건이 올라가 있는 경우가 생깁니다.</p>
+      <p>이때는 위에 있는 물건을 일단 다른 칸으로 옮겨야 하는데, 이 작업(재취급)이 많아지면 크레인 작업 시간과 비용이 늘어납니다. 이 솔버는 실제로 물건을 꺼내기 전에, 지금 상태에서 몇 번의 이동으로 모든 물건을 꺼내기 쉬운 순서로 재배치할 수 있는지, 그 이동 순서(경로) 자체를 미리 계산합니다.</p>
+      <p>계산 방식은 사장님(김태호)이 보유한 특허 2건의 방법을 기반으로, 가치를 추정하는 신경망과 경로 탐색을 결합한 구조로 다시 구현했습니다.</p>
+    </section>
+
+    <section class="pm-section">
+      <h2>검증한 결과 수치</h2>
+      <p>아래 수치는 이 솔버로 직접 돌린 결과입니다. 최적해(이론상 가장 적은 이동 수)인지는 확인하지 않았고, 공개 벤치마크와의 비교도 아직 하지 않았습니다. 재취급 횟수와 이동 횟수를 줄이는 방향으로 학습된 결과만 보여드립니다.</p>
+      <table class="pm-bench">
+        <thead>
+          <tr><th>문제</th><th>규모</th><th>최악 배치 (고정 평가 상태)</th><th>무작위 배치 20개 (빔 탐색)</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>컨테이너 터미널</td>
+            <td>8개 스택 x 5단, 컨테이너 32개 (전부 다른 출고 순서)</td>
+            <td>34수</td>
+            <td>20개 전부 완료, 평균 24.1수</td>
+          </tr>
+          <tr>
+            <td>철강 적치장</td>
+            <td>8개 스택 x 4단, 강재 24장</td>
+            <td>15수</td>
+            <td>20개 전부 완료, 평균 10.7수</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="pm-caption">출처: dev/pre-marshalling/results/261008-v0_demo_paths_bellman.json, 261008-v0_demo_paths_stockyard.json, 보고서 dev/pre-marshalling/docs/261008-v1_stockyard-training-and-seed-check.md (2026-10-08 실측). 무작위 배치 20개는 전부 다시 적용해 실제로 완료 상태가 되는지 확인(verified)했습니다.</p>
+    </section>
+
+    <section class="pm-section" id="demo">
+      <h2>데모</h2>
+      <p>아래 화면에서 문제(컨테이너 터미널 / 철강 적치장)와 배치 상태를 고르면, 솔버가 계산한 이동 순서를 한 수씩 재생해 볼 수 있습니다.</p>
+      <div class="pm-demo-frame-wrap">
+        <iframe src="demo/index.html" title="야드 재배치 솔버 데모" loading="lazy"></iframe>
+      </div>
+      <p class="pm-caption"><a href="demo/index.html" target="_blank" rel="noopener">데모를 새 탭에서 열기</a></p>
+    </section>
+
+    <section class="pm-section">
+      <h2>기반 특허</h2>
+      <p>이 솔버는 아래 등록 특허 2건(발명자 김태호)의 방법을 기반으로 재구현했습니다.</p>
+      <div class="pm-patents">
+        <div class="pm-patent">
+          <div class="pm-pnum">KR102325608B1</div>
+          <div class="pm-pdate">등록 2021-11-15</div>
+          <div>컨테이너 터미널의 프리-마셜링의 심층 강화학습 적용을 위한 인공 신경망의 학습 데이터 생성 방법</div>
+        </div>
+        <div class="pm-patent">
+          <div class="pm-pnum">KR102853422B1</div>
+          <div class="pm-pdate">등록 2025-09-04</div>
+          <div>인공신경망을 적용한 최적 경로 탐색 방법 및 장치</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pm-section">
+      <h2>제공 형태</h2>
+      <p>현재 가격은 공시하지 않습니다. 아래 형태로 문의를 받습니다.</p>
+      <div class="pm-offer-grid">
+        <div class="pm-offer">
+          <h3>수탁 개발</h3>
+          <p>터미널 운영 시스템(TOS)이나 야드 관리 데이터에 맞춰 솔버를 맞춤 개발합니다.</p>
+        </div>
+        <div class="pm-offer">
+          <h3>실증 (PoC)</h3>
+          <p>보유하신 야드 데이터로 재배치 효과를 먼저 실증해 볼 수 있습니다.</p>
+        </div>
+        <div class="pm-offer">
+          <h3>공동 과제 참여</h3>
+          <p>항만·물류 관련 연구 과제나 공동 사업에 참여할 수 있습니다.</p>
+        </div>
+      </div>
+      <p class="pm-callout">문의: <a href="mailto:founder@hannune.ai">founder@hannune.ai</a></p>
+    </section>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p>&copy; <span id="footer-year">2026</span> 주식회사 한누네. All rights reserved. Seoul, Republic of Korea.</p>
+  </div>
+</footer>
+
+<script>
+  var fy = document.getElementById('footer-year');
+  if (fy) fy.textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pre-marshalling Result Demo</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1 id="t-title"></h1>
+  <button id="lang" type="button">EN</button>
+</header>
+<main>
+  <section class="controls">
+    <label><span id="l-problem"></span>
+      <select id="problem"></select></label>
+    <label><span id="l-case"></span>
+      <select id="case"></select></label>
+    <label><span id="l-method"></span>
+      <select id="method"></select></label>
+  </section>
+  <div id="notice" class="notice" hidden></div>
+  <section class="stage">
+    <div id="bay-wrap"><div id="bay"></div></div>
+    <div class="legend"><span class="sw ok"></span><span id="l-ok"></span> <span class="sw bad"></span><span id="l-bad"></span></div>
+    <div class="player">
+      <button id="first" type="button">|&lt;</button>
+      <button id="prev" type="button">&lt;</button>
+      <button id="play" type="button"></button>
+      <button id="next" type="button">&gt;</button>
+      <button id="last" type="button">&gt;|</button>
+      <label><span id="l-speed"></span> <input id="speed" type="range" min="0.25" max="4" step="0.25" value="1"><span id="speedv">1x</span></label>
+    </div>
+    <div class="status"><span id="step"></span> <span id="mv"></span> <span id="done"></span></div>
+  </section>
+  <section class="summary" id="summary"></section>
+  <section class="about" id="about"></section>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
