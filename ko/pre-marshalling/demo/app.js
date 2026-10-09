@@ -1,4 +1,12 @@
 'use strict';
+// app.js 가 로드된 위치(demo/ 폴더) 기준으로 data/ 를 찾는다. 이 파일이 demo/index.html 에서
+// 바로 로드될 때와, ko/pre-marshalling/index.html 안에 인라인으로 로드될 때 모두 현재 문서
+// 주소가 아니라 이 스크립트 파일 주소를 기준으로 상대경로를 풀어야 한다.
+const DEMO_BASE = (() => {
+  const cs = document.currentScript;
+  if (cs && cs.src) return cs.src.replace(/app\.js(?:[?#].*)?$/, '');
+  return '';
+})();
 const PROBLEMS = [
   {id:'container', file:'data/261008-v0_demo_paths_bellman.json'},
   {id:'stockyard', file:'data/261008-v0_demo_paths_stockyard.json'}
@@ -44,7 +52,7 @@ const I18N = {
   }
 };
 const $ = id => document.getElementById(id);
-let lang = (navigator.language||'ko').startsWith('en') ? 'en' : 'ko';
+let lang = 'ko';
 const T = k => I18N[lang][k];
 const data = {};      // problem id -> json or null
 let cur = null;       // {bay, stacks:[[{id,v}]], moves, initial}
@@ -54,7 +62,7 @@ const CELL = 46, GAP = 8;
 async function loadAll(){
   for(const p of PROBLEMS){
     try{
-      const r = await fetch(p.file, {cache:'no-store'});
+      const r = await fetch(DEMO_BASE + p.file, {cache:'no-store'});
       data[p.id] = r.ok ? await r.json() : null;
     }catch(e){ data[p.id] = null; }
   }
@@ -175,12 +183,15 @@ function renderSummary(){
   el.innerHTML=`<h2>${T('sumTitle')}</h2><table>`+rows.map(r=>`<tr><th>${r[0]}</th><td>${r[1]}</td></tr>`).join('')+'</table>';
 }
 function renderStatic(){
-  $('t-title').textContent=T('title'); document.title=T('title');
+  const titleEl=$('t-title');
+  if(titleEl){ titleEl.textContent=T('title'); document.title=T('title'); }
   $('l-problem').textContent=T('problem'); $('l-case').textContent=T('case_'); $('l-method').textContent=T('method');
   $('l-speed').textContent=T('speed'); $('l-ok').textContent=T('ok'); $('l-bad').textContent=T('bad');
-  $('lang').textContent = lang==='ko' ? 'EN' : '한국어';
+  const langBtn=$('lang');
+  if(langBtn) langBtn.textContent = lang==='ko' ? 'EN' : '한국어';
   $('play').textContent = timer ? T('pause') : T('play');
-  $('about').innerHTML=`<h2>${T('aboutTitle')}</h2><p>${T('p1')}</p><p>${T('colorNote')}</p><p>${T('p2')}</p><p>${T('p3')}</p>`+
+  const aboutEl=$('about');
+  if(aboutEl) aboutEl.innerHTML=`<h2>${T('aboutTitle')}</h2><p>${T('p1')}</p><p>${T('colorNote')}</p><p>${T('p2')}</p><p>${T('p3')}</p>`+
     `<h2>${T('pat')}</h2><p>${T('pat1')}</p><p>${T('pat2')}</p>`;
 }
 function onProblem(){
@@ -211,7 +222,8 @@ async function init(){
   if(q.get('case')!==null && data[$('problem').value]){ $('case').value=q.get('case'); loadCase(); renderSummary(); }
   if(q.get('step')) setStep(+q.get('step'));
   if(q.get('autoplay')) play();
-  $('lang').onclick=()=>{
+  const langBtn=$('lang');
+  if(langBtn) langBtn.onclick=()=>{
     lang = lang==='ko'?'en':'ko';
     fillProblems(); fillMethods(); renderStatic();
     const ci=$('case').value; if(data[$('problem').value]){ fillCases(); $('case').value=ci; place(step); renderSummary(); }

@@ -25,6 +25,7 @@
 <meta name="twitter:description" content="컨테이너 터미널과 철강 적치장의 재배치(pre-marshalling) 순서를 강화학습으로 계산하는 솔버.">
 <meta name="twitter:image" content="https://hannune.ai/logo.png">
 <link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="demo/style.css">
 <style>
   .pm-page { padding-top: 6rem; padding-bottom: 4rem; }
   .pm-hero { max-width: 880px; margin: 0 auto 3rem; text-align: center; }
@@ -42,8 +43,7 @@
   .pm-bench th { background: rgba(51,58,47,0.04); font-weight: 600; }
   .pm-caption { font-size: 0.85rem; color: var(--color-accent); margin-top: -0.3rem; margin-bottom: 1.3rem; }
   .pm-callout { background: rgba(51,58,47,0.04); border-left: 3px solid var(--color-dark); padding: 1rem 1.2rem; border-radius: 6px; margin-bottom: 1.4rem; }
-  .pm-demo-frame-wrap { border: 1px solid rgba(51,58,47,0.15); border-radius: 12px; overflow: hidden; margin-bottom: 1rem; background: #fff; }
-  .pm-demo-frame-wrap iframe { width: 100%; height: 760px; border: 0; display: block; }
+  #pm-demo-embed main { display: block; }
   .pm-patents { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.1rem; margin-top: 1rem; }
   .pm-patent { border: 1px solid rgba(51,58,47,0.15); border-radius: 12px; padding: 1.3rem 1.2rem; background: #fff; }
   .pm-patent .pm-pnum { font-weight: 600; color: var(--color-dark); margin-bottom: 0.3rem; }
@@ -107,11 +107,34 @@
 
     <section class="pm-section" id="demo">
       <h2>데모</h2>
-      <p>아래 화면에서 문제(컨테이너 터미널 / 철강 적치장)와 배치 상태를 고르면, 솔버가 계산한 이동 순서를 한 수씩 재생해 볼 수 있습니다.</p>
-      <div class="pm-demo-frame-wrap">
-        <iframe src="demo/index.html" title="야드 재배치 솔버 데모" loading="lazy"></iframe>
+      <p>아래에서 문제(컨테이너 터미널 / 철강 적치장)와 배치 상태를 고르면, 솔버가 계산한 이동 순서를 한 수씩 재생해 볼 수 있습니다.</p>
+      <div id="pm-demo-embed">
+        <main>
+          <div class="controls">
+            <label><span id="l-problem">문제</span>
+              <select id="problem"></select></label>
+            <label><span id="l-case">사례</span>
+              <select id="case"></select></label>
+            <label><span id="l-method">탐색 방식</span>
+              <select id="method"></select></label>
+          </div>
+          <div id="notice" class="notice" hidden></div>
+          <div class="stage">
+            <div id="bay-wrap"><div id="bay"></div></div>
+            <div class="legend"><span class="sw ok"></span><span id="l-ok">정상 위치</span> <span class="sw bad"></span><span id="l-bad">잘못 쌓임(아래에 더 먼저 나갈 블록이 있음)</span></div>
+            <div class="player">
+              <button id="first" type="button">|&lt;</button>
+              <button id="prev" type="button">&lt;</button>
+              <button id="play" type="button"></button>
+              <button id="next" type="button">&gt;</button>
+              <button id="last" type="button">&gt;|</button>
+              <label><span id="l-speed">속도</span> <input id="speed" type="range" min="0.25" max="4" step="0.25" value="1"><span id="speedv">1x</span></label>
+            </div>
+            <div class="status"><span id="step"></span> <span id="mv"></span> <span id="done"></span></div>
+          </div>
+          <div class="summary" id="summary"></div>
+        </main>
       </div>
-      <p class="pm-caption"><a href="demo/index.html" target="_blank" rel="noopener">데모를 새 탭에서 열기</a></p>
     </section>
 
     <section class="pm-section">
@@ -164,5 +187,6 @@
   var fy = document.getElementById('footer-year');
   if (fy) fy.textContent = new Date().getFullYear();
 </script>
+<script src="demo/app.js" defer></script>
 </body>
 </html>
