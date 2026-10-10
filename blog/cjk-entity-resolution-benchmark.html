@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benchmarking CJK Entity-Name Resolution — Hannune</title>
+    <meta name="description" content="An independently unverified, self-run CJK entity-name benchmark: how we built a 100-pair Wikidata-derived holdout, what ER API scored, and where it missed.">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <link rel="canonical" href="https://hannune.ai/blog/cjk-entity-resolution-benchmark.html">
+    <meta property="og:title" content="Benchmarking CJK Entity-Name Resolution">
+    <meta property="og:description" content="A self-run 100-pair CJK holdout, its measured pair-matching F1, and the limits of that result.">
+    <meta property="og:url" content="https://hannune.ai/blog/cjk-entity-resolution-benchmark.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Hannune">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Benchmarking CJK Entity-Name Resolution">
+    <meta name="twitter:description" content="A self-run CJK entity-name benchmark, including the missed match and limits.">
+    <link rel="stylesheet" href="../styles.css">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Benchmarking CJK Entity-Name Resolution",
+      "description": "A self-run CJK entity-name benchmark using a Wikidata-derived held-out pair set.",
+      "datePublished": "2026-10-09",
+      "dateModified": "2026-10-09",
+      "inLanguage": "en",
+      "author": {
+        "@type": "Person",
+        "name": "TaeHo Kim",
+        "alternateName": "김태호",
+        "url": "https://hannune.ai/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Hannune",
+        "logo": { "@type": "ImageObject", "url": "https://hannune.ai/logo.png" }
+      },
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://hannune.ai/blog/cjk-entity-resolution-benchmark.html" },
+      "keywords": ["entity resolution", "CJK", "record linkage", "Splink", "benchmark"],
+      "about": ["entity resolution", "CJK name matching"]
+    }
+    </script>
+    <style>
+      .post-body { max-width: 760px; margin: 0 auto; }
+      .post-body h2 { font-size: 1.6rem; margin-top: 2.5rem; margin-bottom: 0.9rem; color: var(--color-dark); }
+      .post-body p { font-size: 1.02rem; line-height: 1.8; color: var(--color-dark); margin-bottom: 1.1rem; }
+      .post-body ul { margin: 0 0 1.3rem 1.3rem; }
+      .post-body li { font-size: 1.02rem; line-height: 1.75; margin-bottom: 0.6rem; }
+      .post-body .lede { font-size: 1.18rem; line-height: 1.7; color: var(--color-accent); margin-bottom: 1.8rem; }
+      .post-body code { background: var(--color-light); padding: 0.1rem 0.35rem; border-radius: 4px; font-size: 0.92em; }
+      .benchmark-table-wrap { overflow-x: auto; margin: 1.5rem 0; }
+      .benchmark-table { width: 100%; border-collapse: collapse; color: var(--color-dark); }
+      .benchmark-table th, .benchmark-table td { padding: 0.75rem; text-align: left; border-bottom: 1px solid var(--color-accent); }
+      .benchmark-table th { background: var(--color-light); }
+      .benchmark-table td:nth-child(n+2), .benchmark-table th:nth-child(n+2) { text-align: right; }
+    </style>
+  <script defer src="https://tools.hannune.ai/t.js"></script>
+</head>
+<body>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-logo">
+                <img src="../logo.png" alt="Hannune" class="logo-img">
+            </a>
+        </div>
+    </nav>
+
+    <main class="rd-page">
+        <div class="container">
+
+            <a href="index.html" class="report-back-link">← Back to writing</a>
+
+            <div class="rd-header">
+                <h1 class="rd-title">Benchmarking CJK Entity-Name Resolution</h1>
+                <p class="rd-meta">By TaeHo Kim (Hannune) &nbsp;·&nbsp; Published October 9, 2026</p>
+            </div>
+
+            <article class="post-body">
+                <p class="lede">A Korean name can change under romanization; a company can gain or lose a corporate suffix; Chinese names can switch scripts; and Japanese names can cross from kanji or kana into Latin letters. We built and ran a small CJK entity-name benchmark to see how our ER API handled those pairs. The numbers below are measurements from our own benchmark, not independent validation.</p>
+
+                <h2>What we tested</h2>
+                <p>The task was pair classification: given two names, decide whether they refer to the same entity. This set includes company names, personal names, and an organization name. It is not a company-only benchmark. Positive examples came from Wikidata-derived labels and, for some Korean categories, rule-generated variants. Negative examples pair different entities.</p>
+                <p>We evaluated a held-out set of 100 labeled pairs. Its Wikidata QIDs did not overlap with those used in the earlier 149-pair development set or the separate training set. The table shows the final held-out composition.</p>
+                <div class="benchmark-table-wrap">
+                    <table class="benchmark-table">
+                        <thead><tr><th scope="col">Category</th><th scope="col">Match</th><th scope="col">No match</th></tr></thead>
+                        <tbody>
+                            <tr><td><code>kr_romanization</code></td><td>13</td><td>12</td></tr>
+                            <tr><td><code>kr_corp_suffix</code></td><td>13</td><td>12</td></tr>
+                            <tr><td><code>zh_variants</code></td><td>13</td><td>12</td></tr>
+                            <tr><td><code>ja_variants</code></td><td>12</td><td>12</td></tr>
+                            <tr><td><code>ja_rename</code></td><td>1</td><td>0</td></tr>
+                        </tbody>
+                        <tfoot><tr><th scope="row">Total</th><td>52</td><td>48</td></tr></tfoot>
+                    </table>
+                </div>
+
+                <h2>What the pair matcher scored</h2>
+                <p>On the held-out 100 pairs, the <code>/v1/splink-pairs</code> path scored F1 <strong>0.9903</strong>: 51 true positives, 0 false positives, 1 false negative, and 48 true negatives. The earlier 149-pair development set scored F1 <strong>0.9686</strong> on the same pair-comparison path. These are self-run benchmark measurements, not estimates of accuracy on customer data.</p>
+                <p>The missed pair was “ZERO1” and “Pro Wrestling Zero1,” two names for the same wrestling promotion. The short name was ambiguous, and the LLM fallback returned no match with low confidence. That single miss matters more than a rounded score: a name that needs outside context can still defeat this matcher.</p>
+
+                <h2>What sits behind ER API</h2>
+                <p>ER API builds on Splink, the open-source record-linkage engine. The tested path adds CJK normalization and a selective LLM fallback for pairs that the earlier matching steps leave unresolved. Splink deserves credit for the underlying pair-matching work; the CJK and LLM steps are our additions.</p>
+
+                <h2>Limits of this result</h2>
+                <ul>
+                    <li>We made, labeled, and ran this benchmark ourselves. No independent evaluator validated the score.</li>
+                    <li>The holdout contains 100 pairs derived from Wikidata data. Some Korean variants were generated by rules, so the sample does not capture every kind of real-world name noise.</li>
+                    <li>The held-out Korean negatives did not include the especially similar romanized names that caused false positives in the earlier development set. Their absence here does not show that issue was fixed.</li>
+                    <li>LLM judgments can vary between runs. The result above is the recorded benchmark run.</li>
+                    <li>The F1 scores describe pair comparison through <code>/v1/splink-pairs</code>. Registry-backed <code>/v1/match</code> depends on which entities are in the registry and had much lower recall in this evaluation. These scores are not a claim about that path or a production-wide guarantee.</li>
+                </ul>
+            </article>
+
+            <div class="rd-cta">
+                <h2>Try ER API on your own names</h2>
+                <p><a href="https://app.hannune.ai/">Open the API console</a> or email <a href="mailto:contact@hannune.ai">contact@hannune.ai</a>.</p>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; <span id="footer-year">2026</span> Hannune. All rights reserved. Seoul, Republic of Korea.</p>
+        </div>
+    </footer>
+
+    <script>
+      var fy = document.getElementById('footer-year');
+      if (fy) fy.textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

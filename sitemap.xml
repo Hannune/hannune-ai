@@ -34,6 +34,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://hannune.ai/blog/cjk-entity-resolution-benchmark.html</loc>
+    <lastmod>2026-10-09</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://hannune.ai/blog/why-i-built-ai-agent-framework-compare.html</loc>
     <lastmod>2026-10-05</lastmod>
     <priority>0.7</priority>

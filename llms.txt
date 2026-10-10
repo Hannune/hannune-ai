@@ -80,8 +80,16 @@ specialties.
 
 ## Writing
 
+
 Build-in-public essays on Claude Code, Graph RAG, entity resolution,
 and operating autonomous AI agents. Index at https://hannune.ai/blog/
+
+- Benchmarking CJK Entity-Name Resolution (2026-10-09): A self-run,
+  Wikidata-derived 100-pair held-out evaluation of ER API's CJK pair
+  matcher. Held-out F1 was 0.9903; the earlier 149-pair development
+  set scored F1 0.9686. These figures describe pair comparison, not
+  registry-backed matching or independent validation.
+  https://hannune.ai/blog/cjk-entity-resolution-benchmark.html
 
 - Why I built AI Agent Framework Compare: a directory, not a benchmark
   (2026-07-02): Four production agent projects in two years, four
