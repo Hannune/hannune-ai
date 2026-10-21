@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finding where two language versions of the same regulation disagree on what is mandatory — Hannune</title>
+    <meta name="description" content="Ran a clause comparison on a bilingual regulatory document. English and Arabic. The client had been working off both versions for a while and needed to know if they matched before using either one as the reference for an internal policy update.">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <link rel="canonical" href="https://hannune.ai/blog/bilingual-regulation-obligation-gap.html">
+    <meta property="og:title" content="Finding where two language versions of the same regulation disagree on what is mandatory">
+    <meta property="og:description" content="Ran a clause comparison on a bilingual regulatory document. English and Arabic. The client had been working off both versions for a while and needed to know if they matched before using either one as the reference for an internal policy update.">
+    <meta property="og:url" content="https://hannune.ai/blog/bilingual-regulation-obligation-gap.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Hannune">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Finding where two language versions of the same regulation disagree on what is mandatory">
+    <meta name="twitter:description" content="Ran a clause comparison on a bilingual regulatory document. English and Arabic. The client had been working off both versions for a while and needed to know if they matched before using either one as the reference for an internal policy update.">
+    <meta property="og:image" content="https://hannune.ai/blog/images/bilingual-regulation-obligation-gap.jpg">
+    <meta name="twitter:image" content="https://hannune.ai/blog/images/bilingual-regulation-obligation-gap.jpg">
+    <link rel="stylesheet" href="../styles.css">
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Finding where two language versions of the same regulation disagree on what is mandatory",
+  "description": "Ran a clause comparison on a bilingual regulatory document. English and Arabic. The client had been working off both versions for a while and needed to know if they matched before using either one as the reference for an internal policy update.",
+  "datePublished": "2026-10-21",
+  "dateModified": "2026-10-21",
+  "inLanguage": "en",
+  "author": {
+    "@type": "Person",
+    "name": "TaeHo Kim",
+    "alternateName": "김태호",
+    "url": "https://hannune.ai/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Hannune",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://hannune.ai/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://hannune.ai/blog/bilingual-regulation-obligation-gap.html"
+  }
+}
+    </script>
+    <style>
+      .post-body { max-width: 760px; margin: 0 auto; }
+      .post-body p { font-size: 1.02rem; line-height: 1.8; color: var(--color-dark); margin-bottom: 1.1rem; }
+      .photo-credit { max-width: 760px; margin: 0 auto 1.2rem; font-size: 0.78rem; color: var(--color-accent); opacity: 0.75; text-align: center; }
+      .photo-credit a { color: inherit; }
+    </style>
+</head>
+<body>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-logo">
+                <img src="../logo.png" alt="Hannune" class="logo-img">
+            </a>
+        </div>
+    </nav>
+
+    <main class="rd-page">
+        <div class="container">
+
+            <a href="index.html" class="report-back-link">← Back to writing</a>
+
+            <div class="rd-header">
+                <h1 class="rd-title">Finding where two language versions of the same regulation disagree on what is mandatory</h1>
+                <p class="rd-meta">By TaeHo Kim (Hannune) &nbsp;·&nbsp; Published October 21, 2026</p>
+            </div>
+
+            <img class="graph-hero" src="images/bilingual-regulation-obligation-gap.jpg" alt="Finding where two language versions of the same regulation disagree on what is mandatory" width="1200" height="630" loading="eager" style="display:block;width:100%;max-width:760px;margin:1.5rem auto 0.5rem;border-radius:12px;">
+
+            <p class="photo-credit">Photo by <a href="https://unsplash.com/@antoie" target="_blank" rel="noopener noreferrer">Anastassia Anufrieva</a> on <a href="https://unsplash.com/photos/a-woman-sitting-at-a-table-reading-a-paper-ecHGTPfjNfA" target="_blank" rel="noopener noreferrer">Unsplash</a></p>
+            <article class="post-body">
+
+                <p>Ran a clause comparison on a bilingual regulatory document. English and Arabic. The client had been working off both versions for a while and needed to know if they matched before using either one as the reference for an internal policy update.</p>
+                <p>88 clauses. I flagged 16.</p>
+                <p>Most of the flags were modal verb problems. The English "shall" was coming through on the Arabic side closer to "should." That matters because one is a requirement and the other is a recommendation. About a third of those I could point to specific phrase pairs and say here's the gap. The rest needed back-and-forth to confirm they were real conflicts rather than something I'd misread in the Arabic register.</p>
+                <p>I didn't try translating the Arabic into English first. If there's ambiguity in the translation you end up chasing translation artifacts instead of actual clause conflicts, and I'd already had that happen on a smaller test run earlier. I ran extraction separately on each language version instead and normalized both into the same schema before comparing.</p>
+                <p>Getting the schema right was its own problem. The normalization categories were obligation type, which party the obligation applies to, and what it covers. In Arabic the distinction between binding and non-binding obligations doesn't work the same way as the English modal set, and I had to get input from someone with legal Arabic background before the edge cases stopped multiplying. That took a week I hadn't planned for.</p>
+                <p>Three of the flagged clauses had mismatched obligation subjects. Same duty, different party named as responsible in each language version. A couple more existed in one language and had no real equivalent in the other.</p>
+                <p>The people working with these documents weren't operating off a mismatch they'd created. It was just there. I don't know when the versions diverged.</p>
+
+            </article>
+
+            <p class="photo-credit">Originally posted on <a href="https://www.linkedin.com/feed/update/urn:li:activity:7518502697399181313/" target="_blank" rel="noopener noreferrer">LinkedIn</a>.</p>
+
+            <div class="rd-cta">
+                <h2>Building something similar?</h2>
+                <a href="../index.html#contact" class="btn btn-primary">Get in touch →</a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; <span id="footer-year">2026</span> Hannune. All rights reserved. Seoul, Republic of Korea.</p>
+        </div>
+    </footer>
+
+    <script>
+      var fy = document.getElementById('footer-year');
+      if (fy) fy.textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

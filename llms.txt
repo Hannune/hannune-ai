@@ -226,6 +226,9 @@ and operating autonomous AI agents. Index at https://hannune.ai/blog/
 - Context Budget Agentic Steps (2026-07-30): Context window management is the invisible cost in every multi-step agent pipeline.
   https://hannune.ai/blog/context-budget-agentic-steps.html
 
+- Finding where two language versions of the same regulation disagree on what is mandatory (2026-10-21): Ran a clause comparison on a bilingual regulatory document. English and Arabic. The client had been working off both versions for a while and needed to know if they matched before using either one as the reference for an internal policy update.
+  https://hannune.ai/blog/bilingual-regulation-obligation-gap.html
+
 ## Contact
 
 - Website: https://hannune.ai
@@ -250,4 +253,4 @@ and operating autonomous AI agents. Index at https://hannune.ai/blog/
 
 ## Last updated
 
-2026-10-03
+2026-10-21
