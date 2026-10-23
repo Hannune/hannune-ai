@@ -229,6 +229,9 @@ and operating autonomous AI agents. Index at https://hannune.ai/blog/
 - Finding where two language versions of the same regulation disagree on what is mandatory (2026-10-21): Ran a clause comparison on a bilingual regulatory document. English and Arabic. The client had been working off both versions for a while and needed to know if they matched before using either one as the reference for an internal policy update.
   https://hannune.ai/blog/bilingual-regulation-obligation-gap.html
 
+- Why I send one clause per model call instead of batching the document (2026-10-23): Ran an obligation audit on a service contract. Forty-three clauses. First attempt I sent the whole document in one call and asked the model to return an assessment for each clause.
+  https://hannune.ai/blog/clause-per-call-not-batch.html
+
 ## Contact
 
 - Website: https://hannune.ai
@@ -253,4 +256,4 @@ and operating autonomous AI agents. Index at https://hannune.ai/blog/
 
 ## Last updated
 
-2026-10-21
+2026-10-23
