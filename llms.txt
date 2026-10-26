@@ -232,6 +232,9 @@ and operating autonomous AI agents. Index at https://hannune.ai/blog/
 - Why I send one clause per model call instead of batching the document (2026-10-23): Ran an obligation audit on a service contract. Forty-three clauses. First attempt I sent the whole document in one call and asked the model to return an assessment for each clause.
   https://hannune.ai/blog/clause-per-call-not-batch.html
 
+- A verdict without the source quote is not reviewable (2026-10-26): Something I noticed only after the first real bilingual obligation check ran: when a client came back two weeks later about item 47 specifically, I couldn't answer from the results file.
+  https://hannune.ai/blog/verdict-source-quote-reviewable.html
+
 ## Contact
 
 - Website: https://hannune.ai
@@ -256,4 +259,4 @@ and operating autonomous AI agents. Index at https://hannune.ai/blog/
 
 ## Last updated
 
-2026-10-23
+2026-10-26
