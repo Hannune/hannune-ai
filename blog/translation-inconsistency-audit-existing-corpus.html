@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build the glossary first, then use it to audit the translation you already shipped — Hannune</title>
+    <meta name="description" content="The terminology work was supposed to be forward-only. Build a controlled term list, apply it to new translations.">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <link rel="canonical" href="https://hannune.ai/blog/translation-inconsistency-audit-existing-corpus.html">
+    <meta property="og:title" content="Build the glossary first, then use it to audit the translation you already shipped">
+    <meta property="og:description" content="The terminology work was supposed to be forward-only. Build a controlled term list, apply it to new translations.">
+    <meta property="og:url" content="https://hannune.ai/blog/translation-inconsistency-audit-existing-corpus.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Hannune">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Build the glossary first, then use it to audit the translation you already shipped">
+    <meta name="twitter:description" content="The terminology work was supposed to be forward-only. Build a controlled term list, apply it to new translations.">
+    <meta property="og:image" content="https://hannune.ai/blog/images/translation-inconsistency-audit-existing-corpus.jpg">
+    <meta name="twitter:image" content="https://hannune.ai/blog/images/translation-inconsistency-audit-existing-corpus.jpg">
+    <link rel="stylesheet" href="../styles.css">
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Build the glossary first, then use it to audit the translation you already shipped",
+  "description": "The terminology work was supposed to be forward-only. Build a controlled term list, apply it to new translations.",
+  "datePublished": "2026-10-28",
+  "dateModified": "2026-10-28",
+  "inLanguage": "en",
+  "author": {
+    "@type": "Person",
+    "name": "TaeHo Kim",
+    "alternateName": "김태호",
+    "url": "https://hannune.ai/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Hannune",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://hannune.ai/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://hannune.ai/blog/translation-inconsistency-audit-existing-corpus.html"
+  }
+}
+    </script>
+    <style>
+      .post-body { max-width: 760px; margin: 0 auto; }
+      .post-body p { font-size: 1.02rem; line-height: 1.8; color: var(--color-dark); margin-bottom: 1.1rem; }
+      .photo-credit { max-width: 760px; margin: 0 auto 1.2rem; font-size: 0.78rem; color: var(--color-accent); opacity: 0.75; text-align: center; }
+      .photo-credit a { color: inherit; }
+    </style>
+</head>
+<body>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-logo">
+                <img src="../logo.png" alt="Hannune" class="logo-img">
+            </a>
+        </div>
+    </nav>
+
+    <main class="rd-page">
+        <div class="container">
+
+            <a href="index.html" class="report-back-link">← Back to writing</a>
+
+            <div class="rd-header">
+                <h1 class="rd-title">Build the glossary first, then use it to audit the translation you already shipped</h1>
+                <p class="rd-meta">By TaeHo Kim (Hannune) &nbsp;·&nbsp; Published October 28, 2026</p>
+            </div>
+
+            <img class="graph-hero" src="images/translation-inconsistency-audit-existing-corpus.jpg" alt="Build the glossary first, then use it to audit the translation you already shipped" width="1200" height="630" loading="eager" style="display:block;width:100%;max-width:760px;margin:1.5rem auto 0.5rem;border-radius:12px;">
+
+            <p class="photo-credit">Photo by <a href="https://unsplash.com/@antoie" target="_blank" rel="noopener noreferrer">Anastassia Anufrieva</a> on <a href="https://unsplash.com/photos/a-woman-sitting-at-a-table-reading-a-paper-ecHGTPfjNfA" target="_blank" rel="noopener noreferrer">Unsplash</a></p>
+            <article class="post-body">
+
+                <p>The terminology work was supposed to be forward-only. Build a controlled term list, apply it to new translations.</p>
+                <p>After I'd put together about 280 controlled terms I ran the list against the existing documents out of curiosity more than anything else. Forty-odd filings, several years of approved translations.</p>
+                <p>Started with exact string matching. Found about 412 flagged instances. Fine.</p>
+                <p>I'd added an embedding pass mainly because I assumed exact matching would miss paraphrases. It did, and found an additional 238 instances where the existing translation used a near-equivalent rather than the controlled term. That second number surprised me. I'd expected maybe 30 or 40 more, not 238.</p>
+                <p>After removing false positives there were 430 confirmed inconsistencies across the forty documents. About 60 where the same source concept came out differently across documents in a way that would genuinely affect what an obligation looked like to someone reading them side by side.</p>
+                <p>Those 60 went to the top of the fix list.</p>
+                <p>What I hadn't worked out before starting was how to categorize severity. Inconsistent covers everything from a comma difference to a real interpretation problem, and a flat list of 430 items isn't something you can act on directly. I ended up running a second classification pass, one clause at a time, which took longer than the audit itself. I'm still not sure whether that classification step was worth building in rather than just handing the flagged list to the client and letting them make those calls. Some of the severity judgments I made were not ones I was confident about, and the client might have had better context for them.</p>
+                <p>The count gave the rework something to organize around. That part worked. The classification is the part I'd approach differently.</p>
+
+            </article>
+
+            <p class="photo-credit">Originally posted on <a href="https://www.linkedin.com/feed/update/urn:li:activity:7521043323642511361/" target="_blank" rel="noopener noreferrer">LinkedIn</a>.</p>
+
+            <div class="rd-cta">
+                <h2>Building something similar?</h2>
+                <a href="../index.html#contact" class="btn btn-primary">Get in touch →</a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; <span id="footer-year">2026</span> Hannune. All rights reserved. Seoul, Republic of Korea.</p>
+        </div>
+    </footer>
+
+    <script>
+      var fy = document.getElementById('footer-year');
+      if (fy) fy.textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

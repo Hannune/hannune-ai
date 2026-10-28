@@ -235,6 +235,9 @@ and operating autonomous AI agents. Index at https://hannune.ai/blog/
 - A verdict without the source quote is not reviewable (2026-10-26): Something I noticed only after the first real bilingual obligation check ran: when a client came back two weeks later about item 47 specifically, I couldn't answer from the results file.
   https://hannune.ai/blog/verdict-source-quote-reviewable.html
 
+- Build the glossary first, then use it to audit the translation you already shipped (2026-10-28): The terminology work was supposed to be forward-only. Build a controlled term list, apply it to new translations.
+  https://hannune.ai/blog/translation-inconsistency-audit-existing-corpus.html
+
 ## Contact
 
 - Website: https://hannune.ai
@@ -259,4 +262,4 @@ and operating autonomous AI agents. Index at https://hannune.ai/blog/
 
 ## Last updated
 
-2026-10-26
+2026-10-28
