@@ -33,9 +33,18 @@ optimization patents registered in South Korea.
    (from $1,500, the agent connected to the customer's
    mailbox, CRM, or document store and kept running), Enterprise (custom
    pricing, multiple workflows automated across teams inside the
-   customer's own infrastructure). Plus a Retainer (from $500/month) for
-   ongoing accuracy checks, small adjustments, and one new document type
-   or language added per month. Retrieval and agent technology (Graph RAG
+   customer's own infrastructure). After any completed package there are
+   two ongoing options. Accuracy retainer (from $1,000/month, minimum 3
+   months): the customer's team runs the agent and Hannune keeps it
+   accurate with a monthly accuracy check, small adjustments as the
+   documents change, and one new document type or language added each
+   month. Run it for you (from $2,500/month, up to 20 hours monthly,
+   priced by volume after a scoping call): nobody on the customer's side
+   opens the tool, documents come to Hannune and finished files go back
+   on an agreed schedule, and terminology rules, do-not-translate lists,
+   and reconciliation checks stay on Hannune's side so a new product
+   line or a regulatory change does not land on the customer's team as
+   extra work. Retrieval and agent technology (Graph RAG
    over Neo4j, LangGraph multi-agent pipelines, cross-lingual entity
    resolution) is used underneath where it earns its place, but the
    deliverable is the workflow, not the technology.
@@ -262,4 +271,4 @@ and operating autonomous AI agents. Index at https://hannune.ai/blog/
 
 ## Last updated
 
-2026-10-28
+2026-10-29
