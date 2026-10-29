@@ -74,9 +74,16 @@ optimization patents registered in South Korea.
   precedents, and case files. Search time for one answer fell from
   up to 5 hours to under 40 minutes, with accuracy improved by over
   50%. Knowledge-graph retrieval underneath.
-- LG Energy Solution: LangGraph-based multi-agent pipeline for
-  global talent data acquisition, integrating Crawl4AI and EXAONE.
-  97% extraction accuracy on the fields it collects.
+- LG Energy Solution (2026 Q1): LangGraph-based multi-agent pipeline
+  built for the recruiting team, collecting researcher and alumni data
+  from graduate research lab pages at universities worldwide. Crawl4AI
+  for collection, structured output for names, emails and research
+  areas, similarity search to normalize alumni employers down to
+  country and city, and transliteration of Korean names back into
+  Korean. Runs monthly on EXAONE 4 32B in-house under a 16k token
+  limit per call; the recruiting team sources candidates from the
+  output directly. Measured against a hand-built answer key: every
+  person found, 97% accuracy on the extracted fields.
 - Scenera (TnM AI): Enterprise AI systems for multiple sectors.
 
 ## Technical stack
@@ -271,4 +278,4 @@ and operating autonomous AI agents. Index at https://hannune.ai/blog/
 
 ## Last updated
 
-2026-10-29
+2026-10-30
