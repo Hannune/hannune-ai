@@ -52,7 +52,8 @@
   .pm-offer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.1rem; margin-top: 1rem; }
   .pm-offer { border: 1px solid rgba(51,58,47,0.15); border-radius: 12px; padding: 1.3rem 1.2rem; background: #fff; }
   .pm-offer h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--color-dark); }
-  .pm-photos { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.4rem; margin: 1.4rem 0 1rem; }
+  .pm-photos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.4rem 1.6rem; margin: 1.4rem 0 1rem; }
+  @media (max-width: 680px) { .pm-photos { grid-template-columns: 1fr; } }
   .pm-photos figure { margin: 0; }
   .pm-photos img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 10px; display: block; background: rgba(51,58,47,0.06); }
   .pm-photos figcaption { margin-top: 0.6rem; font-size: 0.9rem; line-height: 1.6; color: var(--color-accent); }
@@ -80,7 +81,7 @@
     </section>
     <section class="pm-section">
       <h2>Where this applies</h2>
-      <p>Anywhere goods are stacked several tiers high and lifted out by crane, the same problem shows up.</p>
+      <p>Anywhere goods are stacked several tiers high and taken out one at a time, the same problem shows up, whatever the size of the site.</p>
       <div class="pm-photos">
         <figure>
           <img src="photos/container-yard.jpg" width="1600" height="1067" loading="lazy" decoding="async"
@@ -91,6 +92,11 @@
           <img src="photos/steel-stockyard.jpg" width="1600" height="1067" loading="lazy" decoding="async"
                alt="Steel wire coils stacked in tiers in an outdoor stockyard with an overhead crane above them">
           <figcaption>Steel stockyard. Coils and plates stacked in tiers hit the same problem.</figcaption>
+        </figure>
+        <figure>
+          <img src="photos/warehouse.jpg" width="1600" height="1067" loading="lazy" decoding="async"
+               alt="Cardboard boxes stacked high in tiers inside a small warehouse">
+          <figcaption>Warehouse. Small sites hit it too, wherever goods go in stacked and come out one at a time.</figcaption>
         </figure>
         <figure>
           <img src="photos/gantry-crane.jpg" width="1600" height="1067" loading="lazy" decoding="async"
