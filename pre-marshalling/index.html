@@ -52,8 +52,8 @@
   .pm-offer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.1rem; margin-top: 1rem; }
   .pm-offer { border: 1px solid rgba(51,58,47,0.15); border-radius: 12px; padding: 1.3rem 1.2rem; background: #fff; }
   .pm-offer h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--color-dark); }
-  .pm-photos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.4rem 1.6rem; margin: 1.4rem 0 1rem; }
-  @media (max-width: 680px) { .pm-photos { grid-template-columns: 1fr; } }
+  .pm-photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; margin: 1.4rem 0 1rem; }
+  @media (max-width: 860px) { .pm-photos { grid-template-columns: 1fr; } }
   .pm-photos figure { margin: 0; }
   .pm-photos img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 10px; display: block; background: rgba(51,58,47,0.06); }
   .pm-photos figcaption { margin-top: 0.6rem; font-size: 0.9rem; line-height: 1.6; color: var(--color-accent); }
@@ -66,6 +66,38 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-N1RSRJSC5X');
+</script>
+<!-- Structured data for this one page. No value appears here that is not
+     also stated on the page itself. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Container Yard Pre-Marshalling Optimization",
+  "serviceType": "Logistics optimization",
+  "url": "https://hannune.ai/pre-marshalling/",
+  "provider": {
+    "@type": "Organization",
+    "name": "Hannune Inc.",
+    "url": "https://hannune.ai/",
+    "email": "contact@hannune.ai"
+  },
+  "audience": {"@type": "Audience", "audienceType": "Container terminals, steel stockyards, warehouses"},
+  "description": "Reinforcement learning that computes the pre-marshalling move sequence for container yards and steel stockyards, removing rehandles before retrieval starts.",
+  "isBasedOn": [
+    {"@type": "CreativeWork", "name": "KR102325608B1", "description": "Method for generating training data for a neural network applying deep reinforcement learning to pre-marshalling at container terminals", "datePublished": "2021-11-15"},
+    {"@type": "CreativeWork", "name": "KR102853422B1", "description": "Method and apparatus for optimal path search using an artificial neural network", "datePublished": "2025-09-04"}
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "How we work on it",
+    "itemListElement": [
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Custom build"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Proof of concept"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Joint research"}}
+    ]
+  }
+}
 </script>
 </head>
 <body>
@@ -97,11 +129,6 @@
           <img src="photos/warehouse.jpg" width="1600" height="1067" loading="lazy" decoding="async"
                alt="Cardboard boxes stacked high in tiers inside a small warehouse">
           <figcaption>Warehouse. Small sites hit it too, wherever goods go in stacked and come out one at a time.</figcaption>
-        </figure>
-        <figure>
-          <img src="photos/gantry-crane.jpg" width="1600" height="1067" loading="lazy" decoding="async"
-               alt="A gantry crane spreader lifting a single shipping container">
-          <figcaption>A rehandle is the crane picking up something nobody asked for. This cuts how often that happens.</figcaption>
         </figure>
       </div>
       <p class="pm-caption">Photographs illustrate the setting. They are not Hannune project sites.</p>

@@ -60,6 +60,32 @@ optimization patents registered in South Korea.
    filings instead of client files, reading disclosures daily and
    publishing structured analyses on its own. Hosted at 2asy.ai.
 
+4. **Container Yard Pre-Marshalling Optimization** (service). In a
+   container yard or a steel stockyard, the box leaving next is often
+   buried under boxes leaving later, and digging it out costs a
+   rehandle. This computes the move sequence that re-sorts the stacks
+   into retrieval order before retrieval starts, so those rehandles
+   never happen. The literature and terminal operators call the problem
+   the Container Pre-Marshalling Problem (CPMP); the re-sorting itself
+   is part of yard housekeeping. A value network scores each state and a
+   search procedure follows that score to pick the move order, built on
+   two granted Korean patents held by the founder, Taeho Kim:
+   KR102325608B1 (training data generation for deep reinforcement
+   learning applied to container terminal pre-marshalling, granted
+   2021-11-15) and KR102853422B1 (optimal path search using an
+   artificial neural network, granted 2025-09-04). Measured on this
+   implementation, not against published benchmark instances: a
+   container terminal bay of 8 stacks by 5 tiers with 32 containers
+   solved in 34 moves from the fixed worst-case evaluation state, and
+   all 20 random layouts solved at 24.1 moves on average; a steel
+   stockyard of 8 stacks by 4 tiers with 24 plates solved in 15 moves
+   from the fixed state, and all 20 random layouts solved at 10.7 moves
+   on average. Optimality is not claimed. Taken on as a custom build
+   against the customer's terminal operating system or yard management
+   data, as a proof of concept on the customer's own yard data, or as
+   joint research. Pricing is not published. Page with a working demo:
+   https://hannune.ai/pre-marshalling/.
+
 ## Recent work
 
 - Format-preserving translation pipeline (Hannune's own system, not a
@@ -274,6 +300,7 @@ and operating autonomous AI agents. Index at https://hannune.ai/blog/
 - Document Q&A demo: https://demo.hannune.ai/rag/
 - Document Extraction demo: https://demo.hannune.ai/extraction/
 - Ask Hannune demo: https://demo.hannune.ai/ask-about-hannune/
+- Container yard pre-marshalling, with a working demo: https://hannune.ai/pre-marshalling/
 - Writing / blog: https://hannune.ai/blog/
 
 ## Last updated

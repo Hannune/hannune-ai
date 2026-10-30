@@ -441,6 +441,25 @@
   }
 }
 </script>
+<!-- Pre-marshalling is a separate service from the agent packages above,
+     so it gets its own entry rather than being folded into that catalog. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Container Yard Pre-Marshalling Optimization",
+  "serviceType": "Logistics optimization",
+  "url": "https://hannune.ai/pre-marshalling/",
+  "provider": {
+    "@type": "Organization",
+    "name": "Hannune",
+    "url": "https://hannune.ai/"
+  },
+  "areaServed": "Worldwide",
+  "audience": {"@type": "Audience", "audienceType": "Container terminals, steel stockyards, warehouses"},
+  "description": "Computes the move sequence that re-sorts yard stacks into retrieval order before retrieval starts, so rehandles never happen. Built on two granted patents."
+}
+</script>
   <script defer src="https://www.hannune.tools/t.js"></script>
 <!-- Google Analytics (2026-10-25) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-N1RSRJSC5X"></script>
