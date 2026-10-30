@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- The English name follows the term used in the literature and by terminal
+     operators: the Container Pre-Marshalling Problem (CPMP), part of yard
+     housekeeping. "Rehandle" is the operators' word for the move this work
+     removes. Checked 2026-10-30 against the published problem definitions. -->
+<title>Container Yard Pre-Marshalling Optimization — Hannune</title>
+<meta name="description" content="Reinforcement learning that computes the pre-marshalling move sequence for container yards and steel stockyards, cutting rehandles before retrieval starts. Built on two granted patents.">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<link rel="canonical" href="https://hannune.ai/pre-marshalling/">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/favicon.png">
+<meta property="og:title" content="Container Yard Pre-Marshalling Optimization — Hannune">
+<meta property="og:description" content="Reinforcement learning that computes the pre-marshalling move sequence for container yards and steel stockyards. Built on two granted patents.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hannune.ai/pre-marshalling/">
+<meta property="og:site_name" content="Hannune">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hannune.ai/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Container Yard Pre-Marshalling Optimization — Hannune">
+<meta name="twitter:description" content="Reinforcement learning that computes the pre-marshalling move sequence for container yards and steel stockyards.">
+<meta name="twitter:image" content="https://hannune.ai/logo.png">
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="demo/style.css">
+<style>
+  .pm-page { padding-top: 3rem; padding-bottom: 4rem; }
+  .pm-page .container { max-width: 1080px; margin: 0 auto; padding: 0 2rem; }
+  .pm-hero { max-width: 880px; margin: 0 auto 3rem; text-align: center; }
+  .pm-hero h1 { font-size: 2.2rem; line-height: 1.3; margin-bottom: 1.1rem; color: var(--color-dark); }
+  .pm-hero p.lede { font-size: 1.1rem; line-height: 1.75; color: var(--color-accent); margin-bottom: 1rem; }
+  .pm-hero, .pm-section { padding: 0; }
+  .pm-section { max-width: 980px; margin: 0 auto 3.5rem; }
+  .pm-section h2 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--color-dark); }
+  .pm-section p { font-size: 1.02rem; line-height: 1.75; color: var(--color-dark); margin-bottom: 1.1rem; }
+  .pm-section ul { margin: 0 0 1.3rem 1.3rem; }
+  .pm-section li { font-size: 1.02rem; line-height: 1.7; margin-bottom: 0.55rem; }
+  .pm-bench { width: 100%; border-collapse: collapse; margin-bottom: 1rem; font-size: 0.95rem; }
+  .pm-bench th, .pm-bench td { padding: 0.7rem 0.85rem; border-bottom: 1px solid rgba(51,58,47,0.12); text-align: left; vertical-align: top; }
+  .pm-bench th { background: rgba(51,58,47,0.04); font-weight: 600; }
+  .pm-caption { font-size: 0.85rem; color: var(--color-accent); margin-top: -0.3rem; margin-bottom: 1.3rem; }
+  .pm-callout { background: rgba(51,58,47,0.04); border-left: 3px solid var(--color-dark); padding: 1rem 1.2rem; border-radius: 6px; margin-bottom: 1.4rem; }
+  #pm-demo-embed main { display: block; }
+  .pm-patents { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.1rem; margin-top: 1rem; }
+  .pm-patent { border: 1px solid rgba(51,58,47,0.15); border-radius: 12px; padding: 1.3rem 1.2rem; background: #fff; }
+  .pm-patent .pm-pnum { font-weight: 600; color: var(--color-dark); margin-bottom: 0.3rem; }
+  .pm-patent .pm-pdate { font-size: 0.85rem; color: var(--color-accent); margin-bottom: 0.6rem; }
+  .pm-offer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.1rem; margin-top: 1rem; }
+  .pm-offer { border: 1px solid rgba(51,58,47,0.15); border-radius: 12px; padding: 1.3rem 1.2rem; background: #fff; }
+  .pm-offer h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--color-dark); }
+  .pm-photos { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.4rem; margin: 1.4rem 0 1rem; }
+  .pm-photos figure { margin: 0; }
+  .pm-photos img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 10px; display: block; background: rgba(51,58,47,0.06); }
+  .pm-photos figcaption { margin-top: 0.6rem; font-size: 0.9rem; line-height: 1.6; color: var(--color-accent); }
+  .pm-back { display: inline-block; margin-bottom: 2rem; font-size: 0.9rem; color: var(--color-accent); text-decoration: none; }
+  .pm-back:hover { color: var(--color-hover); }
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-N1RSRJSC5X"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-N1RSRJSC5X');
+</script>
+</head>
+<body>
+
+<main id="main-content" class="pm-page">
+  <div class="container">
+
+    <a class="pm-back" href="/">← Hannune</a>
+
+    <section class="pm-hero">
+      <h1>Container Yard Pre-Marshalling Optimization</h1>
+      <p class="lede">In a container yard or a steel stockyard, the box you need next is often buried under boxes you need later. Digging it out costs a rehandle every time. This computes, in advance, the shortest sequence of moves that re-sorts the stacks so those rehandles never happen. The industry calls the re-sorting pre-marshalling; we solve it with reinforcement learning.</p>
+    </section>
+    <section class="pm-section">
+      <h2>Where this applies</h2>
+      <p>Anywhere goods are stacked several tiers high and lifted out by crane, the same problem shows up.</p>
+      <div class="pm-photos">
+        <figure>
+          <img src="photos/container-yard.jpg" width="1600" height="1067" loading="lazy" decoding="async"
+               alt="Shipping containers stacked several tiers high in rows across a port yard">
+          <figcaption>Container terminal yard. When the stacking order does not match the retrieval order, whatever sits on top has to move first.</figcaption>
+        </figure>
+        <figure>
+          <img src="photos/steel-stockyard.jpg" width="1600" height="1067" loading="lazy" decoding="async"
+               alt="Steel wire coils stacked in tiers in an outdoor stockyard with an overhead crane above them">
+          <figcaption>Steel stockyard. Coils and plates stacked in tiers hit the same problem.</figcaption>
+        </figure>
+        <figure>
+          <img src="photos/gantry-crane.jpg" width="1600" height="1067" loading="lazy" decoding="async"
+               alt="A gantry crane spreader lifting a single shipping container">
+          <figcaption>A rehandle is the crane picking up something nobody asked for. This cuts how often that happens.</figcaption>
+        </figure>
+      </div>
+      <p class="pm-caption">Photographs illustrate the setting. They are not Hannune project sites.</p>
+    </section>
+
+
+    <section class="pm-section">
+      <h2>The problem it solves</h2>
+      <p>Container terminals and steel stockyards store goods in stacks, several tiers high. When the order they are stacked in does not match the order they will leave in, an item that leaves early ends up underneath one that leaves late.</p>
+      <p>Getting to it means lifting the item on top and putting it somewhere else first. That move is a rehandle, and rehandles are pure cost: crane time spent moving something nobody asked for. Terminals already shift containers during quiet hours to avoid them, which is where the term housekeeping comes from.</p>
+      <p>This program takes the current state of a bay and computes the move sequence that ends with every stack in retrieval order, using as few moves as it can find. It runs before retrieval starts, not during it.</p>
+      <p>The method is a re-implementation based on two granted patents held by the inventor, Taeho Kim, founder of Hannune Inc. A neural network scores how good a state is, and a search procedure follows that score to pick the move order.</p>
+    </section>
+
+    <section class="pm-section">
+      <h2>Measured results</h2>
+      <p>These numbers come from running this program. We have not verified that the solutions are optimal, and we have not yet compared them against the published benchmark instances. What is shown is the behaviour of a model trained to reduce rehandles and move counts.</p>
+      <table class="pm-bench">
+        <thead>
+          <tr><th>Problem</th><th>Size</th><th>Worst-case layout (fixed evaluation state)</th><th>20 random layouts (beam search)</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Container terminal</td>
+            <td>8 stacks x 5 tiers, 32 containers, all with distinct retrieval order</td>
+            <td>34 moves</td>
+            <td>All 20 solved, 24.1 moves on average</td>
+          </tr>
+          <tr>
+            <td>Steel stockyard</td>
+            <td>8 stacks x 4 tiers, 24 plates</td>
+            <td>15 moves</td>
+            <td>All 20 solved, 10.7 moves on average</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="pm-caption">Measured over 20 random layouts.</p>
+    </section>
+
+    <section class="pm-section" id="demo">
+      <h2>Demo</h2>
+      <p>Pick a problem (container yard or steel stockyard) and a layout, then step through the computed move sequence one move at a time.</p>
+      <div id="pm-demo-embed">
+        <main>
+          <div class="controls">
+            <label><span id="l-problem">Problem</span>
+              <select id="problem"></select></label>
+            <label><span id="l-case">Case</span>
+              <select id="case"></select></label>
+            <label><span id="l-method">Search</span>
+              <select id="method"></select></label>
+          </div>
+          <div id="notice" class="notice" hidden></div>
+          <div class="stage">
+            <div id="bay-wrap"><div id="bay"></div></div>
+            <div class="legend"><span class="sw ok"></span><span id="l-ok">In place</span> <span class="sw bad"></span><span id="l-bad">Blocking (an earlier-leaving block sits underneath)</span></div>
+            <div class="player">
+              <button id="first" type="button">|&lt;</button>
+              <button id="prev" type="button">&lt;</button>
+              <button id="play" type="button"></button>
+              <button id="next" type="button">&gt;</button>
+              <button id="last" type="button">&gt;|</button>
+              <label><span id="l-speed">Speed</span> <input id="speed" type="range" min="0.25" max="4" step="0.25" value="1"><span id="speedv">1x</span></label>
+            </div>
+            <div class="status"><span id="step"></span> <span id="mv"></span> <span id="done"></span></div>
+          </div>
+          <div class="summary" id="summary"></div>
+        </main>
+      </div>
+    </section>
+
+    <section class="pm-section">
+      <h2>Patents behind it</h2>
+      <p>This program is a re-implementation based on the methods in two granted patents, inventor Taeho Kim.</p>
+      <div class="pm-patents">
+        <div class="pm-patent">
+          <div class="pm-pnum">KR102325608B1</div>
+          <div class="pm-pdate">Granted 2021-11-15</div>
+          <div>Method for generating training data for a neural network applying deep reinforcement learning to pre-marshalling at container terminals</div>
+        </div>
+        <div class="pm-patent">
+          <div class="pm-pnum">KR102853422B1</div>
+          <div class="pm-pdate">Granted 2025-09-04</div>
+          <div>Method and apparatus for optimal path search using an artificial neural network</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pm-section">
+      <h2>How we work on it</h2>
+      <p>Pricing is not published. These are the ways we take this on.</p>
+      <div class="pm-offer-grid">
+        <div class="pm-offer">
+          <h3>Custom build</h3>
+          <p>Built against your terminal operating system or yard management data.</p>
+        </div>
+        <div class="pm-offer">
+          <h3>Proof of concept</h3>
+          <p>Run it on your own yard data first and see what the move count does.</p>
+        </div>
+        <div class="pm-offer">
+          <h3>Joint research</h3>
+          <p>Participation in port and logistics research projects or joint ventures.</p>
+        </div>
+      </div>
+      <p class="pm-callout">Enquiries: <a href="mailto:contact@hannune.ai">contact@hannune.ai</a></p>
+    </section>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p>&copy; <span id="footer-year">2026</span> Hannune Inc. All rights reserved. Seoul, Republic of Korea.</p>
+  </div>
+</footer>
+
+<script>window.PM_LANG = 'en';</script>
+<script src="demo/app.js" defer></script>
+<script>
+  var y = document.getElementById('footer-year');
+  if (y) { y.textContent = String(new Date().getFullYear()); }
+</script>
+
+</body>
+</html>
